@@ -3,25 +3,11 @@ const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const Razorpay = require('razorpay');
-const nodemailer = require('nodemailer');
 
 const Order = require('../models/Order');
 const User = require('../models/User');
 const { protect, admin } = require('../middleware/authMiddleware');
-
-// ---------- EMAIL SETUP (GMAIL) ----------
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-transporter.verify((err) => {
-  if (err) console.log('❌ Order email error:', err.message);
-  else console.log('✅ Order email service ready');
-});
+const transporter = require('../utils/emailTransporter');
 
 const EMAIL_FROM = `"Infused Nutrition" <${process.env.EMAIL_USER}>`;
 

@@ -3,25 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 const { protect, admin } = require('../middleware/authMiddleware');
-const nodemailer = require('nodemailer');
-
-// ---------- EMAIL SETUP (GMAIL) ----------
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER, // your gmail
-    pass: process.env.EMAIL_PASS, // app password
-  },
-});
-
-// optional: check connection on server start
-transporter.verify((err, success) => {
-  if (err) {
-    console.log('❌ Email error:', err.message);
-  } else {
-    console.log('✅ Email service ready');
-  }
-});
+const transporter = require('../utils/emailTransporter');
 
 // change sender display name here
 const EMAIL_FROM = `"Infused Nutrition" <${process.env.EMAIL_USER}>`;
