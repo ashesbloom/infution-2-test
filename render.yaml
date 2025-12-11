@@ -15,7 +15,7 @@ services:
       # Add other env vars here (MONGO_URI, JWT_SECRET, etc.) in the Render Dashboard
 
   # Frontend Service
-  - type: static
+  - type: web
     name: infuse-frontend
     env: static
     plan: free
