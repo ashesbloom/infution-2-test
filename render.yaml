@@ -35,10 +35,10 @@ services:
     routes:
       - type: rewrite
         source: /api/*
-        destination: https://infuse-backend.onrender.com/api/*
+        destination: https://infuse-backend-75ji.onrender.com/api/*
       - type: rewrite
         source: /uploads/*
-        destination: https://infuse-backend.onrender.com/uploads/*
+        destination: https://infuse-backend-75ji.onrender.com/uploads/*
       - type: rewrite
         source: /*
         destination: /index.html
