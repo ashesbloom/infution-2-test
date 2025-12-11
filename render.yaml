@@ -21,7 +21,7 @@ services:
     plan: free
     rootDir: client
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: ./dist
     routes:
       # Rewrite API calls to the backend
       - type: rewrite
