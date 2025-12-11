@@ -1,57 +1,46 @@
-const axios = require('axios');
+const { Resend } = require('resend');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const WEB3FORMS_API_KEY = process.env.WEB3FORMS_ACCESS_KEY;
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const sendMail = async ({ to, subject, text, html }) => {
-  if (!WEB3FORMS_API_KEY) {
-    console.error('❌ Web3Forms Error: Missing WEB3FORMS_ACCESS_KEY in env');
-    return;
-  }
-
-  try {
-    const response = await axios.post('https://api.web3forms.com/submit', {
-      access_key: WEB3FORMS_API_KEY,
-      email: to, // The user's email (Web3Forms will send the email TO this address if configured, or just notify you)
-      subject: subject,
-      message: text || 'No plain text message',
-      html_message: html, // Web3Forms supports HTML content
-      from_name: 'Infused Nutrition',
-    });
-
-    if (response.data.success) {
-      console.log('✅ Email sent via Web3Forms to:', to);
-      return true;
-    } else {
-      console.error('❌ Web3Forms API Error:', response.data.message);
-      return false;
-    }
-  } catch (error) {
-    console.error('❌ Web3Forms Network Error:', error.message);
-    return false;
-  }
-};
-
-// Mock transporter object to maintain compatibility with existing code
+// Mock transporter object to maintain compatibility with existing nodemailer-style code
 const transporter = {
   sendMail: async (mailOptions) => {
-    // Adapt nodemailer options to Web3Forms
-    return sendMail({
-      to: mailOptions.to,
-      subject: mailOptions.subject,
-      text: mailOptions.text,
-      html: mailOptions.html,
-    });
+    if (!process.env.RESEND_API_KEY) {
+      console.error('❌ Resend Error: Missing RESEND_API_KEY in env');
+      return false;
+    }
+
+    try {
+      const { data, error } = await resend.emails.send({
+        from: 'Infused Nutrition <onboarding@resend.dev>', // Use your verified domain in production
+        to: mailOptions.to,
+        subject: mailOptions.subject,
+        text: mailOptions.text,
+        html: mailOptions.html,
+      });
+
+      if (error) {
+        console.error('❌ Resend API Error:', error);
+        return false;
+      }
+
+      console.log('✅ Email sent via Resend to:', mailOptions.to, 'ID:', data.id);
+      return true;
+    } catch (error) {
+      console.error('❌ Resend Network Error:', error.message);
+      return false;
+    }
   },
   verify: (callback) => {
-    if (WEB3FORMS_API_KEY) {
-      console.log('✅ Web3Forms Service Ready');
+    if (process.env.RESEND_API_KEY) {
+      console.log('✅ Resend Email Service Ready');
       if (callback) callback(null, true);
     } else {
-      const err = new Error('Missing WEB3FORMS_ACCESS_KEY');
-      console.error('❌ Web3Forms Error:', err.message);
+      const err = new Error('Missing RESEND_API_KEY');
+      console.error('❌ Resend Error:', err.message);
       if (callback) callback(err, false);
     }
   },
