@@ -2,6 +2,17 @@ const express = require("express");
 const router = express.Router();
 const transporter = require("../utils/emailTransporter");
 
+// GET /api/connect/test - Simple test to check connectivity
+router.get("/test", async (req, res) => {
+  try {
+    await transporter.verify();
+    res.json({ status: "success", message: "SMTP Connection OK" });
+  } catch (error) {
+    console.error("SMTP Test Failed:", error);
+    res.status(500).json({ status: "error", message: error.message, stack: error.stack });
+  }
+});
+
 // POST /api/connect  { name, email, subject, message }
 router.post("/", async (req, res) => {
   const { name, email, subject, message } = req.body;

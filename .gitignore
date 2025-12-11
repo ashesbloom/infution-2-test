@@ -17,3 +17,8 @@ yarn-error.log*
 # Build/Dist folders
 dist/
 build/
+
+#Dependencies
+node_modules/
+server/node_modules/
+client/node_modules/
