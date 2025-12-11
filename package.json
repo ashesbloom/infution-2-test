@@ -1,0 +1,29 @@
+{
+  "name": "Infuse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client",
+    "install-client": "npm install --prefix client",
+    "build": "npm run build --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "npm run data:import --prefix server",
+    "data:destroy": "npm run data:destroy --prefix server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express-async-handler": "^1.2.0",
+    "multer": "^2.0.2",
+    "react-icons": "^5.5.0"
+  }
+}
