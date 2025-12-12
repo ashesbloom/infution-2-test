@@ -390,42 +390,45 @@ const PlaceOrderScreen = () => {
                 </p>
               ) : (
                 <div className="space-y-4">
-                  {items.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center gap-4 border-b border-white/5 pb-3 last:border-b-0"
-                    >
-                      <div className="flex items-center gap-4 min-w-0">
-                        <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-black border border-white/10 flex items-center justify-center overflow-hidden flex-shrink-0">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-contain"
-                          />
+                  {items.map((item, index) => {
+                    const maxQty = Math.min(item.countInStock, 10);
+                    return (
+                      <div
+                        key={index}
+                        className="flex justify-between items-center gap-4 border-b border-white/5 pb-3 last:border-b-0"
+                      >
+                        <div className="flex items-center gap-4 min-w-0">
+                          <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-black border border-white/10 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <Link
+                              to={`/product/${item._id}`}
+                              className="text-sm md:text-base font-semibold text-white hover:text-yellow-400 line-clamp-2"
+                            >
+                              {item.name}
+                            </Link>
+                            <p className="text-[11px] text-zinc-500 mt-1">
+                              Qty: {item.qty}
+                            </p>
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <Link
-                            to={`/product/${item._id}`}
-                            className="text-sm md:text-base font-semibold text-white hover:text-yellow-400 line-clamp-2"
-                          >
-                            {item.name}
-                          </Link>
-                          <p className="text-[11px] text-zinc-500 mt-1">
-                            Qty: {item.qty}
+
+                        <div className="text-right text-xs md:text-sm flex-shrink-0">
+                          <p className="text-zinc-400">
+                            {item.qty} × ₹{item.price}
+                          </p>
+                          <p className="font-semibold text-white">
+                            ₹{(item.qty * item.price).toFixed(2)}
                           </p>
                         </div>
                       </div>
-
-                      <div className="text-right text-xs md:text-sm flex-shrink-0">
-                        <p className="text-zinc-400">
-                          {item.qty} × ₹{item.price}
-                        </p>
-                        <p className="font-semibold text-white">
-                          ₹{(item.qty * item.price).toFixed(2)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>

@@ -27,31 +27,53 @@ const ProductDetails = () => {
   const imageTopRef = useRef(null);
   const fallbackImage = "https://via.placeholder.com/400";
 
+  // swipe/pointer refs
+  const pointerStartX = useRef(0);
+  const pointerCurrentX = useRef(0);
+  const isDragging = useRef(false);
+  const dragTranslate = useRef(0);
+  const swipeThreshold = 40; // px
+
   // fetch product
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`/api/products/${id}`);
+        if (!res.ok) {
+          // handle non-200 responses
+          console.error('Product fetch failed:', res.status, res.statusText);
+          setProduct(null);
+          return;
+        }
+
         const data = await res.json();
         setProduct(data);
 
-        const imgs =
-          (Array.isArray(data.images) && data.images.length > 0
-            ? data.images
-            : data.image
+        // normalize images: prefer data.images array, fall back to data.image
+        const imgsSrc = Array.isArray(data.images) && data.images.length > 0
+          ? data.images
+          : data.image
             ? [data.image]
-            : []) || [];
+            : [];
+
+        const normalize = (src) => {
+          if (!src) return src;
+          // leave absolute URLs as-is, allow leading-slash paths (/uploads/...)
+          return String(src);
+        };
+
+        const imgs = imgsSrc.map(normalize);
         setImages(imgs);
         setMainImage(imgs[0] || data.image || fallbackImage);
 
-        const variants =
-          (Array.isArray(data.variants) && data.variants.length > 0
-            ? data.variants
-            : []) || [];
+        const variants = Array.isArray(data.variants) && data.variants.length > 0
+          ? data.variants
+          : [];
 
         if (variants.length > 0) setSelectedVariant(String(variants[0]));
       } catch (error) {
-        console.error("Error fetching product:", error);
+        console.error('Error fetching product:', error);
+        setProduct(null);
       } finally {
         setLoading(false);
       }
@@ -87,6 +109,7 @@ const ProductDetails = () => {
     const nextIndex = (imageIndex - 1 + images.length) % images.length;
     setImageIndex(nextIndex);
     setMainImage(images[nextIndex] || fallbackImage);
+    resetDragTransform();
   };
 
   const handleNextImage = () => {
@@ -94,6 +117,99 @@ const ProductDetails = () => {
     const nextIndex = (imageIndex + 1) % images.length;
     setImageIndex(nextIndex);
     setMainImage(images[nextIndex] || fallbackImage);
+    resetDragTransform();
+  };
+
+  // helpers for drag transform
+  const setDragTransform = (tx) => {
+    dragTranslate.current = tx;
+    const imgEl = document.getElementById("pd-main-image");
+    if (imgEl) {
+      imgEl.style.transform = `translateX(${tx}px)`;
+      imgEl.style.transition = "none";
+    }
+  };
+
+  const resetDragTransform = () => {
+    const imgEl = document.getElementById("pd-main-image");
+    if (imgEl) {
+      imgEl.style.transition = "transform 200ms ease-out";
+      imgEl.style.transform = "translateX(0px)";
+      // clear after transition
+      setTimeout(() => {
+        if (imgEl) imgEl.style.transition = "";
+      }, 220);
+    }
+    dragTranslate.current = 0;
+  };
+
+  // Pointer handlers (works for mouse & touch on browsers that support pointer events)
+  const onPointerDown = (e) => {
+    isDragging.current = true;
+    pointerStartX.current = e.clientX ?? (e.touches && e.touches[0].clientX) ?? 0;
+    pointerCurrentX.current = pointerStartX.current;
+    // capture pointer for consistent move/up events
+    if (e.pointerId && e.target.setPointerCapture) {
+      try {
+        e.target.setPointerCapture(e.pointerId);
+      } catch (err) {}
+    }
+  };
+
+  const onPointerMove = (e) => {
+    if (!isDragging.current) return;
+    const x = e.clientX ?? (e.touches && e.touches[0].clientX) ?? pointerCurrentX.current;
+    pointerCurrentX.current = x;
+    const delta = x - pointerStartX.current;
+    setDragTransform(delta);
+  };
+
+  const onPointerUp = (e) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const endX = pointerCurrentX.current;
+    const delta = endX - pointerStartX.current;
+
+    if (delta > swipeThreshold) {
+      // swipe right -> previous
+      handlePrevImage();
+    } else if (delta < -swipeThreshold) {
+      // swipe left -> next
+      handleNextImage();
+    } else {
+      resetDragTransform();
+    }
+
+    // release pointer capture if possible
+    if (e.pointerId && e.target.releasePointerCapture) {
+      try {
+        e.target.releasePointerCapture(e.pointerId);
+      } catch (err) {}
+    }
+  };
+
+  // Touch-only fallback (some platforms may not fire pointer events)
+  const onTouchStart = (e) => {
+    pointerStartX.current = e.touches[0].clientX;
+    pointerCurrentX.current = pointerStartX.current;
+    isDragging.current = true;
+  };
+
+  const onTouchMove = (e) => {
+    if (!isDragging.current) return;
+    pointerCurrentX.current = e.touches[0].clientX;
+    const delta = pointerCurrentX.current - pointerStartX.current;
+    setDragTransform(delta);
+  };
+
+  const onTouchEnd = () => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const delta = pointerCurrentX.current - pointerStartX.current;
+
+    if (delta > swipeThreshold) handlePrevImage();
+    else if (delta < -swipeThreshold) handleNextImage();
+    else resetDragTransform();
   };
 
   if (loading)
@@ -118,6 +234,8 @@ const ProductDetails = () => {
       ? product.variants
       : []) || [];
 
+  const maxQty = Math.min(product?.countInStock || 0, 10);
+
   return (
     <div className="min-h-screen w-full bg-black text-white px-4 md:px-8 lg:px-12 pt-2 pb-8 sm:pt-3 sm:pb-10 overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
@@ -133,7 +251,18 @@ const ProductDetails = () => {
           <div className="grid  grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 sm:gap-10 lg:gap-14 items-start lg:items-center">
             
             <div ref={imageTopRef}>
-              <div className="relative  rounded-[26px] bg-gradient-to-b from-[#171717] to-black p-5 sm:p-7 lg:p-10 shadow-[0_24px_60px_rgba(0,0,0,0.95)] border border-white/5 flex items-center justify-center overflow-hidden">
+              <div
+                className="relative  rounded-[26px] bg-gradient-to-b from-[#171717] to-black p-5 sm:p-7 lg:p-10 shadow-[0_24px_60px_rgba(0,0,0,0.95)] border border-white/5 flex items-center justify-center overflow-hidden touch-pan-y"
+                // pointer handlers (covers mouse & touch on supporting browsers)
+                onPointerDown={onPointerDown}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
+                onPointerCancel={onPointerUp}
+                // touch fallback
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#f5b01440,transparent_60%)] blur-2xl" />
 
                 {images.length > 1 && (
@@ -157,9 +286,15 @@ const ProductDetails = () => {
                 )}
 
                 <img
+                  id="pd-main-image"
                   src={mainImage || fallbackImage}
                   alt={product.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = fallbackImage;
+                  }}
                   className="relative max-h-80 sm:max-h-96 w-full object-contain transition-transform duration-300 ease-out hover:scale-105 drop-shadow-[0_0_30px_rgba(0,0,0,0.9)]"
+                  draggable={false}
                 />
               </div>
 
@@ -182,7 +317,12 @@ const ProductDetails = () => {
                       <img
                         src={img}
                         alt={`thumb-${idx}`}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = fallbackImage;
+                        }}
                         className="w-full h-full object-cover"
+                        draggable={false}
                       />
                     </button>
                   ))}
@@ -290,9 +430,9 @@ const ProductDetails = () => {
                       onChange={(e) => setQty(Number(e.target.value))}
                       className="bg-[#111111] text-white text-sm rounded-lg px-4 py-2 border border-zinc-700 focus:outline-none focus:border-[#f5b014]"
                     >
-                      {[...Array(product.countInStock).keys()].slice(0, 10).map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
+                      {Array.from({ length: maxQty }, (_, i) => i + 1).map((x) => (
+                        <option key={x} value={x}>
+                          {x}
                         </option>
                       ))}
                     </select>

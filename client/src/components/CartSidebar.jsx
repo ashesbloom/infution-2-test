@@ -97,90 +97,104 @@ const CartSidebar = ({ isOpen, onClose }) => {
                 Your cart is empty
               </p>
             ) : (
-              cartItems.map((item) => (
-                <div
-                  key={item._id}
-                  className="flex gap-3 items-center bg-black/70 rounded-xl p-3 border border-gray-800 hover:border-yellow-500/70 transition-colors"
-                >
-                  {/* ✅ Selection checkbox */}
-                  <input
-                    type="checkbox"
-                    checked={isItemSelected(item._id)}
-                    onChange={() => {
-                      if (!isAdmin) toggleSelectItem(item._id);
-                    }}
-                    disabled={isAdmin}
-                    className={`w-4 h-4 flex-shrink-0 ${
-                      isAdmin
-                        ? 'opacity-40 cursor-not-allowed'
-                        : 'accent-yellow-400 cursor-pointer'
-                    }`}
-                  />
+              cartItems.map((item) => {
+                const maxQty = Math.min(item.countInStock, 10);
 
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-14 h-14 object-contain rounded-lg bg-black flex-shrink-0 border border-gray-800"
-                  />
-
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-semibold leading-tight line-clamp-2">
-                      {item.name}
-                    </h3>
-
-                    {/* QTY + PRICE */}
-                    <div className="mt-2 flex items-center gap-2">
-                      <button
-                        onClick={() => {
-                          if (!isAdmin) decQty(item);
-                        }}
-                        disabled={isAdmin}
-                        className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition ${
-                          isAdmin
-                            ? 'bg-gray-900 text-gray-500 cursor-not-allowed'
-                            : 'bg-gray-800 hover:bg-gray-700'
-                        }`}
-                      >
-                        -
-                      </button>
-                      <span className="text-sm font-semibold w-7 text-center">
-                        {item.qty}
-                      </span>
-                      <button
-                        onClick={() => {
-                          if (!isAdmin) incQty(item);
-                        }}
-                        disabled={isAdmin}
-                        className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition ${
-                          isAdmin
-                            ? 'bg-gray-900 text-gray-500 cursor-not-allowed'
-                            : 'bg-gray-800 hover:bg-gray-700'
-                        }`}
-                      >
-                        +
-                      </button>
-
-                      <span className="ml-auto text-xs text-yellow-400 font-bold">
-                        ₹{item.price}
-                      </span>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      if (!isAdmin) removeFromCart(item._id);
-                    }}
-                    disabled={isAdmin}
-                    className={`text-[11px] font-semibold transition ${
-                      isAdmin
-                        ? 'text-red-900 cursor-not-allowed'
-                        : 'text-red-400 hover:text-red-500'
-                    }`}
+                return (
+                  <div
+                    key={item._id}
+                    className="flex gap-3 items-center bg-black/70 rounded-xl p-3 border border-gray-800 hover:border-yellow-500/70 transition-colors"
                   >
-                    Remove
-                  </button>
-                </div>
-              ))
+                    {/* ✅ Selection checkbox */}
+                    <input
+                      type="checkbox"
+                      checked={isItemSelected(item._id)}
+                      onChange={() => {
+                        if (!isAdmin) toggleSelectItem(item._id);
+                      }}
+                      disabled={isAdmin}
+                      className={`w-4 h-4 flex-shrink-0 ${
+                        isAdmin
+                          ? 'opacity-40 cursor-not-allowed'
+                          : 'accent-yellow-400 cursor-pointer'
+                      }`}
+                    />
+
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-14 h-14 object-contain rounded-lg bg-black flex-shrink-0 border border-gray-800"
+                    />
+
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-semibold leading-tight line-clamp-2">
+                        {item.name}
+                      </h3>
+
+                      {/* QTY + PRICE */}
+                      <div className="mt-2 flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            if (!isAdmin) decQty(item);
+                          }}
+                          disabled={isAdmin}
+                          className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition ${
+                            isAdmin
+                              ? 'bg-gray-900 text-gray-500 cursor-not-allowed'
+                              : 'bg-gray-800 hover:bg-gray-700'
+                          }`}
+                        >
+                          -
+                        </button>
+
+                        <select
+                          value={item.qty}
+                          onChange={(e) => addToCart(item, Number(e.target.value))}
+                          className="text-sm font-semibold w-16 text-center bg-transparent border border-gray-700 rounded-md"
+                        >
+                          {Array.from({ length: maxQty }, (_, i) => i + 1).map((x) => (
+                            <option key={x} value={x}>
+                              {x}
+                            </option>
+                          ))}
+                        </select>
+
+                        <button
+                          onClick={() => {
+                            if (!isAdmin) incQty(item);
+                          }}
+                          disabled={isAdmin}
+                          className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition ${
+                            isAdmin
+                              ? 'bg-gray-900 text-gray-500 cursor-not-allowed'
+                              : 'bg-gray-800 hover:bg-gray-700'
+                          }`}
+                        >
+                          +
+                        </button>
+
+                        <span className="ml-auto text-xs text-yellow-400 font-bold">
+                          ₹{item.price}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        if (!isAdmin) removeFromCart(item._id);
+                      }}
+                      disabled={isAdmin}
+                      className={`text-[11px] font-semibold transition ${
+                        isAdmin
+                          ? 'text-red-900 cursor-not-allowed'
+                          : 'text-red-400 hover:text-red-500'
+                      }`}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })
             )}
           </div>
 

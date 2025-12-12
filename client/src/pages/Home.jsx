@@ -171,7 +171,7 @@ export default function Home() {
                             disabled={p.countInStock === 0}
                             className="bg-gray-900 text-white text-[9px] sm:text-[10px] rounded-md px-2 py-1 border border-gray-700 focus:border-yellow-400 outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                            {Array.from({ length: Math.min(p.countInStock, 10) }, (_, i) => i + 1).map(
                               (x) => (
                                 <option key={x} value={x}>
                                   {x}

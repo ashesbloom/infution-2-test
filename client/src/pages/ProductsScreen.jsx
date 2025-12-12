@@ -128,7 +128,7 @@ export default function ProductsScreen() {
       <button
         onClick={() => setShowFilters(true)}
         aria-label="Open filters"
-        className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full flex items-center justify-center bg-black/70 border border-yellow-400 text-yellow-400 shadow-[0_0_12px_rgba(245,176,20,0.6)] hover:bg-black hover:border-yellow-300 hover:text-yellow-300 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full flex items-center justify-center bg-black/70 border border-yellow-400 text-yellow-400 shadow-[0_0_12px_rgba(245,176,20,0.6)] hover:bg-black hover:border-yellow-300 hover:text-yellow-300 transition-all duration-300 md:hidden"
       >
         <Filter size={22} className="text-yellow-400"/>
       </button>

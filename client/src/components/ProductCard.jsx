@@ -13,6 +13,8 @@ const ProductCard = ({ product }) => {
     // ❌ no navigate('/cart')
   };
 
+  const maxQty = Math.min(product.countInStock, 10);
+
   return (
     <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-yellow-400 transition-all duration-300 group">
       <Link to={`/product/${product._id}`}>
@@ -51,12 +53,25 @@ const ProductCard = ({ product }) => {
             </span>
           </div>
 
-          <button
-            onClick={handleAddToCart}
-            className="bg-yellow-400 p-3 rounded-lg text-black hover:bg-yellow-300 transition-colors shadow-lg shadow-yellow-400/20"
-          >
-            <ShoppingCart size={20} />
-          </button>
+          <div className="flex items-center">
+            <select
+              onChange={(e) => addToCart(product, Number(e.target.value))}
+              className="bg-gray-800 text-white rounded-lg p-2 mr-2"
+            >
+              {Array.from({ length: maxQty }, (_, i) => i + 1).map((x) => (
+                <option key={x} value={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+
+            <button
+              onClick={handleAddToCart}
+              className="bg-yellow-400 p-3 rounded-lg text-black hover:bg-yellow-300 transition-colors shadow-lg shadow-yellow-400/20"
+            >
+              <ShoppingCart size={20} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

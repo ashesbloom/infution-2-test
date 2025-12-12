@@ -11,6 +11,9 @@ const MyOrdersScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [cancellingId, setCancellingId] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedCancelId, setSelectedCancelId] = useState(null);
+  const [toast, setToast] = useState({ show: false, message: '' });
 
   useEffect(() => {
     const fetchMyOrders = async () => {
@@ -34,10 +37,14 @@ const MyOrdersScreen = () => {
     if (user) fetchMyOrders();
   }, [user]);
 
-  const cancelOrder = async (orderId) => {
-    if (!window.confirm('Are you sure you want to cancel this order?')) return;
+  const promptCancel = (orderId) => {
+    setSelectedCancelId(orderId);
+    setShowConfirm(true);
+  };
 
+  const cancelOrder = async (orderId) => {
     try {
+      setShowConfirm(false);
       setCancellingId(orderId);
 
       await axios.put(
@@ -52,13 +59,19 @@ const MyOrdersScreen = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       setOrders(data);
+      setToast({ show: true, message: 'Order cancelled successfully.' });
+      setTimeout(() => setToast({ show: false, message: '' }), 2500);
     } catch (error) {
-      alert(
-        error?.response?.data?.message ||
-          'Failed to cancel order. Please try again.'
-      );
+      setToast({
+        show: true,
+        message:
+          error?.response?.data?.message ||
+          'Failed to cancel order. Please try again.',
+      });
+      setTimeout(() => setToast({ show: false, message: '' }), 3500);
     } finally {
       setCancellingId(null);
+      setSelectedCancelId(null);
     }
   };
 
@@ -265,7 +278,7 @@ const MyOrdersScreen = () => {
                     <div className="flex gap-2 pt-2 border-t border-white/5">
                       {canCancel && (
                         <button
-                          onClick={() => cancelOrder(order._id)}
+                          onClick={() => promptCancel(order._id)}
                           disabled={cancellingId === order._id}
                           className="flex-1 py-2 text-[10px] bg-red-600 hover:bg-red-500 text-white rounded-md font-bold uppercase tracking-[0.2em] disabled:opacity-60"
                         >
@@ -367,7 +380,7 @@ const MyOrdersScreen = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-xs font-medium space-x-2">
                           {canCancel && (
                             <button
-                              onClick={() => cancelOrder(order._id)}
+                              onClick={() => promptCancel(order._id)}
                               disabled={cancellingId === order._id}
                               className="inline-flex items-center px-4 py-2 text-[10px] bg-red-600 hover:bg-red-500 text-white rounded-md font-bold uppercase tracking-[0.2em] transition disabled:opacity-60"
                             >
@@ -392,6 +405,39 @@ const MyOrdersScreen = () => {
           </div>
         )}
       </div>
+
+      {/* Confirmation Modal */}
+      {showConfirm && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/70" onClick={() => setShowConfirm(false)} />
+          <div className="relative bg-[#0b0b0b] border border-white/10 rounded-2xl p-6 w-[90%] max-w-md z-70 shadow-[0_40px_120px_rgba(0,0,0,0.9)]">
+            <h3 className="text-lg font-bold mb-2">Cancel Order</h3>
+            <p className="text-sm text-zinc-300 mb-4">Are you sure you want to cancel this order?</p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="px-4 py-2 rounded-md bg-[#111] text-zinc-300 border border-white/10"
+              >
+                No
+              </button>
+              <button
+                onClick={() => cancelOrder(selectedCancelId)}
+                className="px-4 py-2 rounded-md bg-red-600 text-white font-bold"
+              >
+                Yes, Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast */}
+      {toast.show && (
+        <div className="fixed bottom-6 right-6 z-60 bg-[#111] text-white px-4 py-2 rounded-md shadow-[0_8px_30px_rgba(0,0,0,0.8)]">
+          {toast.message}
+        </div>
+      )}
     </div>
   );
 };
