@@ -59,18 +59,18 @@ const PaymentScreen = () => {
             2 · SHIPPING
           </button>
           <span className="text-zinc-600">·</span>
-          <span className="text-yellow-400 border-b border-yellow-400 pb-0.5">
+          <span className="text-emerald-500 border-b border-emerald-500 pb-0.5">
             3 · PAYMENT
           </span>
         </div>
 
         {/* Header */}
         <div className="mb-6">
-          <p className="text-[11px] tracking-[0.35em] text-yellow-400 uppercase mb-2">
+          <p className="text-[11px] tracking-[0.35em] text-emerald-500 uppercase mb-2">
             Checkout · Payment
           </p>
           <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tight">
-            Payment <span className="text-[#f5b014]">Method</span>
+            Payment <span className="text-[#06a34f]">Method</span>
           </h1>
           <p className="mt-2 text-xs md:text-sm text-zinc-400">
             Choose how you want to pay for your order. You can still review everything on the next step.
@@ -84,14 +84,14 @@ const PaymentScreen = () => {
           </h2>
 
           {/* PayPal / Card */}
-          <label className="flex items-center gap-3 cursor-pointer p-3.5 md:p-4 rounded-2xl border border-white/10 bg-[#080808] hover:border-[#f5b014] hover:bg-[#0d0d0d] transition">
+          <label className="flex items-center gap-3 cursor-pointer p-3.5 md:p-4 rounded-2xl border border-white/10 bg-[#080808] hover:border-[#06a34f] hover:bg-[#0d0d0d] transition">
             <input
               type="radio"
               value="PayPal"
               name="paymentMethod"
               checked={paymentMethod === 'PayPal'}
               onChange={(e) => setPaymentMethod(e.target.value)}
-              className="w-4 h-4 accent-yellow-400"
+              className="w-4 h-4 accent-emerald-500"
             />
             <div className="flex flex-col">
               <span className="text-sm md:text-base font-semibold text-white">
@@ -104,14 +104,14 @@ const PaymentScreen = () => {
           </label>
 
           {/* UPI / Netbanking */}
-          <label className="flex items-center gap-3 cursor-pointer p-3.5 md:p-4 rounded-2xl border border-white/10 bg-[#080808] hover:border-[#f5b014] hover:bg-[#0d0d0d] transition">
+          <label className="flex items-center gap-3 cursor-pointer p-3.5 md:p-4 rounded-2xl border border-white/10 bg-[#080808] hover:border-[#06a34f] hover:bg-[#0d0d0d] transition">
             <input
               type="radio"
               value="UPI"
               name="paymentMethod"
               checked={paymentMethod === 'UPI'}
               onChange={(e) => setPaymentMethod(e.target.value)}
-              className="w-4 h-4 accent-yellow-400"
+              className="w-4 h-4 accent-emerald-500"
             />
             <div className="flex flex-col">
               <span className="text-sm md:text-base font-semibold text-white">
@@ -126,7 +126,7 @@ const PaymentScreen = () => {
           {/* Continue button */}
           <button
             type="submit"
-            className="mt-2 w-full bg-[#f5b014] hover:bg-[#ffca3b] text-black font-black text-xs md:text-sm tracking-[0.3em] uppercase py-3 rounded-xl shadow-[0_0_25px_rgba(245,176,20,0.7)] transition"
+            className="mt-2 w-full bg-[#06a34f] hover:bg-[#058a42] text-white font-black text-xs md:text-sm tracking-[0.3em] uppercase py-3 rounded-xl shadow-[0_0_25px_rgba(6,163,79,0.7)] transition"
           >
             Continue to Review
           </button>

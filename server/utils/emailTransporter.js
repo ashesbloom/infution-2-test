@@ -20,7 +20,7 @@ const transporter = {
 
     try {
       const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-      sendSmtpEmail.sender = { name: 'Infused Nutrition', email: process.env.BREVO_USER };
+      sendSmtpEmail.sender = { name: 'Nutry Health', email: process.env.BREVO_USER };
       sendSmtpEmail.to = [{ email: mailOptions.to }];
       sendSmtpEmail.subject = mailOptions.subject;
       sendSmtpEmail.textContent = mailOptions.text || '';

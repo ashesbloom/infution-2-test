@@ -48,16 +48,21 @@ const MyOrdersScreen = () => {
       setCancellingId(orderId);
 
       await axios.put(
-        `/api/orders/${orderId}/cancel`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
+  `/api/orders/${orderId}/cancel`,
+  {},
+  {
+    headers: { Authorization: `Bearer ${user.token}` },
+  }
+);
 
-      const { data } = await axios.get('/api/orders/myorders', {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+
+    const { data } = await axios.get(
+  `/api/orders/myorders`,
+  {
+    headers: { Authorization: `Bearer ${user.token}` },
+  }
+);
+
       setOrders(data);
       setToast({ show: true, message: 'Order cancelled successfully.' });
       setTimeout(() => setToast({ show: false, message: '' }), 2500);
@@ -89,7 +94,7 @@ const MyOrdersScreen = () => {
         break;
       case 'Out for Delivery':
         classes +=
-          'bg-yellow-900/30 text-yellow-300 border border-yellow-500/60';
+          'bg-emerald-900/30 text-emerald-400 border border-emerald-500/60';
         break;
       case 'Delivered':
         classes +=
@@ -249,7 +254,7 @@ const MyOrdersScreen = () => {
                       </p>
                       <div className="flex items-center justify-between mt-1">
                         {renderPaymentBadge(order)}
-                        <p className="font-semibold text-[#f5b014]">
+                        <p className="font-semibold text-[#06a34f]">
                           ₹{order.totalPrice}
                         </p>
                       </div>
@@ -289,7 +294,7 @@ const MyOrdersScreen = () => {
                       )}
 
                       <Link to={`/order/${order._id}`} className="flex-1">
-                        <button className="w-full py-2 text-[10px] bg-[#f5b014] hover:bg-[#ffca3b] text-black rounded-md font-bold uppercase tracking-[0.2em]">
+                        <button className="w-full py-2 text-[10px] bg-[#06a34f] hover:bg-[#058a42] text-white rounded-md font-bold uppercase tracking-[0.2em]">
                           View Details
                         </button>
                       </Link>
@@ -391,7 +396,7 @@ const MyOrdersScreen = () => {
                           )}
 
                           <Link to={`/order/${order._id}`}>
-                            <button className="inline-flex items-center px-4 py-2 text-[10px] bg-[#f5b014] hover:bg-[#ffca3b] text-black rounded-md font-bold uppercase tracking-[0.2em] transition">
+                            <button className="inline-flex items-center px-4 py-2 text-[10px] bg-[#06a34f] hover:bg-[#058a42] text-white rounded-md font-bold uppercase tracking-[0.2em] transition">
                               View Details
                             </button>
                           </Link>

@@ -54,9 +54,9 @@ const orderSchema = new mongoose.Schema(
       email_address: { type: String },
     },
 
-    // =========================================
-    // ⭐ ORDER STATUS (your existing)
-    // =========================================
+    // ---------------------------------------------------
+    // ⭐ OFFICIAL ORDER STATUS ENUM (updated)
+    // ---------------------------------------------------
     status: {
       type: String,
       enum: [
@@ -64,7 +64,8 @@ const orderSchema = new mongoose.Schema(
         'Shipped',
         'Out for Delivery',
         'Delivered',
-        'Cancelled', // ⭐ NEW STATUS ADDED HERE
+        'Cancelled',
+        'Cancelled (Stock Refunded)'   // ← added
       ],
       default: 'Processing',
     },
@@ -72,22 +73,12 @@ const orderSchema = new mongoose.Schema(
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
 
-    // =========================================
-    // ⭐ CANCELLATION FIELDS (NEW)
-    // =========================================
-    isCancelled: {
-      type: Boolean,
-      default: false,
-    },
-
-    cancelledAt: {
-      type: Date,
-    },
-
-    cancelReason: {
-      type: String,
-      default: '',
-    },
+    // ---------------------------------------------------
+    // ⭐ CLEAN CANCELLATION FIELDS
+    // ---------------------------------------------------
+    isCancelled: { type: Boolean, default: false },
+    cancelledAt: { type: Date },
+    cancelReason: { type: String, default: '' },
   },
   {
     timestamps: true,

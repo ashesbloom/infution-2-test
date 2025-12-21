@@ -1,6 +1,6 @@
 # Deployment Guide for Render
 
-This guide explains how to deploy your **Infused Nutrition** app to Render using the Free Tier.
+This guide explains how to deploy your **Nutry Health** app to Render using the Free Tier.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ We have created a `render.yaml` file in your project root. This file tells Rende
 1.  Go to the [Render Dashboard](https://dashboard.render.com/).
 2.  Click **New +** and select **Blueprint**.
 3.  Connect your GitHub repository.
-4.  Give your blueprint a name (e.g., `infuse-app`).
+4.  Give your blueprint a name (e.g., `Nutry Health-app`).
 5.  **Important:** Render will ask for Environment Variables. You must provide these for the **Backend** service:
     *   `MONGO_URI`: Your MongoDB connection string.
     *   `JWT_SECRET`: A secret key for authentication.
@@ -27,7 +27,7 @@ We have created a `render.yaml` file in your project root. This file tells Rende
 6.  Click **Apply**.
 
 ### ⚠️ Critical Step: Fix the API Connection
-Render assigns a random URL to your backend (e.g., `https://infuse-backend-xp2z.onrender.com`). The `render.yaml` file guesses the URL, but it will likely be wrong.
+Render assigns a random URL to your backend (e.g., `https://NutryHealth-backend-xp2z.onrender.com`). The `render.yaml` file guesses the URL, but it will likely be wrong.
 
 1.  Wait for the **Backend** service to finish deploying.
 2.  Copy the **Backend URL** from the dashboard.
@@ -49,16 +49,16 @@ If you prefer to set it up manually:
 
 ### 1. Deploy Backend (Web Service)
 1.  New **Web Service** -> Connect Repo.
-2.  **Name**: `infuse-backend`
+2.  **Name**: `Nutry Health-backend`
 3.  **Root Directory**: `.` (Leave blank or dot)
 4.  **Build Command**: `cd server && npm install`
 5.  **Start Command**: `cd server && node server.js`
 6.  **Environment Variables**: Add all the variables listed above.
-7.  **Deploy**. Copy the URL (e.g., `https://infuse-backend.onrender.com`).
+7.  **Deploy**. Copy the URL (e.g., `https://NutryHealth-backend.onrender.com`).
 
 ### 2. Deploy Frontend (Static Site)
 1.  New **Static Site** -> Connect Repo.
-2.  **Name**: `infuse-frontend`
+2.  **Name**: `Nutry Health-frontend`
 3.  **Root Directory**: `client`
 4.  **Build Command**: `npm install && npm run build`
 5.  **Publish Directory**: `dist`

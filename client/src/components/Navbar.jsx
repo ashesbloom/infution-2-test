@@ -113,26 +113,29 @@ const Navbar = () => {
             to="/"
             className="text-2xl md:text-3xl font-black italic tracking-tighter text-white group"
           >
-            INFUSE
-            <span className="text-yellow-500 group-hover:drop-shadow-[0_0_10px_rgba(234,179,8,0.8)]">
-              D.
+            NUTRY
+            <span className="text-[#06a34f]">
+              HEALTH
+            </span>
+            <span className="text-[#06a34f] text-[12px] ml-1">
+              ®
             </span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex gap-8 items-center text-xs font-bold uppercase tracking-[0.3em] text-gray-400">
-            <Link to="/" className="flex items-center gap-1 hover:text-yellow-500">
+            <Link to="/" className="flex items-center gap-1 hover:text-[#06a34f]">
               <HomeIcon size={15} /> HOME
             </Link>
 
             <Link
               to="/verify"
-              className="flex items-center gap-1 hover:text-yellow-500"
+              className="flex items-center gap-1 hover:text-[#06a34f]"
             >
               <ShieldCheck size={15} /> VERIFY
             </Link>
 
-            <Link to="/products" className="hover:text-yellow-500">
+            <Link to="/products" className="hover:text-[#06a34f]">
               PRODUCTS
             </Link>
 
@@ -143,7 +146,7 @@ const Navbar = () => {
                 setSearchOpen(true);
                 setUserMenuOpen(false);
               }}
-              className="flex items-center gap-1 hover:text-yellow-500"
+              className="flex items-center gap-1 hover:text-[#06a34f]"
             >
               <Search size={15} /> SEARCH
             </button>
@@ -151,7 +154,7 @@ const Navbar = () => {
             {/* ADMIN MENU */}
             {isAdmin && (
               <>
-                <Link to="/admin/dashboard" className="hover:text-yellow-500">
+                <Link to="/admin/dashboard" className="hover:text-[#06a34f]">
                   DASHBOARD
                 </Link>
 
@@ -170,14 +173,14 @@ const Navbar = () => {
                 {/* Cart */}
                 <button
                   onClick={openCart}
-                  className="relative text-gray-400 hover:text-yellow-500 transition"
+                  className="relative text-gray-400 hover:text-[#06a34f] transition"
                 >
                   <div className="flex items-center gap-2">
                     <ShoppingCart className="h-5 w-5" />
                     <span>CART</span>
                   </div>
 
-                  <span className="absolute -top-2 -right-3 bg-yellow-500 text-black text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-3 bg-[#06a34f] text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
                     {cartCount}
                   </span>
                 </button>
@@ -187,7 +190,7 @@ const Navbar = () => {
                   <div className="relative">
                     <button
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
-                      className="px-4 py-2 border border-yellow-500 text-yellow-500 rounded-sm uppercase text-[10px] tracking-[0.2em] hover:bg-yellow-500 hover:text-black transition flex items-center gap-1"
+                      className="px-4 py-2 border border-[#06a34f] text-[#06a34f] rounded-sm uppercase text-[10px] tracking-[0.2em] hover:bg-[#06a34f] hover:text-white transition flex items-center gap-1"
                     >
                       HI, {firstName}
                       <span className="text-[8px]">
@@ -229,7 +232,7 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <Link to="/login">
-                    <button className="px-6 py-2 border border-yellow-500 text-yellow-500 rounded-sm uppercase text-[10px] tracking-[0.25em] hover:bg-yellow-500 hover:text-black transition">
+                    <button className="px-6 py-2 border border-[#06a34f] text-[#06a34f] rounded-sm uppercase text-[10px] tracking-[0.25em] hover:bg-[#06a34f] hover:text-white transition">
                       <User size={16} /> LOGIN
                     </button>
                   </Link>
@@ -247,7 +250,7 @@ const Navbar = () => {
                 setSearchOpen(true);
                 setMobileMenuOpen(false);
               }}
-              className="p-1 rounded-sm text-gray-300 hover:text-yellow-500"
+              className="p-1 rounded-sm text-gray-300 hover:text-[#06a34f]"
             >
               <Search className="h-5 w-5" />
             </button>
@@ -255,10 +258,10 @@ const Navbar = () => {
             {!isAdmin && (
               <button
                 onClick={openCart}
-                className="relative text-gray-300 hover:text-yellow-500 transition"
+                className="relative text-gray-300 hover:text-[#06a34f] transition"
               >
                 <ShoppingCart className="h-6 w-6" />
-                <span className="absolute -top-1.5 -right-2 bg-yellow-500 text-black text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                <span className="absolute -top-1.5 -right-2 bg-[#06a34f] text-white text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
                   {cartCount}
                 </span>
               </button>
@@ -273,7 +276,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to="/login"
-                    className="text-[11px] uppercase font-bold hover:text-yellow-500"
+                    className="text-[11px] uppercase font-bold hover:text-[#06a34f]"
                   >
                     LOGIN
                   </Link>
@@ -291,7 +294,7 @@ const Navbar = () => {
               type="button"
               ref={mobileToggleRef}
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="p-1 rounded-sm hover:text-yellow-500"
+              className="p-1 rounded-sm hover:text-[#06a34f]"
             >
               {mobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -312,21 +315,21 @@ const Navbar = () => {
                 <Link
                   to="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-yellow-500"
+                  className="hover:text-[#06a34f]"
                 >
                   HOME
                 </Link>
                 <Link
                   to="/verify"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-yellow-500"
+                  className="hover:text-[#06a34f]"
                 >
                   VERIFY
                 </Link>
                 <Link
                   to="/products"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-yellow-500"
+                  className="hover:text-[#06a34f]"
                 >
                   PRODUCTS
                 </Link>
@@ -343,7 +346,7 @@ const Navbar = () => {
                         navigate("/myorders");
                         setMobileMenuOpen(false);
                       }}
-                      className="text-left hover:text-yellow-500"
+                      className="text-left hover:text-[#06a34f]"
                     >
                       MY ORDERS
                     </button>
@@ -352,7 +355,7 @@ const Navbar = () => {
                         navigate("/profile");
                         setMobileMenuOpen(false);
                       }}
-                      className="text-left hover:text-yellow-500"
+                      className="text-left hover:text-[#06a34f]"
                     >
                       MY PROFILE
                     </button>
@@ -365,7 +368,7 @@ const Navbar = () => {
                       navigate("/admin/dashboard");
                       setMobileMenuOpen(false);
                     }}
-                    className="text-left hover:text-yellow-500"
+                    className="text-left hover:text-[#06a34f]"
                   >
                     DASHBOARD
                   </button>
@@ -387,7 +390,7 @@ const Navbar = () => {
                       navigate("/login");
                       setMobileMenuOpen(false);
                     }}
-                    className="flex items-center gap-1 text-left hover:text-yellow-500"
+                    className="flex items-center gap-1 text-left hover:text-[#06a34f]"
                   >
                     <User size={14} /> LOGIN
                   </button>
@@ -401,7 +404,7 @@ const Navbar = () => {
       {/* 🔍 CENTER SEARCH POPUP */}
       {searchOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-          <div className="w-full max-w-md rounded-2xl bg-[#050505] border border-yellow-500/40 shadow-[0_0_35px_rgba(245,176,20,0.4)] p-5 relative">
+          <div className="w-full max-w-md rounded-2xl bg-[#050505] border border-[#06a34f]/40 shadow-[0_0_35px_rgba(6,163,79,0.4)] p-5 relative">
             {/* Close */}
             <button
               type="button"
@@ -409,12 +412,12 @@ const Navbar = () => {
                 setSearchOpen(false);
                 setSearchTerm("");
               }}
-              className="absolute top-3 right-3 text-gray-400 hover:text-yellow-400 transition"
+              className="absolute top-3 right-3 text-gray-400 hover:text-[#06a34f] transition"
             >
               <X size={18} />
             </button>
 
-            <h2 className="text-center text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400 mb-4">
+            <h2 className="text-center text-sm font-semibold uppercase tracking-[0.25em] text-[#06a34f] mb-4">
               Search Products
             </h2>
 
@@ -428,7 +431,7 @@ const Navbar = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Type product name..."
-                  className="w-full bg-black border border-gray-700 rounded-full pl-9 pr-3 py-2.5 text-sm text-gray-100 placeholder:text-gray-500 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none"
+                  className="w-full bg-black border border-gray-700 rounded-full pl-9 pr-3 py-2.5 text-sm text-gray-100 placeholder:text-gray-500 focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none"
                 />
               </div>
             </div>
@@ -446,7 +449,7 @@ const Navbar = () => {
               ) : filteredResults.length === 0 ? (
                 <div className="px-4 py-3 text-xs text-gray-400">
                   No products found for{" "}
-                  <span className="text-yellow-400 font-semibold">
+                  <span className="text-[#06a34f] font-semibold">
                     "{searchTerm}"
                   </span>
                   .
@@ -460,7 +463,7 @@ const Navbar = () => {
                       setSearchOpen(false);
                       setSearchTerm("");
                     }}
-                    className="flex items-center gap-3 px-4 py-2.5 text-xs text-gray-200 hover:bg-yellow-500/10 border-b border-white/5 last:border-b-0"
+                    className="flex items-center gap-3 px-4 py-2.5 text-xs text-gray-200 hover:bg-[#06a34f]/10 border-b border-white/5 last:border-b-0"
                   >
                     <div className="h-9 w-9 flex items-center justify-center rounded-md bg-[#111] border border-gray-700 overflow-hidden">
                       {p.image ? (

@@ -100,8 +100,8 @@ const ForgotPassword = () => {
         {/* BRAND */}
         <div className="mb-5 text-center">
           <span className="text-3xl sm:text-4xl font-extrabold tracking-[0.3em] uppercase">
-            INFUSE
-            <span className="text-[#f5b014]">D.</span>
+            Nutry Health
+            <span className="text-[#06a34f]">D.</span>
           </span>
         </div>
 
@@ -109,12 +109,12 @@ const ForgotPassword = () => {
           Reset Your Password
         </p>
 
-        <h1 className="text-2xl sm:text-3xl text-center text-[#f5b014] font-semibold mb-5 tracking-[0.25em] uppercase">
+        <h1 className="text-2xl sm:text-3xl text-center text-[#06a34f] font-semibold mb-5 tracking-[0.25em] uppercase">
           Forgot Password
         </h1>
 
         {message && (
-          <div className="mb-4 text-center text-sm text-[#f5b014] font-semibold">
+          <div className="mb-4 text-center text-sm text-[#06a34f] font-semibold">
             {message}
           </div>
         )}
@@ -130,7 +130,7 @@ const ForgotPassword = () => {
                 type="email"
                 placeholder="you@example.com"
                 className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
-                           focus:border-[#f5b014] focus:ring-1 focus:ring-[#f5b014] outline-none transition-all 
+                           focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -141,8 +141,8 @@ const ForgotPassword = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2.5 sm:py-3 rounded-lg font-semibold tracking-[0.2em] uppercase bg-[#f5b014] 
-                         text-black hover:bg-[#f5b014]/90 disabled:opacity-60 disabled:cursor-not-allowed transition-colors text-sm"
+              className="w-full py-2.5 sm:py-3 rounded-lg font-semibold tracking-[0.2em] uppercase bg-[#06a34f] 
+                         text-black hover:bg-[#06a34f]/90 disabled:opacity-60 disabled:cursor-not-allowed transition-colors text-sm"
             >
               {isSubmitting ? "Checking..." : "Continue"}
             </button>
@@ -156,7 +156,7 @@ const ForgotPassword = () => {
               <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
                 Security Question
               </label>
-              <div className="w-full px-4 py-2.5 rounded-lg bg-transparent text-[#f5b014] border border-neutral-800 text-sm">
+              <div className="w-full px-4 py-2.5 rounded-lg bg-transparent text-[#06a34f] border border-neutral-800 text-sm">
                 {securityQuestion}
               </div>
             </div>
@@ -169,7 +169,7 @@ const ForgotPassword = () => {
                 type="text"
                 placeholder="Enter your answer"
                 className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
-                           focus:border-[#f5b014] focus:ring-1 focus:ring-[#f5b014] outline-none transition-all 
+                           focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={securityAnswer}
                 onChange={(e) => setSecurityAnswer(e.target.value)}
@@ -185,7 +185,7 @@ const ForgotPassword = () => {
                 type="password"
                 placeholder="Ex: Pass@123"
                 className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
-                           focus:border-[#f5b014] focus:ring-1 focus:ring-[#f5b014] outline-none transition-all 
+                           focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -201,7 +201,7 @@ const ForgotPassword = () => {
                 type="password"
                 placeholder="Confirm new password"
                 className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
-                           focus:border-[#f5b014] focus:ring-1 focus:ring-[#f5b014] outline-none transition-all 
+                           focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -212,8 +212,8 @@ const ForgotPassword = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 rounded-lg font-semibold tracking-[0.2em] uppercase bg-[#f5b014] 
-                         text-black hover:bg-[#f5b014]/90 disabled:opacity-60 disabled:cursor-not-allowed transition-colors text-sm"
+              className="w-full py-3 rounded-lg font-semibold tracking-[0.2em] uppercase bg-[#06a34f] 
+                         text-black hover:bg-[#06a34f]/90 disabled:opacity-60 disabled:cursor-not-allowed transition-colors text-sm"
             >
               {isSubmitting ? "Resetting..." : "Reset Password"}
             </button>
@@ -222,7 +222,7 @@ const ForgotPassword = () => {
 
         <div className="mt-5 text-center text-xs text-neutral-500 tracking-wide">
           Back to{" "}
-          <Link to="/login" className="text-[#f5b014] hover:underline">
+          <Link to="/login" className="text-[#06a34f] hover:underline">
             Login
           </Link>
         </div>

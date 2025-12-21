@@ -15,6 +15,7 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [qty, setQty] = useState(1);
 
   const [mainImage, setMainImage] = useState("");
@@ -23,46 +24,66 @@ const ProductDetails = () => {
 
   const [selectedVariant, setSelectedVariant] = useState("");
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [showCartPopup, setShowCartPopup] = useState(false);
+
+
 
   const imageTopRef = useRef(null);
   const fallbackImage = "https://via.placeholder.com/400";
+
+  // Abort controller for cleanup
+  const abortControllerRef = useRef(null);
 
   // swipe/pointer refs
   const pointerStartX = useRef(0);
   const pointerCurrentX = useRef(0);
   const isDragging = useRef(false);
   const dragTranslate = useRef(0);
-  const swipeThreshold = 40; // px
+  const swipeThreshold = 40;
 
-  // fetch product
+  // OPTIMIZED: fetch product with timeout and proper error handling
   useEffect(() => {
     const fetchProduct = async () => {
+      // Cancel any previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+
+      // Create new abort controller
+      abortControllerRef.current = new AbortController();
+      const signal = abortControllerRef.current.signal;
+
       try {
-        const res = await fetch(`/api/products/${id}`);
+        setLoading(true);
+        setError(null);
+
+        // Add timeout to prevent hanging requests
+        const timeoutId = setTimeout(() => {
+          abortControllerRef.current?.abort();
+        }, 10000); // 10 second timeout
+
+        const res = await fetch(
+          `/api/products/${id}`,
+          { signal }
+        );
+
+        clearTimeout(timeoutId);
+
         if (!res.ok) {
-          // handle non-200 responses
-          console.error('Product fetch failed:', res.status, res.statusText);
-          setProduct(null);
-          return;
+          throw new Error(`Failed to fetch product: ${res.status}`);
         }
 
         const data = await res.json();
         setProduct(data);
 
-        // normalize images: prefer data.images array, fall back to data.image
+        // Normalize images
         const imgsSrc = Array.isArray(data.images) && data.images.length > 0
           ? data.images
           : data.image
             ? [data.image]
             : [];
 
-        const normalize = (src) => {
-          if (!src) return src;
-          // leave absolute URLs as-is, allow leading-slash paths (/uploads/...)
-          return String(src);
-        };
-
-        const imgs = imgsSrc.map(normalize);
+        const imgs = imgsSrc.map(src => String(src || ""));
         setImages(imgs);
         setMainImage(imgs[0] || data.image || fallbackImage);
 
@@ -71,37 +92,74 @@ const ProductDetails = () => {
           : [];
 
         if (variants.length > 0) setSelectedVariant(String(variants[0]));
-      } catch (error) {
-        console.error('Error fetching product:', error);
-        setProduct(null);
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          console.log('Fetch aborted');
+        } else {
+          console.error('Error fetching product:', err);
+          setError(err.message);
+          setProduct(null);
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchProduct();
+
+    // Cleanup function
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, [id]);
 
-  // ensure top-of-page is visible immediately on mount
+  // Scroll to top
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
         document.activeElement?.blur();
-      } catch (e) {}
+      } catch (e) { }
       window.scrollTo({ top: 0, behavior: "auto" });
       imageTopRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
     }
   }, []);
 
+  // OPTIMIZED: handleAddToCart - immediate feedback
   const handleAddToCart = () => {
     if (!product) return;
+    try {
+      addToCart(product, qty);
+
+      // show popup
+      setShowCartPopup(true);
+      setTimeout(() => setShowCartPopup(false), 2000);
+
+    } catch (err) {
+      console.error('Error adding to cart:', err);
+    }
+  };
+  // cart popup handler
+  const handleHeroAddToCart = (product, qty) => {
     addToCart(product, qty);
+
+    setShowCartPopup(true);
+    setTimeout(() => setShowCartPopup(false), 2000);
   };
 
+
+  // OPTIMIZED: handleBuyNow - faster navigation
   const handleBuyNow = () => {
     if (!product || isAdmin || product.countInStock === 0) return;
-    addToCart(product, qty);
-    navigate("/shipping");
+
+    try {
+      addToCart(product, qty);
+      // Use replace instead of push for faster navigation
+      navigate("/shipping", { replace: false });
+    } catch (err) {
+      console.error('Error during buy now:', err);
+    }
   };
 
   const handlePrevImage = () => {
@@ -120,7 +178,6 @@ const ProductDetails = () => {
     resetDragTransform();
   };
 
-  // helpers for drag transform
   const setDragTransform = (tx) => {
     dragTranslate.current = tx;
     const imgEl = document.getElementById("pd-main-image");
@@ -135,7 +192,6 @@ const ProductDetails = () => {
     if (imgEl) {
       imgEl.style.transition = "transform 200ms ease-out";
       imgEl.style.transform = "translateX(0px)";
-      // clear after transition
       setTimeout(() => {
         if (imgEl) imgEl.style.transition = "";
       }, 220);
@@ -143,16 +199,14 @@ const ProductDetails = () => {
     dragTranslate.current = 0;
   };
 
-  // Pointer handlers (works for mouse & touch on browsers that support pointer events)
   const onPointerDown = (e) => {
     isDragging.current = true;
     pointerStartX.current = e.clientX ?? (e.touches && e.touches[0].clientX) ?? 0;
     pointerCurrentX.current = pointerStartX.current;
-    // capture pointer for consistent move/up events
     if (e.pointerId && e.target.setPointerCapture) {
       try {
         e.target.setPointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch (err) { }
     }
   };
 
@@ -171,24 +225,20 @@ const ProductDetails = () => {
     const delta = endX - pointerStartX.current;
 
     if (delta > swipeThreshold) {
-      // swipe right -> previous
       handlePrevImage();
     } else if (delta < -swipeThreshold) {
-      // swipe left -> next
       handleNextImage();
     } else {
       resetDragTransform();
     }
 
-    // release pointer capture if possible
     if (e.pointerId && e.target.releasePointerCapture) {
       try {
         e.target.releasePointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch (err) { }
     }
   };
 
-  // Touch-only fallback (some platforms may not fire pointer events)
   const onTouchStart = (e) => {
     pointerStartX.current = e.touches[0].clientX;
     pointerCurrentX.current = pointerStartX.current;
@@ -212,19 +262,35 @@ const ProductDetails = () => {
     else resetDragTransform();
   };
 
-  if (loading)
+  if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center text-xl">
         Loading...
       </div>
     );
+  }
 
-  if (!product)
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center text-xl gap-4">
+        <p>Error: {error}</p>
+        <Link
+          to="/"
+          className="text-emerald-500 hover:text-emerald-400 text-base underline"
+        >
+          Go back to products
+        </Link>
+      </div>
+    );
+  }
+
+  if (!product) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center text-xl">
         Product not found
       </div>
     );
+  }
 
   const [firstWord, ...restWords] = (product.name || "").split(" ");
   const restName = restWords.join(" ");
@@ -241,36 +307,34 @@ const ProductDetails = () => {
       <div className="max-w-6xl mx-auto">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-zinc-400 hover:text-yellow-400 mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-[0.25em]"
+          className="inline-flex items-center gap-2 text-zinc-400 hover:text-emerald-500 mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-[0.25em]"
         >
           <ArrowLeft size={18} />
           Back to Products
         </Link>
 
-        <div className="rounded-[32px] border-yellow-300 text-yellow-300 shadow-[0_0_26px_rgba(245,176,20,0.6)] bg-gradient-to-br from-[#111111] via-[#050505] to-[#111111] p-5 sm:p-7 lg:p-10 shadow-[0_32px_80px_rgba(0,0,0,0.9)] border border-white/10">
-          <div className="grid  grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 sm:gap-10 lg:gap-14 items-start lg:items-center">
-            
+        <div className="rounded-[32px] border-emerald-400 text-emerald-400 shadow-[0_0_26px_rgba(6,163,79,0.6)] bg-gradient-to-br from-[#111111] via-[#050505] to-[#111111] p-5 sm:p-7 lg:p-10 shadow-[0_32px_80px_rgba(0,0,0,0.9)] border border-white/10">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 sm:gap-10 lg:gap-14 items-start lg:items-center">
+
             <div ref={imageTopRef}>
               <div
-                className="relative  rounded-[26px] bg-gradient-to-b from-[#171717] to-black p-5 sm:p-7 lg:p-10 shadow-[0_24px_60px_rgba(0,0,0,0.95)] border border-white/5 flex items-center justify-center overflow-hidden touch-pan-y"
-                // pointer handlers (covers mouse & touch on supporting browsers)
+                className="relative rounded-[26px] bg-gradient-to-b from-[#171717] to-black p-5 sm:p-7 lg:p-10 shadow-[0_24px_60px_rgba(0,0,0,0.95)] border border-white/5 flex items-center justify-center overflow-hidden touch-pan-y"
                 onPointerDown={onPointerDown}
                 onPointerMove={onPointerMove}
                 onPointerUp={onPointerUp}
                 onPointerCancel={onPointerUp}
-                // touch fallback
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#f5b01440,transparent_60%)] blur-2xl" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#06a34f40,transparent_60%)] blur-2xl" />
 
                 {images.length > 1 && (
                   <>
                     <button
                       type="button"
                       onClick={handlePrevImage}
-                      className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-black/60 border border-white/20 flex items-center justify-center hover:bg-black/80 transition"
+                      className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-black/60 border border-white/20 flex items-center justify-center hover:bg-black/80 transition z-10"
                     >
                       <ChevronLeft size={18} />
                     </button>
@@ -278,7 +342,7 @@ const ProductDetails = () => {
                     <button
                       type="button"
                       onClick={handleNextImage}
-                      className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-black/60 border border-white/20 flex items-center justify-center hover:bg-black/80 transition"
+                      className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-black/60 border border-white/20 flex items-center justify-center hover:bg-black/80 transition z-10"
                     >
                       <ChevronRight size={18} />
                     </button>
@@ -289,6 +353,7 @@ const ProductDetails = () => {
                   id="pd-main-image"
                   src={mainImage || fallbackImage}
                   alt={product.name}
+                  loading="eager"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = fallbackImage;
@@ -308,15 +373,15 @@ const ProductDetails = () => {
                         setMainImage(img);
                         setImageIndex(idx);
                       }}
-                      className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl border ${
-                        imageIndex === idx
-                          ? "border-[#f5b014] shadow-[0_0_18px_rgba(245,176,20,0.8)]"
+                      className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl border ${imageIndex === idx
+                          ? "border-[#06a34f] shadow-[0_0_18px_rgba(6,163,79,0.8)]"
                           : "border-white/15"
-                      } overflow-hidden bg-[#111] flex items-center justify-center hover:border-[#f5b014] transition`}
+                        } overflow-hidden bg-[#111] flex items-center justify-center hover:border-[#06a34f] transition`}
                     >
                       <img
                         src={img}
                         alt={`thumb-${idx}`}
+                        loading="lazy"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
                           e.currentTarget.src = fallbackImage;
@@ -339,11 +404,10 @@ const ProductDetails = () => {
                         setImageIndex(idx);
                         setMainImage(images[idx] || fallbackImage);
                       }}
-                      className={`h-2.5 w-2.5 rounded-full ${
-                        imageIndex === idx
-                          ? "bg-yellow-400 shadow-[0_0_12px_rgba(245,176,20,0.9)]"
+                      className={`h-2.5 w-2.5 rounded-full ${imageIndex === idx
+                          ? "bg-emerald-500 shadow-[0_0_12px_rgba(6,163,79,0.9)]"
                           : "bg-zinc-600"
-                      }`}
+                        }`}
                     />
                   ))}
                 </div>
@@ -352,22 +416,22 @@ const ProductDetails = () => {
 
             <div className="flex flex-col justify-center space-y-6 mt-6 lg:mt-0">
               <div className="space-y-2 text-center lg:text-left">
-                <p className="text-[11px] tracking-[0.3em] text-yellow-400 uppercase">Premium Series</p>
+                <p className="text-[11px] tracking-[0.3em] text-emerald-500 uppercase">Premium Series</p>
 
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight leading-tight">
                   <span className="block">{firstWord}</span>
-                  {restName && <span className="block text-yellow-400">{restName}</span>}
+                  {restName && <span className="block text-emerald-500">{restName}</span>}
                 </h1>
               </div>
 
               <div className="text-left">
                 <div
-                  className={`overflow-hidden transition-all duration-500 ease-in-out`}
+                  className="overflow-hidden transition-all duration-500 ease-in-out"
                   style={{
                     maxHeight: isDescriptionExpanded ? "800px" : "70px"
                   }}
                 >
-                  <p className="text-sm md:text-base text-zinc-300 leading-relaxed border-l-2 border-[#f5b014] pl-4">
+                  <p className="text-sm md:text-base text-zinc-300 leading-relaxed border-l-2 border-[#06a34f] pl-4">
                     {product.description}
                   </p>
                 </div>
@@ -376,7 +440,7 @@ const ProductDetails = () => {
                   <button
                     type="button"
                     onClick={() => setIsDescriptionExpanded((prev) => !prev)}
-                    className="mt-1 ml-4 text-[11px] uppercase tracking-[0.25em] text-yellow-400 hover:text-yellow-300"
+                    className="mt-1 ml-4 text-[11px] uppercase tracking-[0.25em] text-emerald-500 hover:text-emerald-400"
                   >
                     {isDescriptionExpanded ? "Read Less" : "Read More"}
                   </button>
@@ -389,7 +453,7 @@ const ProductDetails = () => {
                   <select
                     value={selectedVariant}
                     onChange={(e) => setSelectedVariant(e.target.value)}
-                    className="bg-[#111111] text-white text-sm rounded-lg px-4 py-2 border border-zinc-700 focus:outline-none focus:border-[#f5b014] max-w-xs"
+                    className="bg-[#111111] text-white text-sm rounded-lg px-4 py-2 border border-zinc-700 focus:outline-none focus:border-[#06a34f] max-w-xs"
                   >
                     {variants.map((v, idx) => (
                       <option key={idx} value={v}>
@@ -402,16 +466,15 @@ const ProductDetails = () => {
 
               <div className="pt-3 border-t border-white/10">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-3xl md:text-4xl font-extrabold text-[#f5b014]">₹{product.price}</span>
+                  <span className="text-3xl md:text-4xl font-extrabold text-[#06a34f]">₹{product.price}</span>
                 </div>
 
                 <div className="mt-3 flex items-center gap-3">
                   <span
-                    className={`font-bold text-xs px-3 py-1 rounded-full border ${
-                      product.countInStock > 0
+                    className={`font-bold text-xs px-3 py-1 rounded-full border ${product.countInStock > 0
                         ? "text-emerald-400 border-emerald-500/60 bg-emerald-900/40"
                         : "text-red-400 border-red-500/60 bg-red-900/40"
-                    }`}
+                      }`}
                   >
                     {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                   </span>
@@ -428,7 +491,7 @@ const ProductDetails = () => {
                     <select
                       value={qty}
                       onChange={(e) => setQty(Number(e.target.value))}
-                      className="bg-[#111111] text-white text-sm rounded-lg px-4 py-2 border border-zinc-700 focus:outline-none focus:border-[#f5b014]"
+                      className="bg-[#111111] text-white text-sm rounded-lg px-4 py-2 border border-zinc-700 focus:outline-none focus:border-[#06a34f]"
                     >
                       {Array.from({ length: maxQty }, (_, i) => i + 1).map((x) => (
                         <option key={x} value={x}>
@@ -439,7 +502,7 @@ const ProductDetails = () => {
 
                     {product.weight && (
                       <span className="text-[11px] uppercase tracking-[0.3em] text-zinc-400">
-                        Weight: <span className="text-[11px] tracking-[0.3em] text-yellow-400 uppercase">{product.weight}</span>
+                        Weight: <span className="text-[11px] tracking-[0.3em] text-emerald-500 uppercase">{product.weight}</span>
                       </span>
                     )}
                   </div>
@@ -448,27 +511,23 @@ const ProductDetails = () => {
                 {!isAdmin && (
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
                     <button
-                      onClick={handleAddToCart}
+                      type="button"
+                      onClick={() => handleHeroAddToCart(product, qty)}
                       disabled={product.countInStock === 0}
-                      className={`w-full sm:w-auto px-8 py-3 font-black uppercase tracking-[0.25em] rounded-full flex items-center justify-center gap-2 text-[11px] transition
-                        ${
-                          product.countInStock === 0
-                            ? "bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700"
-                            : "bg-zinc-900 text-yellow-400 border border-yellow-500 hover:bg-zinc-800"
-                        }`}
+                      className="w-full sm:w-auto px-8 sm:px-10 py-3 rounded-2xl border border-emerald-500 bg-black/40 text-emerald-400 text-[11px] sm:text-xs font-bold uppercase tracking-[0.3em] hover:bg-emerald-500/20 shadow-[0_0_20px_rgba(6,163,79,0.3)] disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      <ShoppingCart size={18} />
                       Add to Cart
                     </button>
+
+
 
                     <button
                       onClick={handleBuyNow}
                       disabled={product.countInStock === 0}
                       className={`w-full sm:w-auto px-8 py-3 font-extrabold uppercase tracking-[0.25em] rounded-full flex items-center justify-center gap-2 text-[11px] transition
-                        ${
-                          product.countInStock === 0
-                            ? "bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700"
-                            : "bg-gradient-to-r from-[#f5b014] to-[#ffcc3d] text-black hover:brightness-80 hover:shadow-[0_0_40px_rgba(234,179,8,0.5)] border border-yellow-400"
+                        ${product.countInStock === 0
+                          ? "bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700"
+                          : "bg-gradient-to-r from-[#06a34f] to-[#058a42] text-black hover:brightness-80 hover:shadow-[0_0_40px_rgba(6,163,79,0.5)] border border-emerald-500"
                         }`}
                     >
                       Buy Now
@@ -477,10 +536,22 @@ const ProductDetails = () => {
                 )}
               </div>
             </div>
-            {/* END RIGHT */}
           </div>
         </div>
       </div>
+      {showCartPopup && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+          <div className="relative flex items-center justify-center">
+            {/* soft glow */}
+            <div className="absolute inset-0 rounded-full blur-xl bg-emerald-500/50" />
+
+            {/* capsule */}
+            <div className="relative px-5 py-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 text-black text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] shadow-[0_0_10px_rgba(6,163,79,0.7)]">
+              {product?.name || "Item"} added to cart
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

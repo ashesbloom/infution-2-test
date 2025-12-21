@@ -9,12 +9,12 @@ import {
 
 // --- REUSABLE VALUE CARD COMPONENT ---
 const ValueCard = ({ icon: Icon, title, description }) => (
-    <div className="group bg-zinc-900/50 border border-white/5 p-8 rounded-xl hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+    <div className="group bg-zinc-900/50 border border-white/5 p-8 rounded-xl hover:border-emerald-500/30 transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <Icon size={100} className="text-yellow-500 -rotate-12" />
+            <Icon size={100} className="text-emerald-500 -rotate-12" />
         </div>
         <div className="relative z-10">
-            <div className="w-14 h-14 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-yellow-500 text-yellow-500 group-hover:text-black transition-colors duration-300">
+            <div className="w-14 h-14 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500 text-emerald-500 group-hover:text-black transition-colors duration-300">
                 <Icon size={28} />
             </div>
             <h3 className="text-2xl font-black text-white italic uppercase mb-3">{title}</h3>
@@ -58,11 +58,11 @@ const ProcessSection = () => {
                         onClick={() => setActiveStep(index)}
                         className={`flex items-center gap-6 p-6 rounded-xl border transition-all duration-300 text-left group ${
                             activeStep === index
-                                ? 'bg-yellow-500 border-yellow-500'
+                                ? 'bg-emerald-500 border-emerald-500'
                                 : 'bg-zinc-900/50 border-white/5 hover:border-white/20'
                         }`}
                     >
-                        <div className={`p-3 rounded-lg ${activeStep === index ? 'bg-black text-yellow-500' : 'bg-white/5 text-gray-400 group-hover:text-white'}`}>
+                        <div className={`p-3 rounded-lg ${activeStep === index ? 'bg-black text-emerald-500' : 'bg-white/5 text-gray-400 group-hover:text-white'}`}>
                             <step.icon size={24} />
                         </div>
                         <div>
@@ -87,7 +87,7 @@ const ProcessSection = () => {
                             activeStep === index ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 pointer-events-none'
                         }`}
                     >
-                        <step.icon size={48} className="text-yellow-500 mb-6" />
+                        <step.icon size={48} className="text-emerald-500 mb-6" />
                         <h3 className="text-3xl font-black text-white italic uppercase mb-4">
                             {step.title}
                         </h3>
@@ -117,15 +117,15 @@ function About_page() {
     };
 
     return (
-        <div className="bg-black font-sans selection:bg-yellow-500 selection:text-black min-h-screen relative overflow-x-hidden">
+        <div className="bg-black font-sans selection:bg-emerald-500 selection:text-black min-h-screen relative overflow-x-hidden">
 
             {/* --- BACKGROUND DOODLES --- */}
             <div className="fixed inset-0 pointer-events-none h-full w-full z-0 overflow-hidden">
                 <div className="absolute inset-0 opacity-[0.05]">
-                    <Dumbbell className="absolute top-20 left-10 w-32 h-32 -rotate-12 text-yellow-600" />
-                    <Trophy className="absolute top-40 right-20 w-40 h-40 rotate-12 text-yellow-600" />
-                    <Zap className="absolute bottom-40 left-20 w-24 h-24 rotate-45 text-yellow-600" />
-                    <Target className="absolute bottom-20 right-1/3 w-32 h-32 -rotate-12 text-yellow-600" />
+                    <Dumbbell className="absolute top-20 left-10 w-32 h-32 -rotate-12 text-emerald-600" />
+                    <Trophy className="absolute top-40 right-20 w-40 h-40 rotate-12 text-emerald-600" />
+                    <Zap className="absolute bottom-40 left-20 w-24 h-24 rotate-45 text-emerald-600" />
+                    <Target className="absolute bottom-20 right-1/3 w-32 h-32 -rotate-12 text-emerald-600" />
                 </div>
             </div>
 
@@ -139,14 +139,14 @@ function About_page() {
                             <Link
                                 to="/"
                                 onClick={scrollToTopSmooth}
-                                className="inline-flex items-center gap-2 py-2 px-4 rounded-full border border-white/10 text-white text-xs font-medium uppercase tracking-widest bg-white/5 hover:bg-yellow-500 hover:text-black transition-colors duration-300 group shadow-md"
+                                className="inline-flex items-center gap-2 py-2 px-4 rounded-full border border-white/10 text-white text-xs font-medium uppercase tracking-widest bg-white/5 hover:bg-emerald-500 hover:text-black transition-colors duration-300 group shadow-md"
                             >
                                 <ArrowLeft size={16} className="group-hover:translate-x-[-2px] transition-transform" />
                                 Back to Home
                             </Link>
                         </div>
 
-                        <span className="inline-block py-1 px-3 rounded border border-yellow-500/30 bg-yellow-500/10 text-yellow-500 font-bold tracking-[0.2em] uppercase text-[10px] mb-6 backdrop-blur-md">
+                        <span className="inline-block py-1 px-3 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-bold tracking-[0.2em] uppercase text-[10px] mb-6 backdrop-blur-md">
                             EST. 2025 • The New Standard
                         </span>
                         <h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white italic uppercase leading-[0.85] tracking-tighter mb-8">
@@ -155,7 +155,7 @@ function About_page() {
                                 The Fire
                             </span>
                         </h1>
-                        <p className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl font-medium leading-relaxed border-l-4 border-yellow-500 pl-6 text-left md:text-center md:border-l-0 md:border-t-4 md:pt-6">
+                        <p className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl font-medium leading-relaxed border-l-4 border-emerald-500 pl-6 text-left md:text-center md:border-l-0 md:border-t-4 md:pt-6">
                             We are a new breed of supplement company. No legacy. No outdated formulas. Just pure, unadulterated performance for the modern athlete.
                         </p>
                     </div>
@@ -164,7 +164,7 @@ function About_page() {
                 </section>
 
                 {/* --- SCROLLING MARQUEE --- */}
-                <div className="bg-yellow-500 py-4 overflow-hidden relative -rotate-1 scale-105 border-y-4 border-black">
+                <div className="bg-emerald-500 py-4 overflow-hidden relative -rotate-1 scale-105 border-y-4 border-black">
                     <div className="whitespace-nowrap animate-marquee flex gap-8 items-center">
                         {[...Array(10)].map((_, i) => (
                             <React.Fragment key={i}>
@@ -186,14 +186,14 @@ function About_page() {
                         <div className="order-2 lg:order-1">
                             <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase mb-6 leading-none">
                                 Disrupting The <br />
-                                <span className="text-yellow-500">Status Quo.</span>
+                                <span className="text-emerald-500">Status Quo.</span>
                             </h2>
                             <div className="space-y-6 text-gray-400 text-lg">
                                 <p>
                                     We looked around the supplement industry and didn't like what we saw. Under-dosed proprietary blends, artificial dyes, and marketing hype masquerading as science.
                                 </p>
                                 <p>
-                                    <strong className="text-white">INFUSED</strong> was born from frustration. As athletes, we wanted products that actually worked. When we couldn't find them, we decided to make them.
+                                    <strong className="text-white">Nutry Health</strong> was born from frustration. As athletes, we wanted products that actually worked. When we couldn't find them, we decided to make them.
                                 </p>
                                 <p>
                                     We might be the new kids on the block, but that's our advantage. We aren't stuck in the past. We are building the future of sports nutrition.
@@ -202,7 +202,7 @@ function About_page() {
                         </div>
 
                         <div className="order-1 lg:order-2 relative group">
-                            <div className="absolute inset-0 bg-yellow-500 blur-[60px] opacity-20 rounded-full group-hover:opacity-30 transition-opacity duration-500"></div>
+                            <div className="absolute inset-0 bg-emerald-500 blur-[60px] opacity-20 rounded-full group-hover:opacity-30 transition-opacity duration-500"></div>
                             <div className="relative z-10 bg-zinc-900 border border-white/10 p-2 rounded-2xl rotate-2 group-hover:rotate-0 transition-transform duration-500">
                                 <div className="aspect-[4/5] bg-zinc-800 rounded-xl overflow-hidden relative">
                                     <img
@@ -228,7 +228,7 @@ function About_page() {
                     <div className="max-w-[1000px] mx-auto">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-black text-white uppercase italic tracking-tighter">
-                                The <span className="text-yellow-500">Difference</span>
+                                The <span className="text-emerald-500">Difference</span>
                             </h2>
                             <p className="text-gray-400 mt-4">Why we are worth the switch.</p>
                         </div>
@@ -248,16 +248,16 @@ function About_page() {
                             </div>
 
                             {/* Us */}
-                            <div className="bg-zinc-900 p-8 rounded-2xl border border-yellow-500/30 relative overflow-hidden shadow-[0_0_30px_rgba(234,179,8,0.1)] hover:scale-[1.02] transition-transform">
-                                <div className="absolute top-0 right-0 w-20 h-20 bg-yellow-500/20 blur-[40px]"></div>
+                            <div className="bg-zinc-900 p-8 rounded-2xl border border-emerald-500/30 relative overflow-hidden shadow-[0_0_30px_rgba(234,179,8,0.1)] hover:scale-[1.02] transition-transform">
+                                <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/20 blur-[40px]"></div>
                                 <h3 className="text-xl font-black text-white italic uppercase mb-6 flex items-center gap-2">
-                                    <CheckCircle2 size={20} className="text-yellow-500" /> The Infused Way
+                                    <CheckCircle2 size={20} className="text-emerald-500" /> The Nutry Health Way
                                 </h3>
                                 <ul className="space-y-4">
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-yellow-500" /> 100% Fully Transparent Labels</li>
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-yellow-500" /> Zero Artificial Colors</li>
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-yellow-500" /> Clinical Effective Dosages</li>
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-yellow-500" /> Premium Patented Ingredients</li>
+                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> 100% Fully Transparent Labels</li>
+                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Zero Artificial Colors</li>
+                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Clinical Effective Dosages</li>
+                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Premium Patented Ingredients</li>
                                 </ul>
                             </div>
                         </div>
@@ -269,7 +269,7 @@ function About_page() {
                     <div className="max-w-[1400px] mx-auto">
                         <div className="mb-16">
                             <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
-                                Inside The <span className="text-yellow-500">Lab</span>
+                                Inside The <span className="text-emerald-500">Lab</span>
                             </h2>
                             <p className="text-gray-400 mt-4 max-w-lg">
                                 See exactly how we craft the highest quality supplements on the market.
@@ -304,18 +304,18 @@ function About_page() {
 
                 {/* --- CTA SECTION --- */}
                 <section className="py-32 px-6 md:px-16 text-center relative overflow-hidden bg-gradient-to-b from-black to-zinc-900 border-t border-white/5">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
                     <div className="relative z-10 max-w-3xl mx-auto">
                         <h2 className="text-4xl md:text-6xl font-black text-white italic uppercase mb-8">
-                            Be Part of the <br /><span className="text-yellow-500">Beginning.</span>
+                            Be Part of the <br /><span className="text-emerald-500">Beginning.</span>
                         </h2>
                         <p className="text-gray-400 mb-10 text-lg">
-                            We are just getting started. Join the Infused movement today and experience the difference of a brand that puts performance first.
+                            We are just getting started. Join the Nutry Health movement today and experience the difference of a brand that puts performance first.
                         </p>
 
                         <Link to="/" onClick={scrollToTopSmooth}>
-                            <button className="bg-yellow-500 hover:bg-yellow-400 text-black font-black text-sm md:text-base uppercase tracking-[0.2em] px-12 py-5 rounded-sm skew-x-[-10deg] shadow-[0_0_20px_rgba(234,179,8,0.3)] transition-all transform hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(234,179,8,0.6)]">
+                            <button className="bg-emerald-500 hover:bg-emerald-500 text-black font-black text-sm md:text-base uppercase tracking-[0.2em] px-12 py-5 rounded-sm skew-x-[-10deg] shadow-[0_0_20px_rgba(234,179,8,0.3)] transition-all transform hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(234,179,8,0.6)]">
                                 <span className="block skew-x-[10deg] flex items-center gap-3">
                                     Shop The Launch <ArrowRight size={20} />
                                 </span>

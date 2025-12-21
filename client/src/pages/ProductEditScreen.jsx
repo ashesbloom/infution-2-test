@@ -84,8 +84,15 @@ const ProductEditScreen = () => {
         },
       });
 
-      // backend returns path/url
-      setImageField(data);
+      // backend returns the URL directly as a string (not an object)
+      const uploadedUrl = typeof data === 'string' ? data : (data.url || data.path || data.secure_url || '');
+      if (uploadedUrl) {
+        setImageField(uploadedUrl);
+      } else {
+        console.error('Upload response missing URL:', data);
+        alert('Upload succeeded but no URL was returned');
+      }
+
     } catch (err) {
       console.error('Image upload failed:', err.response?.data || err.message);
       alert(err.response?.data?.message || 'Image upload failed');
@@ -148,13 +155,13 @@ const ProductEditScreen = () => {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <Link
           to="/admin/productlist"
-          className="text-sm sm:text-base text-gray-400 hover:text-yellow-400 transition-colors inline-flex items-center gap-1 mb-4"
+          className="text-sm sm:text-base text-gray-400 hover:text-emerald-500 transition-colors inline-flex items-center gap-1 mb-4"
         >
           <span className="text-lg">&larr;</span>
           Go Back
         </Link>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold mb-6 text-yellow-400 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold mb-6 text-emerald-500 tracking-tight">
           Edit Product
         </h1>
 
@@ -171,7 +178,7 @@ const ProductEditScreen = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
@@ -184,7 +191,7 @@ const ProductEditScreen = () => {
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
@@ -198,7 +205,7 @@ const ProductEditScreen = () => {
               value={image}
               onChange={(e) => setImage(e.target.value)}
               placeholder="https:// or /uploads/filename.jpg"
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -235,7 +242,7 @@ const ProductEditScreen = () => {
               value={image2}
               onChange={(e) => setImage2(e.target.value)}
               placeholder="Additional image URL"
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -272,7 +279,7 @@ const ProductEditScreen = () => {
               value={image3}
               onChange={(e) => setImage3(e.target.value)}
               placeholder="Additional image URL"
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -308,7 +315,7 @@ const ProductEditScreen = () => {
               type="text"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
@@ -321,7 +328,7 @@ const ProductEditScreen = () => {
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
@@ -336,7 +343,7 @@ const ProductEditScreen = () => {
                 type="number"
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
-                className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+                className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
               />
             </div>
 
@@ -348,7 +355,7 @@ const ProductEditScreen = () => {
               <select
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
-                className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+                className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
               >
                 <option value="1 kg">1 kg</option>
                 <option value="2 kg">2 kg</option>
@@ -364,13 +371,13 @@ const ProductEditScreen = () => {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 h-24 resize-none focus:outline-none focus:border-[#f5b014] focus:ring-2 focus:ring-[#f5b014]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(245,176,20,0.35)]"
+              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 h-24 resize-none focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
           <button
             type="submit"
-            className="mt-2 inline-flex items-center justify-center rounded-md bg-[#f5b014] px-6 sm:px-8 py-2.5 text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-black shadow-[0_0_0_rgba(0,0,0,0)] hover:bg-[#ffca3b] hover:shadow-[0_0_24px_rgba(245,176,20,0.6)] transition-all"
+            className="mt-2 inline-flex items-center justify-center rounded-md bg-[#06a34f] px-6 sm:px-8 py-2.5 text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-white shadow-[0_0_0_rgba(0,0,0,0)] hover:bg-[#058a42] hover:shadow-[0_0_24px_rgba(6,163,79,0.6)] transition-all"
           >
             Update Product
           </button>

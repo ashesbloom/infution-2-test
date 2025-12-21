@@ -11,6 +11,9 @@ import VerifyScreen from "./pages/VerifyScreen";
 import PaymentFailed from "./pages/PaymentFailed";
 import ForgotPassword from "./pages/ForgotPassword";
 import About_page from "./pages/aboutPage";
+import TermsPage from "./pages/TandC";
+import PrivacyPage from "./pages/PrivacyPolicy";
+
 
 
 // NEW PAGE
@@ -66,6 +69,8 @@ export default function App() {
           <Route path="/verify" element={<VerifyScreen />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/about" element={<About_page />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
          
           {/* NEW PRODUCTS PAGE */}
           <Route path="/products" element={<ProductsScreen />} />

@@ -8,8 +8,13 @@ const connectDB = async () => {
       throw new Error('MONGO_URI is not defined in environment variables');
     }
 
-    // ✅ For newer mongoose versions (v7+), just pass the URI
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+    // ✅ For newer mongoose versions (v7+), with TLS options for compatibility
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      tls: true,
+      tlsAllowInvalidCertificates: false,
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+    });
 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {

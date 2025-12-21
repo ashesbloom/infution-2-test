@@ -92,11 +92,11 @@ const ProductCreateScreen = () => {
 
         {/* Header */}
         <div className="mb-6 md:mb-8">
-          <p className="text-[11px] tracking-[0.35em] text-yellow-400 uppercase mb-2">
+          <p className="text-[11px] tracking-[0.35em] text-emerald-500 uppercase mb-2">
             Admin · Products
           </p>
           <h1 className="text-2xl md:text-3xl font-black tracking-tight uppercase">
-            Create <span className="text-[#f5b014]">Product</span>
+            Create <span className="text-[#06a34f]">Product</span>
           </h1>
           <p className="mt-2 text-xs md:text-sm text-zinc-400">
             Add a new product with price, stock and multiple images. First image will be used as the main display.
@@ -116,7 +116,7 @@ const ProductCreateScreen = () => {
               </label>
               <input
                 type="text"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#f5b014]"
+                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -130,7 +130,7 @@ const ProductCreateScreen = () => {
               <input
                 type="number"
                 min="0"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#f5b014]"
+                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
@@ -160,12 +160,12 @@ const ProductCreateScreen = () => {
                 file:mr-4 file:py-2 file:px-4
                 file:rounded-full file:border-0
                 file:text-sm file:font-semibold
-                file:bg-yellow-500/10 file:text-yellow-400
-                hover:file:bg-yellow-500/20"
+                file:bg-emerald-500/10 file:text-emerald-500
+                hover:file:bg-emerald-500/20"
             />
 
             {uploading && (
-              <p className="text-yellow-400 text-xs mt-2 tracking-[0.18em] uppercase">
+              <p className="text-emerald-500 text-xs mt-2 tracking-[0.18em] uppercase">
                 Uploading images...
               </p>
             )}
@@ -196,7 +196,7 @@ const ProductCreateScreen = () => {
               </label>
               <input
                 type="text"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#f5b014]"
+                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
@@ -210,7 +210,7 @@ const ProductCreateScreen = () => {
               <input
                 type="number"
                 min="0"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#f5b014]"
+                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
                 required
@@ -223,7 +223,7 @@ const ProductCreateScreen = () => {
                 Weight
               </label>
               <select
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#f5b014]"
+                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
               >
@@ -239,7 +239,7 @@ const ProductCreateScreen = () => {
               Description
             </label>
             <textarea
-              className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#f5b014]"
+              className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -250,7 +250,7 @@ const ProductCreateScreen = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="mt-2 w-full bg-[#f5b014] hover:bg-[#ffca3b] text-black font-black text-xs md:text-sm tracking-[0.3em] uppercase py-3 rounded-xl shadow-[0_0_25px_rgba(245,176,20,0.7)] transition"
+            className="mt-2 w-full bg-[#06a34f] hover:bg-[#058a42] text-white font-black text-xs md:text-sm tracking-[0.3em] uppercase py-3 rounded-xl shadow-[0_0_25px_rgba(6,163,79,0.7)] transition"
           >
             Create Product
           </button>

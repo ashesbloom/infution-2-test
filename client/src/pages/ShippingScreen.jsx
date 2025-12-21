@@ -6,11 +6,9 @@ import axios from "axios";
 const ShippingScreen = () => {
   const navigate = useNavigate();
 
-  // Load saved data
   const savedAddress =
     JSON.parse(localStorage.getItem("shippingAddress")) || {};
 
-  // State Variables
   const [name, setName] = useState(savedAddress.name || "");
   const [address, setAddress] = useState(savedAddress.address || "");
   const [city, setCity] = useState(savedAddress.city || "");
@@ -18,13 +16,29 @@ const ShippingScreen = () => {
   const [country, setCountry] = useState(savedAddress.country || "");
   const [state, setState] = useState(savedAddress.state || "");
   const [mobile, setMobile] = useState(savedAddress.mobile || "");
-
   const [pinLoading, setPinLoading] = useState(false);
+  const [pinError, setPinError] = useState("");
+  const [isValidPin, setIsValidPin] = useState(false);
 
-  // Auto-fetch City & State logic
   useEffect(() => {
     const fetchLocation = async () => {
+      setPinError("");
+      setIsValidPin(false);
+
       if (postalCode.length === 6) {
+        const upPrefixes = ["20", "21", "22", "23", "24", "25", "26", "27"];
+
+        // ❌ Not a UP Pincode
+        if (!upPrefixes.some((pref) => postalCode.startsWith(pref))) {
+          setPinError(
+            "We are not serviceable in your area... We will reach you soon... Thank you!"
+          );
+          setCity("");
+          setState("");
+          setCountry("");
+          return;
+        }
+
         setPinLoading(true);
         try {
           const { data } = await axios.get(
@@ -36,12 +50,14 @@ const ShippingScreen = () => {
             setCity(details.District);
             setState(details.State);
             setCountry("India");
+            setIsValidPin(true);
+          } else {
+            setPinError("Invalid Pincode");
           }
-          setPinLoading(false);
         } catch (error) {
-          console.error(error);
-          setPinLoading(false);
+          setPinError("Unable to fetch location");
         }
+        setPinLoading(false);
       }
     };
 
@@ -51,16 +67,15 @@ const ShippingScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // Save Address Details
+    if (!isValidPin) return;
+
     localStorage.setItem(
       "shippingAddress",
       JSON.stringify({ name, address, city, postalCode, country, state, mobile })
     );
 
-    // Auto-select Razorpay
     localStorage.setItem("paymentMethod", "Razorpay");
 
-    // Jump to Place Order
     navigate("/placeorder");
   };
 
@@ -68,7 +83,7 @@ const ShippingScreen = () => {
     <div className="min-h-[calc(100vh-5rem)] w-full bg-black text-white flex items-center justify-center px-4 pb-10">
       <div className="w-full max-w-xl bg-[#050505] border border-white/10 rounded-3xl shadow-[0_0_35px_rgba(0,0,0,0.9)] px-6 sm:px-8 py-8 md:py-10">
 
-        {/* ✅ BACK BUTTON INSIDE THE CARD */}
+        {/* BACK */}
         <button
           onClick={() => navigate(-1)}
           className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#111] text-white border border-white/10 hover:bg-[#1a1a1a] transition text-sm"
@@ -76,23 +91,23 @@ const ShippingScreen = () => {
           ← Back
         </button>
 
-        {/* Header */}
+        {/* HEADER */}
         <div className="mb-8">
-          <p className="text-[11px] tracking-[0.35em] text-yellow-400 uppercase mb-2">
+          <p className="text-[11px] tracking-[0.35em] text-emerald-500 uppercase mb-2">
             Checkout · Step 1 / 2
           </p>
           <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tight">
-            Shipping <span className="text-[#f5b014]">Address</span>
+            Shipping <span className="text-[#06a34f]">Address</span>
           </h1>
           <p className="mt-2 text-xs md:text-sm text-zinc-400">
-            Enter your delivery details. Pincode will auto-fill your city and
-            state when valid.
+            Enter your delivery details. Only Uttar Pradesh pincodes are serviceable.
           </p>
         </div>
 
-        {/* Form */}
+        {/* FORM */}
         <form onSubmit={submitHandler} className="space-y-5">
-          {/* Full Name */}
+          
+          {/* NAME */}
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
               Full Name <span className="text-red-500">*</span>
@@ -103,11 +118,11 @@ const ShippingScreen = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter recipient's name"
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#f5b014] focus:outline-none text-sm px-4 py-2.5 text-white placeholder:text-zinc-500"
+              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
             />
           </div>
 
-          {/* Address */}
+          {/* ADDRESS */}
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
               Address <span className="text-red-500">*</span>
@@ -118,11 +133,11 @@ const ShippingScreen = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="House No, Street, Landmark"
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#f5b014] focus:outline-none text-sm px-4 py-2.5 text-white placeholder:text-zinc-500"
+              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
             />
           </div>
 
-          {/* Mobile Number */}
+          {/* MOBILE */}
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
               Mobile Number <span className="text-red-500">*</span>
@@ -135,36 +150,45 @@ const ShippingScreen = () => {
               placeholder="10-digit mobile number"
               pattern="[0-9]{10}"
               maxLength="10"
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#f5b014] focus:outline-none text-sm px-4 py-2.5 text-white placeholder:text-zinc-500"
+              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
             />
           </div>
 
-          {/* Postal Code */}
+          {/* PINCODE */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400">
+              <label className="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400">
                 Pincode <span className="text-red-500">*</span>
               </label>
               {pinLoading && (
-                <span className="text-[10px] text-yellow-400 uppercase tracking-[0.18em]">
+                <span className="text-[10px] text-emerald-500 uppercase tracking-[0.18em]">
                   Fetching details...
                 </span>
               )}
             </div>
+
             <input
               type="text"
               required
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               maxLength="6"
-              placeholder="e.g. 110001"
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#f5b014] focus:outline-none text-sm px-4 py-2.5 text-white placeholder:text-zinc-500"
+              placeholder="e.g. 221001"
+              className={`w-full rounded-lg bg-[#101010] border ${
+                pinError ? "border-emerald-400" : "border-zinc-700"
+              } focus:border-[#06a34f] text-sm px-4 py-2.5 text-white`}
             />
+
+            {/* CLEAN ERROR MESSAGE */}
+            {pinError && (
+              <div className="mt-2 text-[11px] text-emerald-400 bg-emerald-400/10 border border-emerald-400/30 px-3 py-2 rounded-lg">
+                {pinError}
+              </div>
+            )}
           </div>
 
-          {/* City & State */}
+          {/* CITY + STATE */}
           <div className="flex flex-col md:flex-row gap-4">
-            {/* City */}
             <div className="w-full md:w-1/2">
               <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
                 City <span className="text-red-500">*</span>
@@ -174,11 +198,10 @@ const ShippingScreen = () => {
                 required
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#f5b014] focus:outline-none text-sm px-4 py-2.5 text-white"
+                className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
               />
             </div>
 
-            {/* State */}
             <div className="w-full md:w-1/2">
               <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
                 State <span className="text-red-500">*</span>
@@ -188,12 +211,12 @@ const ShippingScreen = () => {
                 required
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#f5b014] focus:outline-none text-sm px-4 py-2.5 text-white"
+                className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
               />
             </div>
           </div>
 
-          {/* Country */}
+          {/* COUNTRY */}
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
               Country <span className="text-red-500">*</span>
@@ -203,16 +226,22 @@ const ShippingScreen = () => {
               required
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#f5b014] focus:outline-none text-sm px-4 py-2.5 text-white"
+              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
             />
           </div>
 
-          {/* Submit */}
+          {/* SUBMIT */}
           <button
             type="submit"
-            className="mt-4 w-full bg-[#f5b014] hover:bg-[#ffca3b] text-black font-black text-xs tracking-[0.3em] uppercase py-3 rounded-lg shadow-[0_0_25px_rgba(245,176,20,0.7)] transition"
+            disabled={!isValidPin}
+            className={`mt-4 w-full text-black font-black text-xs tracking-[0.3em] uppercase py-3 rounded-lg shadow-[0_0_25px_rgba(6,163,79,0.7)] transition
+              ${
+                isValidPin
+                  ? "bg-[#06a34f] hover:bg-[#058a42]"
+                  : "bg-gray-600 cursor-not-allowed opacity-60"
+              }`}
           >
-            Proceed to Pay
+            {isValidPin ? "Proceed to Pay" : "Enter Valid UP Pincode"}
           </button>
         </form>
       </div>

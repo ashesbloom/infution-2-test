@@ -1,479 +1,618 @@
 // client/src/pages/OrderListScreen.jsx
-// <-- paste this entire file (replaces current OrderListScreen.jsx) -->
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { useAuth } from '../context/AuthContext';
 import { X, Check, Filter } from 'lucide-react';
 
 const OrderListScreen = () => {
-  const { user } = useAuth();
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [updatingId, setUpdatingId] = useState(null);
-  const [cancellingId, setCancellingId] = useState(null);
+  const { user } = useAuth();
 
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [filterPayment, setFilterPayment] = useState('all');
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [updatingId, setUpdatingId] = useState(null);
+  const [cancellingId, setCancellingId] = useState(null);
 
-  const [toast, setToast] = useState(null);
+  // ⭐ FILTER STATES
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [filterPayment, setFilterPayment] = useState('all');
+  const [filterUser, setFilterUser] = useState('all'); // NEW
 
-  const config =
-    user && user.token
-      ? {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      : {};
+  const [toast, setToast] = useState(null);
 
-  const fetchOrders = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get('/api/orders', config);
-      setOrders(data || []);
-      setLoading(false);
-    } catch (err) {
-      setError(err.response ? err.response.data.message : err.message);
-      setLoading(false);
-    }
-  };
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedCancelId, setSelectedCancelId] = useState(null);
 
-  useEffect(() => {
-    if (user && user.isAdmin) {
-      fetchOrders();
-    }
-  }, [user]);
+  // ⭐ PAGINATION
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 25;
 
-  const showToast = (msg, ms = 3000) => {
-    setToast(msg);
-    setTimeout(() => setToast(null), ms);
-  };
+  const config =
+    user && user.token
+      ? { headers: { Authorization: `Bearer ${user.token}` } }
+      : {};
 
-  const updateStatus = async (orderId, status) => {
-    try {
-      setUpdatingId(orderId);
-      await axios.put(`/api/orders/${orderId}/status`, { status }, config);
-      await fetchOrders();
-      showToast(`Order ${orderId.substring(19)} updated to "${status}". Email sent if configured.`);
-    } catch (err) {
-      alert(err?.response?.data?.message || err?.message || 'Failed to update order status');
-    } finally {
-      setUpdatingId(null);
-    }
-  };
+  // ⭐ FETCH ORDERS
+  const fetchOrders = async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.get('/api/orders', config);
 
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [selectedCancelId, setSelectedCancelId] = useState(null);
+     
+      setOrders(data || []);
+    } catch (err) {
+      setError(err.response ? err.response.data.message : err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const promptCancel = (orderId) => {
-    setSelectedCancelId(orderId);
-    setShowConfirm(true);
-  };
+  useEffect(() => {
+    if (user && user.isAdmin) fetchOrders();
+  }, [user]);
 
-  const cancelOrder = async (orderId) => {
-    try {
-      setShowConfirm(false);
-      setCancellingId(orderId);
-      await axios.put(`/api/orders/${orderId}/cancel`, {}, config);
-      await fetchOrders();
-      showToast(`Order ${orderId.substring(19)} cancelled.`);
-    } catch (err) {
-      showToast(err?.response?.data?.message || err?.message || 'Failed to cancel order');
-    } finally {
-      setCancellingId(null);
-      setSelectedCancelId(null);
-    }
-  };
+  // ⭐ TOAST
+  const showToast = (msg, ms = 3000) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), ms);
+  };
 
-  const renderStatusBadge = (status) => {
-    const text = status || 'Processing';
+  // ⭐ UPDATE ORDER STATUS
+  const updateStatus = async (orderId, status) => {
+    try {
+      setUpdatingId(orderId);
+      await api.put(`/api/orders/${orderId}/status`, { status }, config);
 
-    // base pill
-    let base = 'inline-block px-3 py-1 rounded-full text-[12px] font-semibold border ';
-    // glow + color per status
-    switch (text) {
-      case 'Shipped':
-        return <span className={base + 'bg-blue-900/60 text-blue-300 border-blue-500/30 shadow-[0_0_14px_rgba(59,130,246,0.18)]'}>{text}</span>;
-      case 'Out for Delivery':
-        return <span className={base + 'bg-yellow-900/45 text-yellow-300 border-yellow-400/30 shadow-[0_0_18px_rgba(245,176,20,0.18)]'}>{text}</span>;
-      case 'Delivered':
-        return <span className={base + 'bg-green-900/50 text-green-300 border-green-400/30 shadow-[0_0_18px_rgba(34,197,94,0.18)]'}>{text}</span>;
-      case 'Cancelled':
-        return <span className={base + 'bg-red-900/45 text-red-300 border-red-400/30 shadow-[0_0_18px_rgba(239,68,68,0.18)]'}>{text}</span>;
-      default:
-        return <span className={base + 'bg-gray-800 text-gray-300 border-gray-700/40'}>{text}</span>;
-    }
-  };
+    
+      await fetchOrders();
+      showToast(`Order ${orderId.substring(19)} updated to "${status}".`);
+    } catch (err) {
+      alert(err?.response?.data?.message || err?.message);
+    } finally {
+      setUpdatingId(null);
+    }
+  };
 
-  const filteredOrders = (orders || []).filter((order) => {
-    const statusText = order.status || 'Processing';
-    let paymentText;
+  // ⭐ CANCEL ORDER FLOW
+  const promptCancel = (orderId) => {
+    setSelectedCancelId(orderId);
+    setShowConfirm(true);
+  };
 
-    if (order.paymentMethod === 'COD') {
-      paymentText = 'COD';
-    } else if (order.isPaid) {
-      paymentText = 'Prepaid';
-    } else {
-      paymentText = 'Pending';
-    }
+  const cancelOrder = async (orderId) => {
+    try {
+      setCancellingId(orderId);
+      // Ensure this URL and endpoint path exactly match the backend PUT /api/orders/:id/cancel
+      await api.put(`/api/orders/${orderId}/cancel`, {}, config);
 
-    if (filterStatus !== 'all' && statusText !== filterStatus) return false;
-    if (filterPayment !== 'all' && paymentText !== filterPayment) return false;
+      await fetchOrders();
+      showToast(`Order ${orderId.substring(19)} cancelled and stock released.`);
+    } catch (err) {
+      showToast(err?.response?.data?.message || err?.message);
+    } finally {
+      setCancellingId(null);
+      setShowConfirm(false);
+    }
+  };
 
-    return true;
-  });
+  // ⭐ STATUS BADGE
+  const renderStatusBadge = (status) => {
+    const text = status || 'Processing';
+    let base =
+      'inline-block px-3 py-1 rounded-full text-[12px] font-semibold border ';
 
-  if (!user || !user.isAdmin) {
-    return (
-      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center px-4 text-center">
-        You are not authorized to view this page.
-      </div>
-    );
-  }
+    switch (text) {
+      case 'Shipped':
+        return (
+          <span className={base + 'bg-blue-900/60 text-blue-300 border-blue-500/30'}>
+            {text}
+          </span>
+        );
+      case 'Out for Delivery':
+        return (
+          <span className={base + 'bg-emerald-900/45 text-emerald-400 border-emerald-500/30'}>
+            {text}
+          </span>
+        );
+      case 'Delivered':
+        return (
+          <span className={base + 'bg-green-900/50 text-green-300 border-green-400/30'}>
+            {text}
+          </span>
+        );
+      case 'Cancelled':
+        return (
+          <span className={base + 'bg-red-900/45 text-red-300 border-red-400/30'}>
+            {text}
+          </span>
+        );
+      default:
+        return (
+          <span className={base + 'bg-gray-800 text-gray-300 border-gray-700'}>
+            {text}
+          </span>
+        );
+    }
+  };
+  // ⭐ SORT NEWEST FIRST
+const sortedOrders = [...orders].sort(
+  (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+);
 
-  if (loading)
-    return (
-      <div className="min-h-screen w-full bg-black text-gray-300 flex items-center justify-center">
-        Loading Orders...
-      </div>
-    );
 
-  if (error)
-    return (
-      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center px-4 text-center">
-        Error: {error}
-      </div>
-    );
+  // ⭐ FILTER LOGIC (auto-cancel deleted users)
+ const filteredOrders = sortedOrders.filter((order) => {
 
-  return (
-    <div className="min-h-screen w-full bg-black text-white overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-8 pb-10">
-        <div className="mb-5">
-          <Link to="/admin/dashboard">
-            <button className="inline-flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gray-300 border border-gray-700 hover:bg-gray-700 hover:text-white transition-all hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-              ← Back
-            </button>
-          </Link>
-        </div>
+    const statusText =
+      !order.user || !order.user.name
+        ? 'Cancelled'
+        : order.status || 'Processing';
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            <span className="text-white">Orders </span>
-            <span className="text-yellow-400 text-sm sm:text-base">({filteredOrders.length})</span>
-          </h1>
+    const paymentText =
+      order.paymentMethod === 'COD'
+        ? 'COD'
+        : order.isPaid
+        ? 'Prepaid'
+        : 'Pending';
 
-          <button
-            type="button"
-            onClick={() => setFilterOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-500 text-yellow-300 bg-black/40 text-[11px] font-semibold uppercase tracking-[0.25em] hover:bg-yellow-500/10 hover:text-yellow-200 shadow-[0_0_16px_rgba(250,204,21,0.4)] transition-all"
-          >
-            <Filter size={14} />
-            Filter
-            <span className="text-[9px]">{filterOpen ? '▲' : '▼'}</span>
-          </button>
-        </div>
+    const isDeletedUser = !order.user || !order.user.name;
 
-        {/* desktop table unchanged */}
-        <div className="hidden md:block w-full rounded-2xl bg-[#050814] border border-white/10 shadow-xl overflow-x-auto">
-          <table className="min-w-full table-auto">
-            <thead className="bg-[#0b1220] sticky top-0 z-20">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">User</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Total</th>
-                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase tracking-wider">Payment</th>
-                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase tracking-wider">Delivered</th>
-                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
+    // Status filter
+    if (filterStatus !== 'all' && statusText !== filterStatus) return false;
 
-            <tbody>
-              {filteredOrders.map((order, idx) => {
-                const statusText = order.status || 'Processing';
-                const isCancelled = order.status === 'Cancelled' || order.isCancelled;
-                // Only allow cancel if not cancelled, not delivered, not shipped, not out for delivery
-                const canCancel = !isCancelled && !order.isDelivered && statusText !== 'Shipped' && statusText !== 'Out for Delivery' && statusText !== 'Delivered';
+    // Payment filter
+    if (filterPayment !== 'all' && paymentText !== filterPayment) return false;
 
-                const showShip = statusText === 'Processing';
-                const showOutForDelivery = statusText === 'Processing' || statusText === 'Shipped';
-                const showDelivered = statusText === 'Processing' || statusText === 'Shipped' || statusText === 'Out for Delivery';
+    // User filter
+    if (filterUser === 'active' && isDeletedUser) return false;
+    if (filterUser === 'deleted' && !isDeletedUser) return false;
 
-                return (
-                  <tr key={order._id} className={`border-t border-white/5 transition-all ${idx % 2 === 0 ? 'bg-[#050814]' : 'bg-[#050814]/80'} hover:bg-[#0f172a] hover:shadow-[0_0_18px_rgba(245,176,20,0.35)]`}>
-                    <td className="px-6 py-3 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-200">{order._id.substring(19)}</td>
-                    <td className="px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-300">{order.user?.name}</td>
-                    <td className="px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-300">{order.createdAt.substring(0, 10)}</td>
-                    <td className="px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-300">₹{order.totalPrice}</td>
-                    <td className="px-6 py-3 whitespace-nowrap text-center text-xs sm:text-sm">
-                      {order.paymentMethod === 'COD' ? (
-                        <span className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold bg-gray-500/20 text-gray-100 border border-gray-500/50">COD</span>
-                      ) : order.isPaid ? (
-                        <span className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold bg-green-500/15 text-green-300 border border-green-500/50">Prepaid</span>
-                      ) : (
-                        <span className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold bg-red-500/15 text-red-300 border border-red-500/50">Pending</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-3 whitespace-nowrap text-center">
-                      {order.isDelivered ? (<div className="flex justify-center text-green-500"><Check size={18} /></div>) : (<div className="flex justify-center text-red-500"><X size={18} /></div>)}
-                    </td>
-                    <td className="px-6 py-3 whitespace-nowrap text-center text-xs sm:text-sm">{renderStatusBadge(order.status)}</td>
+    return true;
+  });
 
-                    <td className="px-6 py-3 whitespace-nowrap text-xs sm:text-sm font-medium space-x-2">
-                      {canCancel && (
-                        <button onClick={() => promptCancel(order._id)} disabled={cancellingId === order._id} className="mb-1 inline-flex items-center px-3 py-1 text-[11px] rounded bg-red-600 text-white hover:bg-red-500 hover:shadow-[0_0_14px_rgba(239,68,68,0.9)] disabled:opacity-60 disabled:hover:shadow-none transition-all">
-                          {cancellingId === order._id ? 'Cancelling...' : 'Cancel'}
-                        </button>
-                      )}
+  // ⭐ AUTO RETURN TO PAGE 1 IF CURRENT PAGE EMPTY
+  useEffect(() => {
+    const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(1);
+    }
+  }, [filteredOrders]);
 
-                      {!order.isDelivered && !isCancelled && (
-                        <>
-                          {showShip && (
-                            <button onClick={() => updateStatus(order._id, 'Shipped')} disabled={updatingId === order._id} className="mb-1 inline-flex items-center px-3 py-1 text-[11px] rounded bg-blue-500 text-white hover:bg-blue-400 hover:shadow-[0_0_14px_rgba(59,130,246,0.7)] disabled:opacity-60 disabled:hover:shadow-none transition-all">
-                              {updatingId === order._id ? 'Updating...' : 'Shipped'}
-                            </button>
-                          )}
+  // ⭐ PAGINATION CALC
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
-                          {showOutForDelivery && (
-                            <button onClick={() => updateStatus(order._id, 'Out for Delivery')} disabled={updatingId === order._id} className="mb-1 inline-flex items-center px-3 py-1 text-[11px] rounded bg-yellow-400 text-black hover:bg-yellow-300 hover:shadow-[0_0_14px_rgba(245,197,24,0.9)] disabled:opacity-60 disabled:hover:shadow-none transition-all">
-                              {updatingId === order._id ? 'Updating...' : 'Out for Delivery'}
-                            </button>
-                          )}
+  // UNAUTHORIZED
+  if (!user || !user.isAdmin) {
+    return (
+      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center">
+        Unauthorized
+        </div>
+    );
+  }
 
-                          {showDelivered && (
-                            <button onClick={() => updateStatus(order._id, 'Delivered')} disabled={updatingId === order._id} className="mb-1 inline-flex items-center px-3 py-1 text-[11px] rounded bg-green-500 text-white hover:bg-green-400 hover:shadow-[0_0_14px_rgba(34,197,94,0.9)] disabled:opacity-60 disabled:hover:shadow-none transition-all">
-                              {updatingId === order._id ? 'Updating...' : 'Delivered'}
-                            </button>
-                          )}
-                        </>
-                      )}
+  // LOADING
+  if (loading)
+    return (
+      <div className="min-h-screen w-full bg-black text-gray-300 flex items-center justify-center">
+        Loading orders...
+      </div>
+    );
 
-                      <Link to={`/order/${order._id}`}>
-                        <button className="mt-1 inline-flex items-center px-3 py-1 text-[11px] rounded bg-gray-700 text-gray-100 hover:bg-gray-600 hover:shadow-[0_0_12px_rgba(148,163,184,0.8)] transition-all">
-                          Details
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+  // ERROR
+  if (error)
+    return (
+      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center">
+        Error: {error}
+      </div>
+    );
 
-        {/* MOBILE CARDS: product-like theme (matches ProductsScreen) */}
-        <section className="md:hidden space-y-4">
-          {loading ? (
-            <p className="text-gray-300">Loading...</p>
-          ) : filteredOrders.length === 0 ? (
-            <p className="text-gray-400 text-sm">No orders found.</p>
-          ) : (
-            filteredOrders.map((order) => {
-              const statusText = order.status || 'Processing';
-              const isCancelled = order.status === 'Cancelled' || order.isCancelled;
-              // Only allow cancel if not cancelled, not delivered, not shipped, not out for delivery
-              const canCancel = !isCancelled && !order.isDelivered && statusText !== 'Shipped' && statusText !== 'Out for Delivery' && statusText !== 'Delivered';
+  return (
+    <div className="min-h-screen w-full bg-black text-white">
 
-              const showShip = statusText === 'Processing';
-              const showOutForDelivery = statusText === 'Processing' || statusText === 'Shipped';
-              const showDelivered = statusText === 'Processing' || statusText === 'Shipped' || statusText === 'Out for Delivery';
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
 
-              const firstItem = order.orderItems?.[0] || {};
+        <Link to="/admin/dashboard">
+          <button className="mb-5 inline-flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gray-300 border border-gray-700 hover:bg-gray-700">
+            ← Back
+          </button>
+        </Link>
 
-              return (
-                <div
-                  key={order._id}
-                  className="bg-[#0d0d0d] border-yellow-300 border-opacity-30 rounded-2xl p-4 border border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-yellow-500/12"
-                >
-                  {/* small top-left tag (optional if you want a tag like product cards) */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-[#0b0b0b] rounded-lg p-2">
-                      <img src={firstItem.image || '/images/placeholder.png'} alt={firstItem.name || 'Order item'} className="max-h-16 object-contain" />
-                    </div>
+        {/* HEADER */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-10">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            Orders{" "}
+            <span className="text-emerald-500 text-base">
+              ({filteredOrders.length})
+            </span>
+          </h1>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="truncate">
-                          <h3 className="text-sm font-extrabold text-gray-200 truncate">{firstItem.name ? firstItem.name : `Order #${order._id.substring(19)}`}</h3>
-                          <p className="text-xs text-gray-300 truncate mt-1">{order.user?.name || '—'}</p>
-                        </div>
+          <button
+            type="button"
+            onClick={() => setFilterOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500 text-emerald-400 bg-black/40 text-[11px] font-semibold uppercase tracking-[0.25em] hover:bg-emerald-500/10 transition"
+          >
+            <Filter size={14} />
+            Filter
+          </button>
+        </div>
 
-                        <div className="text-right">
-                          <p className="text-yellow-400 font-bold text-sm">₹{order.totalPrice}</p>
+        {/* DESKTOP TABLE */}
+        <div className="hidden md:block w-full rounded-2xl bg-[#050814] border border-white/10 shadow-xl overflow-x-auto">
+          <table className="min-w-full">
+            <thead className="bg-[#0b1220] sticky top-0">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">ID</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">User</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">Total</th>
+                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase">Payment</th>
+                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase">Delivered</th>
+                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">Actions</th>
+              </tr>
+            </thead>
 
-                          {/* status badge with glow */}
-                          <div className="mt-2">
-                            {renderStatusBadge(isCancelled ? 'Cancelled' : order.status)}
-                          </div>
-                        </div>
-                      </div>
+            <tbody>
+              {currentOrders.map((order, idx) => {
+                const statusText =
+                  !order.user || !order.user.name
+                    ? "Cancelled"
+                    : order.status || "Processing";
 
-                      <div className="mt-3 text-xs text-gray-300 grid grid-cols-2 gap-2">
-                        <div>
-                          <div className="text-[11px] text-gray-400">Date</div>
-                          <div className="font-medium">{order.createdAt.substring(0, 10)}</div>
-                        </div>
-                        <div>
-                          <div className="text-[11px] text-gray-400">Items</div>
-                          <div className="font-medium">{order.orderItems?.length ?? 0}</div>
-                        </div>
-                        <div>
-                          <div className="text-[11px] text-gray-400">Payment</div>
-                          <div className="font-medium">{order.paymentMethod === 'COD' ? 'COD' : order.isPaid ? 'Prepaid' : 'Pending'}</div>
-                        </div>
-                        <div>
-                          <div className="text-[11px] text-gray-400">Delivered</div>
-                          <div className="font-medium">{order.isDelivered ? 'Yes' : 'No'}</div>
-                        </div>
-                      </div>
+                const canCancel =
+                  statusText !== "Cancelled" &&
+                  !order.isDelivered &&
+                  !["Shipped", "Out for Delivery", "Delivered"].includes(statusText);
 
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {canCancel && (
-                          <button onClick={() => promptCancel(order._id)} disabled={cancellingId === order._id} className="inline-flex items-center px-3 py-1.5 text-[12px] rounded bg-red-600 text-white hover:bg-red-500 disabled:opacity-60 transition">
-                            {cancellingId === order._id ? 'Cancelling...' : 'Cancel'}
-                          </button>
-                        )}
-      {/* Confirmation Modal */}
-      {showConfirm && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/70" onClick={() => setShowConfirm(false)} />
-          <div className="relative bg-[#0b0b0b] border border-white/10 rounded-2xl p-6 w-[90%] max-w-md z-70 shadow-[0_40px_120px_rgba(0,0,0,0.9)]">
-            <h3 className="text-lg font-bold mb-2">Cancel Order</h3>
-            <p className="text-sm text-zinc-300 mb-4">Are you sure you want to cancel this order?</p>
+                const showShip = statusText === "Processing";
+                const showOut = statusText === "Processing" || statusText === "Shipped";
+                const showDelivered =
+                  ["Processing", "Shipped", "Out for Delivery"].includes(statusText);
 
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setShowConfirm(false)}
-                className="px-4 py-2 rounded-md bg-[#111] text-zinc-300 border border-white/10"
-              >
-                No
-              </button>
-              <button
-                onClick={() => cancelOrder(selectedCancelId)}
-                className="px-4 py-2 rounded-md bg-red-600 text-white font-bold"
-              >
-                Yes, Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                return (
+                  <tr
+                    key={order._id}
+                    className={`border-t border-white/5 ${idx % 2 ? "bg-[#050814]/80" : "bg-[#050814]"} hover:bg-[#0f172a]`}
+                  >
+                    <td className="px-6 py-3 text-gray-200 text-sm">{order._id.substring(19)}</td>
+                    <td className="px-6 py-3 text-gray-300 text-sm">
+                      {order.user?.name || "Deleted User"}
+                    </td>
+                    <td className="px-6 py-3 text-gray-300 text-sm">
+                      {order.createdAt.substring(0, 10)}
+                    </td>
+                    <td className="px-6 py-3 text-gray-300 text-sm">₹{order.totalPrice}</td>
 
-                        {!order.isDelivered && !isCancelled && (
-                          <>
-                            {showShip && (
-                              <button onClick={() => updateStatus(order._id, 'Shipped')} disabled={updatingId === order._id} className="inline-flex items-center px-3 py-1.5 text-[12px] rounded bg-blue-500 text-white hover:bg-blue-400 disabled:opacity-60 transition">
-                                {updatingId === order._id ? 'Updating...' : 'Shipped'}
-                              </button>
-                            )}
+                    <td className="px-6 py-3 text-center">
+                      {order.paymentMethod === "COD" ? (
+                        <span className="px-3 py-1 rounded-full text-[11px] bg-gray-500/20 text-gray-100 border border-gray-500/50">COD</span>
+                      ) : order.isPaid ? (
+                        <span className="px-3 py-1 rounded-full text-[11px] bg-green-500/20 text-green-300 border border-green-600/50">Prepaid</span>
+                      ) : (
+                        <span className="px-3 py-1 rounded-full text-[11px] bg-red-500/20 text-red-300 border border-red-600/50">Pending</span>
+                      )}
+                    </td>
 
-                            {showOutForDelivery && (
-                              <button onClick={() => updateStatus(order._id, 'Out for Delivery')} disabled={updatingId === order._id} className="inline-flex items-center px-3 py-1.5 text-[12px] rounded bg-yellow-400 text-black hover:bg-yellow-300 disabled:opacity-60 transition">
-                                {updatingId === order._id ? 'Updating...' : 'Out for Delivery'}
-                              </button>
-                            )}
+                    <td className="px-6 py-3 text-center">
+                      {order.isDelivered ? <Check className="text-green-500 mx-auto" /> : <X className="text-red-500 mx-auto" />}
+                    </td>
 
-                            {showDelivered && (
-                              <button onClick={() => updateStatus(order._id, 'Delivered')} disabled={updatingId === order._id} className="inline-flex items-center px-3 py-1.5 text-[12px] rounded bg-green-500 text-white hover:bg-green-400 disabled:opacity-60 transition">
-                                {updatingId === order._id ? 'Updating...' : 'Delivered'}
-                              </button>
-                            )}
-                          </>
-                        )}
+                    <td className="px-6 py-3 text-center">
+                      {renderStatusBadge(statusText)}
+                    </td>
 
-                        <Link to={`/order/${order._id}`}>
-                          <button className="inline-flex items-center px-3 py-1.5 text-[12px] rounded bg-gray-700 text-gray-100 hover:bg-gray-600 transition">
-                            Details
-                          </button>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </section>
-      </div>
+                    <td className="px-6 py-3 space-x-2">
+                      {canCancel && (
+                        <button
+                          onClick={() => promptCancel(order._id)}
+                          disabled={cancellingId === order._id}
+                          className="px-3 py-1 text-[11px] bg-red-600 text-white rounded disabled:opacity-50"
+                        >
+                          {cancellingId === order._id ? "Cancelling..." : "Cancel"}
+                        </button>
+                      )}
 
-      {/* FILTER OVERLAY - unchanged */}
-      {filterOpen && (
-        <div
-          className="fixed inset-0 z-40 flex items-end md:items-start justify-center md:justify-end bg-black/40 backdrop-blur-sm"
-          onClick={() => setFilterOpen(false)}
-        >
-          <div
-            className="w-full max-w-md md:w-72 rounded-t-xl md:rounded-2xl bg-[#020617] border border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.9)] p-4 text-xs text-gray-200 relative m-4 md:m-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button type="button" onClick={() => setFilterOpen(false)} className="absolute top-3 right-3 text-gray-500 hover:text-yellow-400 transition">
-              <X size={16} />
-            </button>
+                      {showShip && (
+                        <button
+                          onClick={() => updateStatus(order._id, "Shipped")}
+                          disabled={updatingId === order._id}
+                          className="px-3 py-1 text-[11px] bg-blue-500 text-white rounded disabled:opacity-50"
+                        >
+                          {updatingId === order._id ? "Updating..." : "Shipped"}
+                        </button>
+                      )}
 
-            <div className="mb-4 mt-2">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Status</p>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { label: 'All', value: 'all' },
-                  { label: 'Processing', value: 'Processing' },
-                  { label: 'Shipped', value: 'Shipped' },
-                  { label: 'Out for Delivery', value: 'Out for Delivery' },
-                  { label: 'Delivered', value: 'Delivered' },
-                  { label: 'Cancelled', value: 'Cancelled' },
-                ].map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => setFilterStatus(opt.value)}
-                    className={`px-2.5 py-1.5 rounded-full border text-[10px] uppercase tracking-[0.16em] text-center ${filterStatus === opt.value ? 'border-yellow-500 bg-yellow-500/20 text-yellow-300' : 'border-white/10 text-gray-300 hover:border-yellow-500 hover:text-yellow-200'}`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+                      {showOut && (
+                        <button
+                          onClick={() => updateStatus(order._id, "Out for Delivery")}
+                          disabled={updatingId === order._id}
+                          className="px-3 py-1 text-[11px] bg-emerald-500 text-black rounded disabled:opacity-50"
+                        >
+                          {updatingId === order._id ? "Updating..." : "Out for Delivery"}
+                        </button>
+                      )}
 
-            <div className="mb-4">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">Payment</p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { label: 'All', value: 'all' },
-                  { label: 'COD', value: 'COD' },
-                  { label: 'Prepaid', value: 'Prepaid' },
-                  { label: 'Pending', value: 'Pending' },
-                ].map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => setFilterPayment(opt.value)}
-                    className={`px-2.5 py-1.5 rounded-full border text-[10px] uppercase tracking-[0.16em] ${filterPayment === opt.value ? 'border-yellow-500 bg-yellow-500/20 text-yellow-300' : 'border-white/10 text-gray-300 hover:border-yellow-500 hover:text-yellow-200'}`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+                      {showDelivered && (
+                        <button
+                          onClick={() => updateStatus(order._id, "Delivered")}
+                          disabled={updatingId === order._id}
+                          className="px-3 py-1 text-[11px] bg-green-500 text-white rounded disabled:opacity-50"
+                        >
+                          {updatingId === order._id ? "Updating..." : "Delivered"}
+                        </button>
+                      )}
 
-            <button type="button" onClick={() => { setFilterStatus('all'); setFilterPayment('all'); }} className="w-full text-[10px] uppercase tracking-[0.22em] text-gray-300 hover:text-yellow-400 mt-1">
-              Reset Filters
-            </button>
-          </div>
-        </div>
-      )}
+                      <Link to={`/order/${order._id}`}>
+                        <button className="px-4 py-1 mt-2 text-[11px] bg-gray-700 text-white rounded hover:bg-gray-600">
+                          Details
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
 
-      {/* toast */}
-      {toast && (
-        <div className="fixed right-6 bottom-6 z-50 md:right-6 md:bottom-6 left-0 md:left-auto md:translate-x-0">
-          <div className="mx-auto md:mx-0 inline-block px-4 py-2 rounded-lg bg-black/90 border border-white/10 text-sm text-gray-200 shadow-lg">
-            {toast}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+        {/* MOBILE VERSION */}
+        <div className="md:hidden space-y-4 mt-6">
+          {currentOrders.map((order) => {
+            const statusText =
+              !order.user || !order.user.name ? "Cancelled" : order.status || "Processing";
+
+            const canCancel =
+              statusText !== "Cancelled" &&
+              !order.isDelivered &&
+              !["Shipped", "Out for Delivery", "Delivered"].includes(statusText);
+
+            const showShip = statusText === "Processing";
+            const showOut = statusText === "Processing" || statusText === "Shipped";
+            const showDelivered =
+              ["Processing", "Shipped", "Out for Delivery"].includes(statusText);
+
+            const firstItem = order.orderItems?.[0];
+
+            return (
+              <div key={order._id} className="bg-[#0d0d0d] border border-white/10 rounded-2xl p-4 shadow-lg">
+                <div className="flex gap-3 items-start">
+                  <img
+                    src={firstItem?.image || "/images/placeholder.png"}
+                    className="w-20 h-20 object-contain rounded-md bg-black/40 p-2"
+                  />
+
+                  <div className="flex-1">
+                    <h3 className="font-bold text-sm text-gray-200">
+                      {firstItem?.name}
+                    </h3>
+
+                    <p className="text-xs text-gray-400">
+                      {order.user?.name || "Deleted User"}
+                    </p>
+
+                    <div className="mt-2">{renderStatusBadge(statusText)}</div>
+
+                    <div className="grid grid-cols-2 gap-2 mt-3 text-xs text-gray-300">
+                      <div><span className="text-gray-400">Date:</span> {order.createdAt.substring(0, 10)}</div>
+                      <div><span className="text-gray-400">Items:</span> {order.orderItems?.length}</div>
+                      <div><span className="text-gray-400">Payment:</span> {order.paymentMethod === "COD" ? "COD" : order.isPaid ? "Prepaid" : "Pending"}</div>
+                      <div><span className="text-gray-400">Delivered:</span> {order.isDelivered ? "Yes" : "No"}</div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {canCancel && (
+                        <button
+                          onClick={() => promptCancel(order._id)}
+                          disabled={cancellingId === order._id}
+                          className="px-3 py-1.5 bg-red-600 text-white text-[12px] rounded disabled:opacity-50"
+                        >
+                          {cancellingId === order._id ? "Cancelling..." : "Cancel"}
+                        </button>
+                      )}
+
+                      {showShip && (
+                        <button
+                          onClick={() => updateStatus(order._id, "Shipped")}
+                          disabled={updatingId === order._id}
+                          className="px-3 py-1.5 bg-blue-500 text-white text-[12px] rounded disabled:opacity-50"
+                        >
+                          {updatingId === order._id ? "Updating..." : "Shipped"}
+                        </button>
+                      )}
+
+                      {showOut && (
+                        <button
+                          onClick={() => updateStatus(order._id, "Out for Delivery")}
+                          disabled={updatingId === order._id}
+                          className="px-3 py-1.5 bg-emerald-500 text-black text-[12px] rounded disabled:opacity-50"
+                        >
+                          {updatingId === order._id ? "Updating..." : "Out for Delivery"}
+                        </button>
+                      )}
+
+                      {showDelivered && (
+                        <button
+                          onClick={() => updateStatus(order._id, "Delivered")}
+                          disabled={updatingId === order._id}
+                          className="px-3 py-1.5 bg-green-500 text-white text-[12px] rounded disabled:opacity-50"
+                        >
+                          {updatingId === order._id ? "Updating..." : "Delivered"}
+                        </button>
+                      )}
+
+                      <Link to={`/order/${order._id}`}>
+                        <button className="px-3 py-1.5 bg-gray-700 text-white text-[12px] rounded">Details</button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* PAGINATION */}
+        <div className="flex justify-center items-center gap-4 mt-10">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-40"
+          >
+            ← Previous
+          </button>
+
+          <span className="text-gray-300 text-sm">
+            Page {currentPage} / {Math.ceil(filteredOrders.length / ordersPerPage)}
+          </span>
+
+          <button
+            onClick={() =>
+              setCurrentPage((prev) =>
+                Math.min(prev + 1, Math.ceil(filteredOrders.length / ordersPerPage))
+              )
+            }
+            disabled={indexOfLastOrder >= filteredOrders.length}
+            className="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-40"
+          >
+            Next →
+          </button>
+        </div>
+
+      </div>
+      {/* CANCEL CONFIRM MODAL */}
+      {showConfirm && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+          <div className="bg-[#0b0b0b] p-6 rounded-2xl border border-white/10 w-[90%] max-w-md">
+            <h3 className="text-lg font-bold mb-2">Cancel Order</h3>
+            <p className="text-sm text-gray-300 mb-4">
+              Are you sure you want to cancel this order?
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="px-4 py-2 bg-[#111] text-gray-300 border border-white/10 rounded-md"
+              >
+                No
+              </button>
+
+              <button
+                onClick={() => cancelOrder(selectedCancelId)}
+                className="px-4 py-2 bg-red-600 text-white font-bold rounded-md"
+              >
+                Yes, Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ⭐ FILTER POPUP (Mobile Center Popup) */}
+      {filterOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4"
+          onClick={() => setFilterOpen(false)}
+        >
+          <div
+            className="bg-[#030712] w-full max-w-xs p-4 rounded-2xl border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-gray-200 text-sm font-semibold">Filters</h3>
+              <button onClick={() => setFilterOpen(false)}>
+                <X size={16} className="text-gray-400" />
+              </button>
+            </div>
+
+            {/* STATUS FILTER */}
+            <p className="uppercase text-xs text-gray-400 mb-1">Status</p>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {[
+                "all",
+                "Processing",
+                "Shipped",
+                "Out for Delivery",
+                "Delivered",
+                "Cancelled",
+              ].map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => setFilterStatus(opt)}
+                  className={`px-2 py-1 rounded border ${
+                    filterStatus === opt
+                      ? "border-emerald-500 text-emerald-400"
+                      : "border-white/20 text-gray-300"
+                  }`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+
+            {/* PAYMENT FILTER */}
+            <p className="uppercase text-xs text-gray-400 mb-1">Payment</p>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {["all", "COD", "Prepaid", "Pending"].map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => setFilterPayment(opt)}
+                  className={`px-2 py-1 rounded border ${
+                    filterPayment === opt
+                      ? "border-emerald-500 text-emerald-400"
+                      : "border-white/20 text-gray-300"
+                  }`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+
+            {/* USER STATUS FILTER */}
+            <p className="uppercase text-xs text-gray-400 mb-1">User Status</p>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {["all", "active", "deleted"].map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => setFilterUser(opt)}
+                  className={`px-2 py-1 rounded border ${
+                    filterUser === opt
+                      ? "border-emerald-500 text-emerald-400"
+                      : "border-white/20 text-gray-300"
+                  }`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+
+            {/* RESET FILTER */}
+            <button
+              onClick={() => {
+                setFilterStatus("all");
+                setFilterPayment("all");
+                setFilterUser("all");
+              }}
+              className="text-emerald-500 text-xs"
+            >
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* TOAST */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 bg-black/90 border border-white/10 text-white px-4 py-2 rounded-lg">
+          {toast}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default OrderListScreen;

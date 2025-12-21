@@ -1,42 +1,30 @@
-const path = require('path');
-const express = require('express');
-const multer = require('multer');
+const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-// storage configuration
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/'); // Images will be saved in an 'uploads' folder
-  },
-  filename(req, file, cb) {
-    // Rename file to: fieldname-date.extension (e.g., image-12345678.jpg)
-    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Storage
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "NutryHealth-products",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
   },
 });
 
-// Check file type (only images allowed)
-function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png/;
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = filetypes.test(file.mimetype);
+const upload = multer({ storage });
 
-  if (extname && mimetype) {
-    return cb(null, true);
-  } else {
-    cb('Images only!');
-  }
-}
-
-const upload = multer({
-  storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
-});
-
-// The Route
-router.post('/', upload.single('image'), (req, res) => {
-  res.send(`/${req.file.path.replace(/\\/g, "/")}`); // Return the path
+// Route
+router.post("/", upload.single("image"), (req, res) => {
+  res.json(req.file.path); // ✅ Cloudinary URL
 });
 
 module.exports = router;

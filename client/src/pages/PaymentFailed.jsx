@@ -19,7 +19,7 @@ const PaymentFailed = () => {
       <div className="flex gap-4 mt-8">
         <Link
           to="/payment"
-          className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-lg shadow"
+          className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow"
         >
           Try Again
         </Link>

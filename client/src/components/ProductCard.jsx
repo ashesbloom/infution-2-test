@@ -6,17 +6,19 @@ import { useCart } from '../context/CartContext';
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();        // ✅ only addToCart, no openCart
 
+  // Guard against null/undefined product
+  if (!product) return null;
+
   const handleAddToCart = () => {
-    if (!product) return;
     addToCart(product, 1);               // ✅ just updates cart state
     // ❌ no openCart()
     // ❌ no navigate('/cart')
   };
 
-  const maxQty = Math.min(product.countInStock, 10);
+  const maxQty = Math.min(product.countInStock || 0, 10);
 
   return (
-    <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-yellow-400 transition-all duration-300 group">
+    <div className="bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-[#06a34f] transition-all duration-300 group">
       <Link to={`/product/${product._id}`}>
         <div className="relative overflow-hidden">
           {/* Product Image */}
@@ -33,13 +35,13 @@ const ProductCard = ({ product }) => {
 
       <div className="p-6">
         {/* Category Tag */}
-        <span className="text-yellow-400 text-xs font-bold tracking-widest uppercase mb-2 block">
+        <span className="text-[#06a34f] text-xs font-bold tracking-widest uppercase mb-2 block">
           {product.category || 'Supplement'}
         </span>
 
         {/* Product Name */}
         <Link to={`/product/${product._id}`}>
-          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">
+          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#06a34f] transition-colors">
             {product.name}
           </h3>
         </Link>
@@ -67,7 +69,7 @@ const ProductCard = ({ product }) => {
 
             <button
               onClick={handleAddToCart}
-              className="bg-yellow-400 p-3 rounded-lg text-black hover:bg-yellow-300 transition-colors shadow-lg shadow-yellow-400/20"
+              className="bg-[#06a34f] p-3 rounded-lg text-white hover:bg-[#058a42] transition-colors shadow-lg shadow-[#06a34f]/20"
             >
               <ShoppingCart size={20} />
             </button>

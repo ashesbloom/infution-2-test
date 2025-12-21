@@ -63,7 +63,7 @@ router.post(
       images: allImages,
 
       // default brand + description so mongoose "required" doesn’t fail
-      brand: (brand && brand.trim()) || 'Infuse',
+      brand: (brand && brand.trim()) || 'Nutry Health',
       category,
       countInStock: Number(countInStock),
       numReviews: 0,

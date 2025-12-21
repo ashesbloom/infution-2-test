@@ -8,11 +8,11 @@ export default {
     extend: {
       colors: {
         brand: {
-          primary: "#FFD700",   // Gold (Buttons / Highlights)
-          secondary: "#000000", // Black (Navbar / Footer)
-          accent: "#FFFFFF",    // White (Text)
-          bg: "#F3F4F6",        // Light Gray (Page Background)
-          text: "#1F2937",      // Dark Gray (Body Text)
+          primary: "#06a34f",   // Green (Buttons / Highlights)
+          secondary: "#3a3436", // Charcoal (Navbar / Footer)
+          accent: "#f0fdfc",    // Mint (Light Background)
+          bg: "#f0fdfc",        // Mint (Page Background)
+          text: "#3a3436",      // Charcoal (Body Text)
           danger: "#EF4444",    // Red (Error / Out of Stock)
         }
       },

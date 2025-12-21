@@ -101,7 +101,7 @@ useEffect(() => {
           </Link>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold mb-6 tracking-tight text-yellow-400">
+        <h1 className="text-2xl sm:text-3xl font-extrabold mb-6 tracking-tight text-emerald-500">
           Users
         </h1>
 
@@ -171,7 +171,7 @@ useEffect(() => {
                       <p className="text-xs text-gray-300 mt-1 truncate">{u.email}</p>
 
                       <div className="mt-2 flex items-center gap-2 text-xs text-gray-400">
-                        <span className="font-mono text-[12px] text-yellow-400 break-all">{shortId(u._id)}</span>
+                        <span className="font-mono text-[12px] text-emerald-500 break-all">{shortId(u._id)}</span>
                         <button
                           onClick={() => copyToClipboard(u._id, u._id)}
                           className="p-1 rounded-md hover:bg-zinc-900 transition"
@@ -213,8 +213,8 @@ useEffect(() => {
       {/* Delete Confirmation Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-[#0b1220] border border-white/10 rounded-xl shadow-[0_0_25px_rgba(245,176,20,0.4)] w-80 max-w-[90%] p-6 text-center">
-            <h2 className="text-xl font-bold text-yellow-400 mb-2">Confirm Delete</h2>
+          <div className="bg-[#0b1220] border border-white/10 rounded-xl shadow-[0_0_25px_rgba(6,163,79,0.4)] w-80 max-w-[90%] p-6 text-center">
+            <h2 className="text-xl font-bold text-emerald-500 mb-2">Confirm Delete</h2>
             <p className="text-gray-300 text-sm mb-6">Are you sure you want to delete this user?</p>
 
             <div className="flex justify-center gap-4">

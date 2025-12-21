@@ -6,14 +6,14 @@ const { protect, admin } = require('../middleware/authMiddleware');
 const transporter = require('../utils/emailTransporter');
 
 // change sender display name here
-const EMAIL_FROM = `"Infused Nutrition" <${process.env.EMAIL_USER}>`;
+const EMAIL_FROM = `"Nutry Health" <${process.env.EMAIL_USER}>`;
 
 // ---------- EMAIL HELPERS ----------
 
 const sendLoginAlert = async (email, name) => {
   const text = `Hello ${name},
 
-We detected a new login to your Infused Nutrition account.
+We detected a new login to your Nutry Health account.
 If this was not you, please change your password immediately.
 `;
 
@@ -21,9 +21,9 @@ If this was not you, please change your password immediately.
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
     <h2 style="color:#eab308;">New Login Detected</h2>
     <p>Hello ${name},</p>
-    <p>We detected a new login to your Infused Nutrition account just now.</p>
+    <p>We detected a new login to your Nutry Health account just now.</p>
     <p>If this was not you, please reset your password immediately.</p>
-    <p style="font-size:12px; color:#666;">– Infused Nutrition Security Team</p>
+    <p style="font-size:12px; color:#666;">– Nutry Health Security Team</p>
   </div>
   `;
 
@@ -31,7 +31,7 @@ If this was not you, please change your password immediately.
     await transporter.sendMail({
       from: EMAIL_FROM,
       to: email,
-      subject: 'New Login Detected - Infused Nutrition',
+      subject: 'New Login Detected - Nutry Health',
       text,
       html,
     });
@@ -45,15 +45,15 @@ If this was not you, please change your password immediately.
 const sendWelcomeEmail = async (email, name) => {
   const text = `Hello ${name},
 
-Welcome to Infused Nutrition! Your account has been created successfully.
+Welcome to Nutry Health! Your account has been created successfully.
 `;
 
   const html = `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-    <h2 style="color:#eab308;">Welcome to Infused Nutrition, ${name}! 🎉</h2>
+    <h2 style="color:#eab308;">Welcome to Nutry Health, ${name}! 🎉</h2>
     <p>We're excited to have you on board.</p>
     <p>You can now log in and start exploring our products.</p>
-    <p style="font-size:12px; color:#666;">– Infused Nutrition Supplements Store</p>
+    <p style="font-size:12px; color:#666;">– Nutry Health Supplements Store</p>
   </div>
   `;
 
@@ -61,7 +61,7 @@ Welcome to Infused Nutrition! Your account has been created successfully.
     await transporter.sendMail({
       from: EMAIL_FROM,
       to: email,
-      subject: 'Welcome to Infused!',
+      subject: 'Welcome to Nutry Health!',
       text,
       html,
     });
@@ -76,7 +76,7 @@ Welcome to Infused Nutrition! Your account has been created successfully.
 const sendPasswordResetEmail = async (email, name) => {
   const text = `Hello ${name},
 
-This is a confirmation that your Infused Nutrition account password has just been changed.
+This is a confirmation that your Nutry Health account password has just been changed.
 If you did not request this change, please contact support immediately.
 `;
 
@@ -84,9 +84,9 @@ If you did not request this change, please contact support immediately.
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
     <h2 style="color:#eab308;">Your Password Was Changed</h2>
     <p>Hello ${name},</p>
-    <p>This is a confirmation that the password for your Infused Nutrition account has just been changed.</p>
+    <p>This is a confirmation that the password for your Nutry Health account has just been changed.</p>
     <p>If this was not you, please contact support immediately.</p>
-    <p style="font-size:12px; color:#666;">– Infused Nutrition Security Team</p>
+    <p style="font-size:12px; color:#666;">– Nutry Health Security Team</p>
   </div>
   `;
 
@@ -94,7 +94,7 @@ If you did not request this change, please contact support immediately.
     await transporter.sendMail({
       from: EMAIL_FROM,
       to: email,
-      subject: 'Your Infused password was changed',
+      subject: 'Your Nutry Health password was changed',
       text,
       html,
     });

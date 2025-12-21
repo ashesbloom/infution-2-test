@@ -1,132 +1,123 @@
 // server/routes/orderRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const Razorpay = require('razorpay');
-const nodemailer = require('nodemailer');
+const transporter = require('../utils/brevoTransporter');
+
 
 const Order = require('../models/Order');
 const User = require('../models/User');
-const Product = require('../models/Product'); // Import Product model
+const Product = require('../models/Product');
 const { protect, admin } = require('../middleware/authMiddleware');
 
-// ---------- EMAIL SETUP (GMAIL) ----------
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// ------------------------------------------------
+// EMAIL SETUP (BREVO SMTP – PRODUCTION SAFE)
+// ------------------------------------------------
 
-transporter.verify((err) => {
-  if (err) console.log('❌ Order email error:', err.message);
-  else console.log('✅ Order email service ready');
-});
 
-const EMAIL_FROM = `"Infused Nutrition" <${process.env.EMAIL_USER}>`;
+// // Verify only in development (avoid delays on Render)
+// if (process.env.NODE_ENV !== 'production') {
+//   transporter.verify((err) => {
+//     if (err) console.log('❌ Order email error:', err.message);
+//     else console.log('✅ Brevo email service ready');
+//   });
+// }
 
-/**
- * sendOrderMail(user, order, label)
- * label can be:
- *   '' (default) -> order confirmation (used at order create)
- *   'COD' or 'RAZORPAY' -> used in create/pay flows
- *   'SHIPPED' -> admin marked as Shipped
- *   'OUT_FOR_DELIVERY' -> admin marked Out for Delivery
- *   'DELIVERED' -> admin marked Delivered
- */
+const EMAIL_FROM = `"Nutry Health" <no-reply@nutryhealth.com>`;
+
+// ------------------------------------------------
+// EMAIL HELPER (NON-BLOCKING)
+// ------------------------------------------------
 const sendOrderMail = async (user, order, label = '') => {
-  if (!user || !order) return;
-
-  const itemsRows = order.orderItems
-    .map(
-      (item) => `
-        <tr>
-          <td style="padding: 8px 0;">${item.name}</td>
-          <td style="padding: 8px 0; text-align:center;">${item.qty}</td>
-          <td style="padding: 8px 0; text-align:right;">₹${item.price}</td>
-        </tr>
-      `
-    )
-    .join('');
-
-  // Basic plain-text fallback (kept minimal)
-  let text = `Hello ${user.name},\n\nOrder ID: ${order._id}\nTotal Amount: ₹${order.totalPrice}\nPayment Method: ${order.paymentMethod}\nStatus: ${order.status || ''}\n`;
-
-  // Compose subject & preface depending on label/status
-  let subject = `Your Order is Confirmed – ${order._id}`;
-  let prefaceHtml = `<p>Your order has been placed successfully.</p>`;
-
-  if (label === 'COD') {
-    subject = `Your Order is Confirmed (COD) – ${order._id}`;
-    prefaceHtml = `<p>Your Cash-on-Delivery order has been received.</p>`;
-    text = `Hello ${user.name},\n\nYour Cash-on-Delivery order has been received.\n\nOrder ID: ${order._id}\nTotal Amount: ₹${order.totalPrice}\nPayment Method: ${order.paymentMethod}\n`;
-  } else if (label === 'RAZORPAY') {
-    subject = `Payment Received – ${order._id}`;
-    prefaceHtml = `<p>Thank you — we have received your payment.</p>`;
-    text = `Hello ${user.name},\n\nPayment received for your order.\n\nOrder ID: ${order._id}\nTotal Amount: ₹${order.totalPrice}\n`;
-  } else if (label === 'SHIPPED') {
-    subject = `Your Order Has Shipped – ${order._id}`;
-    prefaceHtml = `<p>Good news — your order has been shipped! 🚚</p>`;
-    text = `Hello ${user.name},\n\nYour order has been shipped.\n\nOrder ID: ${order._id}\nStatus: ${order.status}\nTotal Amount: ₹${order.totalPrice}\n`;
-  } else if (label === 'OUT_FOR_DELIVERY') {
-    subject = `Out for Delivery – ${order._id}`;
-    prefaceHtml = `<p>Your order is out for delivery and will reach you soon. 📦</p>`;
-    text = `Hello ${user.name},\n\nYour order is out for delivery.\n\nOrder ID: ${order._id}\nStatus: ${order.status}\nTotal Amount: ₹${order.totalPrice}\n`;
-  } else if (label === 'DELIVERED') {
-    subject = `Order Delivered – ${order._id}`;
-    prefaceHtml = `<p>We hope you enjoy your purchase — your order has been delivered. ✅</p>`;
-    text = `Hello ${user.name},\n\nYour order has been delivered.\n\nOrder ID: ${order._id}\nTotal Amount: ₹${order.totalPrice}\n`;
-  }
-
-  const html = `
-  <div style="font-family: Arial, sans-serif; color: #111; max-width: 600px; margin: 0 auto;">
-    <h2 style="color:#eab308;">${prefaceHtml.replace(/<\/?p>/g, '')}</h2>
-
-    <div style="margin-top: 8px; padding: 12px 16px; background:#f4f4f5; border-radius:8px;">
-      <p><strong>Order ID:</strong> ${order._id}</p>
-      <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
-      <p><strong>Total Amount:</strong> ₹${order.totalPrice}</p>
-      <p><strong>Status:</strong> ${order.status || ''}</p>
-    </div>
-
-    <h3 style="margin-top:16px;">Shipping Details</h3>
-    <p>
-      ${order.shippingAddress?.fullName || ''}<br/>
-      ${order.shippingAddress?.address || ''}<br/>
-      ${order.shippingAddress?.city || ''}, ${order.shippingAddress?.state || ''} - ${order.shippingAddress?.postalCode || ''}<br/>
-      Phone: ${order.shippingAddress?.phone || ''}
-    </p>
-
-    <h3 style="margin-top:16px;">Order Items</h3>
-    <table style="width:100%; border-collapse:collapse; margin-top:8px;">
-      <thead>
-        <tr style="border-bottom:1px solid #ddd;">
-          <th style="text-align:left; padding-bottom:8px;">Product</th>
-          <th style="text-align:center; padding-bottom:8px;">Qty</th>
-          <th style="text-align:right; padding-bottom:8px;">Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${itemsRows}
-      </tbody>
-    </table>
-
-    <p style="margin-top:16px;">We appreciate your purchase 🙌</p>
-    <p style="font-size:12px; color:#666;">– Infused Nutrition Pvt ltd Store</p>
-  </div>
-  `;
-
   try {
+    if (!user || !order) return;
+
+    const itemsRows = order.orderItems
+      .map(
+        (item) => `
+          <tr>
+            <td style="padding:8px 0;">${item.name}</td>
+            <td style="padding:8px 0; text-align:center;">${item.qty}</td>
+            <td style="padding:8px 0; text-align:right;">₹${item.price}</td>
+          </tr>
+        `
+      )
+      .join('');
+
+    let subject = `Order Update – ${order._id}`;
+
+if (label === 'COD')
+  subject = `Order Placed (Cash on Delivery) – ${order._id}`;
+
+if (label === 'RAZORPAY')
+  subject = `Payment Successful – Order ${order._id}`;
+
+if (label === 'SHIPPED')
+  subject = `Your Order Has Been Shipped – ${order._id}`;
+
+if (label === 'OUT_FOR_DELIVERY')
+  subject = `Out for Delivery – Order ${order._id}`;
+
+if (label === 'DELIVERED')
+  subject = `Order Delivered Successfully – ${order._id}`;
+
+if (label === 'CANCELLED')
+  subject = `Order Cancelled – ${order._id}`;
+
+let message = 'Your order has been placed successfully.';
+
+if (label === 'COD')
+  message = 'Your Cash-on-Delivery order has been received.';
+
+if (label === 'RAZORPAY')
+  message = 'Payment received successfully.';
+
+if (label === 'SHIPPED')
+  message = 'Your order has been shipped.';
+
+if (label === 'OUT_FOR_DELIVERY')
+  message = 'Your order is out for delivery.';
+
+if (label === 'DELIVERED')
+  message = 'Your order has been delivered.';
+
+if (label === 'CANCELLED')
+  message = 'Your order has been cancelled.';
+
+
+    const html = `
+      <div style="font-family:Arial; max-width:600px; margin:auto;">
+        <h2>${message}</h2>
+
+        <p><strong>Order ID:</strong> ${order._id}</p>
+        <p><strong>Total Amount:</strong> ₹${order.totalPrice}</p>
+        <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+        <p><strong>Status:</strong> ${order.status}</p>
+
+        <h3>Shipping Details</h3>
+        <p>
+          ${order.shippingAddress?.fullName}<br/>
+          ${order.shippingAddress?.address}<br/>
+          ${order.shippingAddress?.city}, ${order.shippingAddress?.state} - ${order.shippingAddress?.postalCode}
+        </p>
+
+        <h3>Order Items</h3>
+        <table width="100%">${itemsRows}</table>
+
+        <p style="color:#666;">– Nutry Health Pvt Ltd</p>
+      </div>
+    `;
+
     await transporter.sendMail({
       from: EMAIL_FROM,
       to: user.email,
       subject,
-      text,
       html,
     });
   } catch (err) {
-    console.error(`❌ Email error:`, err.message);
+    console.log('📧 Email skipped:', err.message);
   }
 };
 
@@ -152,6 +143,28 @@ router.post(
       throw new Error('No order items');
     }
 
+    // Validate that all order items have a product ID
+    for (const item of orderItems) {
+      if (!item.product) {
+        res.status(400);
+        throw new Error(`Missing product ID for item: ${item.name || 'Unknown'}`);
+      }
+    }
+
+    const outOfStockItems = [];
+
+    for (const item of orderItems) {
+      const product = await Product.findById(item.product);
+      if (!product || product.countInStock < item.qty) {
+        outOfStockItems.push(item.name);
+      }
+    }
+
+    if (outOfStockItems.length > 0) {
+      res.status(400);
+      throw new Error(`Out of stock: ${outOfStockItems.join(', ')}`);
+    }
+
     const order = new Order({
       orderItems,
       user: req.user._id,
@@ -165,21 +178,16 @@ router.post(
 
     const createdOrder = await order.save();
 
-    // Decrement stock for each product in the order
     for (const item of orderItems) {
-      const product = await Product.findById(item.product);
-      if (product) {
-        product.countInStock -= item.qty;
-        if (product.countInStock < 0) {
-          product.countInStock = 0; // Ensure stock doesn't go negative
-        }
-        await product.save();
-      }
+      await Product.updateOne(
+        { _id: item.product },
+        { $inc: { countInStock: -item.qty } }
+      );
     }
 
     if (paymentMethod?.toUpperCase() === 'COD') {
       const userData = await User.findById(req.user._id);
-      await sendOrderMail(userData, createdOrder, 'COD');
+      sendOrderMail(userData, createdOrder, 'COD');
     }
 
     res.status(201).json(createdOrder);
@@ -187,30 +195,31 @@ router.post(
 );
 
 // ------------------------------------------------
-// RAZORPAY ROUTES
+// RAZORPAY CONFIG
 // ------------------------------------------------
 router.get('/config/razorpay', protect, (req, res) => {
   res.json({ key: process.env.RAZORPAY_KEY_ID });
 });
 
+// ------------------------------------------------
+// CREATE RAZORPAY ORDER
+// ------------------------------------------------
 router.post(
   '/razorpay',
   protect,
   asyncHandler(async (req, res) => {
-    const { amount } = req.body;
-
     const instance = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    const order = await instance.orders.create({
-      amount: Math.round(amount * 100),
+    const razorOrder = await instance.orders.create({
+      amount: Math.round(req.body.amount * 100),
       currency: 'INR',
-      receipt: `receipt_${Date.now()}`,
+      receipt: `order_rcpt_${Date.now()}`,
     });
 
-    res.json(order);
+    res.json(razorOrder);
   })
 );
 
@@ -221,14 +230,7 @@ router.get(
   '/myorders',
   protect,
   asyncHandler(async (req, res) => {
-    const orders = await Order.find({
-      user: req.user._id,
-      $or: [
-        { paymentMethod: { $ne: 'Razorpay' } },
-        { paymentMethod: 'Razorpay', isPaid: true },
-      ],
-    });
-
+    const orders = await Order.find({ user: req.user._id });
     res.json(orders);
   })
 );
@@ -241,13 +243,7 @@ router.get(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const orders = await Order.find({
-      $or: [
-        { paymentMethod: { $ne: 'Razorpay' } },
-        { paymentMethod: 'Razorpay', isPaid: true },
-      ],
-    }).populate('user', 'id name');
-
+    const orders = await Order.find().populate('user', 'id name');
     res.json(orders);
   })
 );
@@ -274,7 +270,7 @@ router.get(
 );
 
 // ------------------------------------------------
-// MARK AS PAID
+// PAY ORDER (RAZORPAY)
 // ------------------------------------------------
 router.put(
   '/:id/pay',
@@ -289,31 +285,29 @@ router.put(
 
     order.isPaid = true;
     order.paidAt = Date.now();
-    order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.email_address,
-    };
+    order.paymentResult = req.body;
 
-    const updatedOrder = await order.save();
+    const updated = await order.save();
 
     const userData = await User.findById(order.user);
-    await sendOrderMail(userData, updatedOrder, 'RAZORPAY');
+    sendOrderMail(userData, updated, 'RAZORPAY');
 
-    res.json(updatedOrder);
+    res.json(updated);
   })
 );
 
 // ------------------------------------------------
-// ADMIN – UPDATE SHIPPING STATUS (non-blocking email)
+// UPDATE SHIPPING STATUS (ADMIN)
 // ------------------------------------------------
 router.put(
   '/:id/status',
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id).populate('user', 'email name');
+    const order = await Order.findById(req.params.id).populate(
+      'user',
+      'email name'
+    );
 
     if (!order) {
       res.status(404);
@@ -321,54 +315,34 @@ router.put(
     }
 
     const { status } = req.body;
-
     order.status = status;
 
     if (status === 'Delivered') {
       order.isDelivered = true;
       order.deliveredAt = Date.now();
-
-      if (order.paymentMethod === 'COD' && !order.isPaid) {
-        order.isPaid = true;
-        order.paidAt = Date.now();
-        order.paymentResult = {
-          id: 'COD_ON_DELIVERY',
-          status: 'COMPLETED',
-          update_time: new Date().toISOString(),
-          email_address: order.user?.email || '',
-        };
-      }
     }
+if (status === 'Shipped') {
+  order.shippedAt = Date.now();
+}
+
+if (status === 'Out for Delivery') {
+  order.outForDeliveryAt = Date.now();
+}
 
     const updatedOrder = await order.save();
+    sendOrderMail(
+  order.user,
+  updatedOrder,
+  status.toUpperCase().replace(/\s+/g, '_')
+);
 
-    // Send email in background (non-blocking) so API responds fast.
-    try {
-      // fetching user data from DB is quick; we await that.
-      const userData = await User.findById(order.user);
-
-      if (status === 'Shipped') {
-        // do NOT await — trigger and forget
-        sendOrderMail(userData, updatedOrder, 'SHIPPED');
-      } else if (
-        status === 'Out for Delivery' ||
-        status === 'Out-for-Delivery' ||
-        status === 'OutForDelivery'
-      ) {
-        sendOrderMail(userData, updatedOrder, 'OUT_FOR_DELIVERY');
-      } else if (status === 'Delivered') {
-        sendOrderMail(userData, updatedOrder, 'DELIVERED');
-      }
-    } catch (err) {
-      console.error('❌ Failed to trigger status email:', err.message || err);
-    }
 
     res.json(updatedOrder);
   })
 );
 
 // ------------------------------------------------
-// ⭐ NEW — CANCEL ORDER (USER OR ADMIN)
+// CANCEL ORDER
 // ------------------------------------------------
 router.put(
   '/:id/cancel',
@@ -381,29 +355,38 @@ router.put(
       throw new Error('Order not found');
     }
 
-    // Only owner or admin can cancel
-    if (order.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+    if (
+      order.user.toString() !== req.user._id.toString() &&
+      !req.user.isAdmin
+    ) {
       res.status(401);
       throw new Error('Not authorized to cancel this order');
     }
 
-    // Cannot cancel shipped/delivered
-    if (order.status === 'Shipped' || order.status === 'Out for Delivery' || order.status === 'Delivered') {
+    if (
+      order.status === 'Shipped' ||
+      order.status === 'Out for Delivery' ||
+      order.status === 'Delivered'
+    ) {
       res.status(400);
-      throw new Error('Order cannot be cancelled after it has been shipped');
+      throw new Error('Order cannot be cancelled after shipping.');
     }
 
-    if (order.isCancelled) {
-      res.status(400);
-      throw new Error('Order is already cancelled');
+    for (const item of order.orderItems) {
+      await Product.updateOne(
+        { _id: item.product },
+        { $inc: { countInStock: item.qty } }
+      );
     }
 
     order.isCancelled = true;
-    order.cancelledAt = Date.now();
     order.status = 'Cancelled';
-    order.cancelReason = req.body.reason || '';
+    order.cancelledAt = Date.now();
 
     const updated = await order.save();
+    const userData = await User.findById(order.user);
+sendOrderMail(userData, updated, 'CANCELLED');
+
     res.json(updated);
   })
 );

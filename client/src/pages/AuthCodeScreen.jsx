@@ -132,7 +132,7 @@ const AuthCodeScreen = () => {
         <button
           className={`px-4 py-2 rounded text-sm font-semibold ${
             tab === "generate"
-              ? "bg-yellow-400 text-black"
+              ? "bg-emerald-500 text-black"
               : "bg-gray-800 text-gray-200"
           }`}
           onClick={() => setTab("generate")}
@@ -142,7 +142,7 @@ const AuthCodeScreen = () => {
         <button
           className={`px-4 py-2 rounded text-sm font-semibold ${
             tab === "list"
-              ? "bg-yellow-400 text-black"
+              ? "bg-emerald-500 text-black"
               : "bg-gray-800 text-gray-200"
           }`}
           onClick={() => {
@@ -155,7 +155,7 @@ const AuthCodeScreen = () => {
         <button
           className={`px-4 py-2 rounded text-sm font-semibold ${
             tab === "verify"
-              ? "bg-yellow-400 text-black"
+              ? "bg-emerald-500 text-black"
               : "bg-gray-800 text-gray-200"
           }`}
           onClick={() => setTab("verify")}
@@ -205,7 +205,7 @@ const AuthCodeScreen = () => {
             <button
               type="submit"
               disabled={loadingGenerate}
-              className="px-4 py-2 rounded bg-yellow-400 text-black font-semibold text-sm hover:bg-yellow-300 disabled:opacity-60"
+              className="px-4 py-2 rounded bg-emerald-500 text-black font-semibold text-sm hover:bg-emerald-400 disabled:opacity-60"
             >
               {loadingGenerate ? "Generating…" : "Generate Codes"}
             </button>
@@ -311,7 +311,7 @@ const AuthCodeScreen = () => {
             <button
               type="submit"
               disabled={verifyLoading}
-              className="px-4 py-2 rounded bg-yellow-400 text-black font-semibold text-sm hover:bg-yellow-300 disabled:opacity-60"
+              className="px-4 py-2 rounded bg-emerald-500 text-black font-semibold text-sm hover:bg-emerald-400 disabled:opacity-60"
             >
               {verifyLoading ? "Verifying…" : "Verify"}
             </button>

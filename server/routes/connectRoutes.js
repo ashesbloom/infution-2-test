@@ -26,9 +26,9 @@ router.post("/", async (req, res) => {
     const adminMail = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
-      subject: subject ? `INFUSED Contact: ${subject}` : "New INFUSED Message",
+      subject: subject ? `Nutry Health Contact: ${subject}` : "New Nutry Health Message",
       text: `
-A new message was submitted on the INFUSED site:
+A new message was submitted on the Nutry Health site:
 
 Name: ${name || "Not provided"}
 Email: ${email}
@@ -39,7 +39,7 @@ Message:
 ${message || "No message provided"}
 
 -------------------------------------
-Sent automatically from INFUSED Website
+Sent automatically from Nutry Health Website
       `,
     };
 
@@ -47,7 +47,7 @@ Sent automatically from INFUSED Website
     const userMail = {
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Thanks for contacting INFUSED",
+      subject: "Thanks for contacting Nutry Health",
       text: `
 Hi ${name || ""},
 
@@ -59,7 +59,7 @@ Subject: ${subject || "No subject"}
 Message: ${message || "No message provided"}
 
 Regards,
-INFUSED Support Team
+Nutry Health Support Team
       `,
     };
 

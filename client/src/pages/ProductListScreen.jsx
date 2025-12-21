@@ -50,7 +50,7 @@ const ProductListScreen = () => {
   if (loading)
     return (
       <div className="min-h-screen w-full bg-black flex items-center justify-center px-4">
-        <div className="w-full max-w-xs rounded-2xl border border-gray-800 bg-gradient-to-b from-gray-900 to-black px-4 py-3 shadow-xl shadow-yellow-500/15">
+        <div className="w-full max-w-xs rounded-2xl border border-gray-800 bg-gradient-to-b from-gray-900 to-black px-4 py-3 shadow-xl shadow-emerald-500/15">
           <p className="text-xs sm:text-sm text-gray-300 animate-pulse tracking-wide text-center">
             Loading products...
           </p>
@@ -98,7 +98,7 @@ const ProductListScreen = () => {
           </div>
 
           <Link to="/admin/product/create" className="self-start sm:self-auto">
-            <button className="inline-flex items-center gap-2 rounded-full bg-[#f5b014] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-black shadow-[0_0_0_rgba(0,0,0,0)] transition-all hover:-translate-y-[1px] hover:bg-[#ffca3b] hover:shadow-[0_0_18px_rgba(245,176,20,0.7)]">
+            <button className="inline-flex items-center gap-2 rounded-full bg-[#06a34f] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white shadow-[0_0_0_rgba(0,0,0,0)] transition-all hover:-translate-y-[1px] hover:bg-[#058a42] hover:shadow-[0_0_18px_rgba(6,163,79,0.7)]">
               <Plus size={14} />
               Create Product
             </button>
@@ -116,7 +116,7 @@ const ProductListScreen = () => {
             </p>
           </div>
           <span className="ml-3 rounded-full border border-gray-700 bg-black/70 px-3 py-1 text-[10px] text-gray-300">
-            Total: <span className="text-[#f5b014]">{products.length}</span>
+            Total: <span className="text-[#06a34f]">{products.length}</span>
           </span>
         </div>
 
@@ -131,7 +131,7 @@ const ProductListScreen = () => {
               {products.map((product, idx) => (
                 <article
                   key={product._id}
-                  className="relative flex flex-col rounded-2xl border border-gray-800 bg-gradient-to-b from-gray-900/95 to-black/95 p-4 shadow-lg shadow-black/50 transition-transform duration-200 hover:-translate-y-1 hover:shadow-yellow-500/20"
+                  className="relative flex flex-col rounded-2xl border border-gray-800 bg-gradient-to-b from-gray-900/95 to-black/95 p-4 shadow-lg shadow-black/50 transition-transform duration-200 hover:-translate-y-1 hover:shadow-emerald-500/20"
                 >
                   {/* ID + Category */}
                   <div className="mb-2 flex items-center justify-between gap-2">
@@ -150,8 +150,8 @@ const ProductListScreen = () => {
                     </h2>
                     <p className="text-xs text-gray-400">
                       Price:{' '}
-                      <span className="font-semibold text-[#f5b014]">
-                        ${product.price}
+                      <span className="font-semibold text-[#06a34f]">
+                        ₹{product.price}
                       </span>
                     </p>
                   </div>
@@ -194,8 +194,8 @@ const ProductListScreen = () => {
       {/* Delete Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-          <div className="w-full max-w-xs rounded-2xl border border-yellow-500/40 bg-[#020617] p-5 text-center shadow-[0_0_25px_rgba(245,176,20,0.4)]">
-            <h2 className="mb-2 text-lg font-bold text-[#f5b014]">
+          <div className="w-full max-w-xs rounded-2xl border border-emerald-500/40 bg-[#020617] p-5 text-center shadow-[0_0_25px_rgba(6,163,79,0.4)]">
+            <h2 className="mb-2 text-lg font-bold text-[#06a34f]">
               Confirm Delete
             </h2>
             <p className="mb-5 text-[11px] text-gray-300">

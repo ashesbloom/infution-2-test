@@ -196,7 +196,7 @@ const ProfileScreen = () => {
               </label>
               <input
                 type="text"
-                className="w-full bg-[#111111] border border-zinc-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#f5b014]"
+                className="w-full bg-[#111111] border border-zinc-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#06a34f]"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -222,7 +222,7 @@ const ProfileScreen = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#f5b014] hover:bg-[#ffca3b] text-black font-black py-3 rounded-md text-xs uppercase tracking-[0.3em] disabled:opacity-60 transition shadow-[0_0_25px_rgba(245,176,20,0.6)]"
+            className="w-full bg-[#06a34f] hover:bg-[#058a42] text-white font-black py-3 rounded-md text-xs uppercase tracking-[0.3em] disabled:opacity-60 transition shadow-[0_0_25px_rgba(6,163,79,0.6)]"
           >
             {loading ? 'Updating...' : 'Update Profile'}
           </button>
@@ -236,7 +236,7 @@ const ProfileScreen = () => {
 
           <p className="mt-2 text-[11px] md:text-xs text-zinc-500 italic">
             Since you created your account on{' '}
-            <span className="text-yellow-400">{createdDateText}</span>
+            <span className="text-emerald-500">{createdDateText}</span>
           </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -265,12 +265,12 @@ const ProfileScreen = () => {
             </div>
 
             {/* PENDING */}
-            <div className="bg-[#0b0b0b] border border-yellow-500/40 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_22px_rgba(245,176,20,0.25)]">
+            <div className="bg-[#0b0b0b] border border-emerald-500/40 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_22px_rgba(6,163,79,0.25)]">
               <span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-zinc-400">
                 Pending
               </span>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-3xl md:text-4xl font-black text-[#f5b014]">
+                <span className="text-3xl md:text-4xl font-black text-[#06a34f]">
                   {loadingStats ? '—' : pendingCount}
                 </span>
               </div>
