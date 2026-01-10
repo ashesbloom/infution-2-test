@@ -209,10 +209,10 @@ export default function ProductsScreen() {
   const renderFilterContent = () => (
     <div className="space-y-6">
       {/* Categories */}
-      <div className="border-b border-white/10 pb-6">
+      <div className="border-b border-gray-200 pb-6">
         <button
           onClick={() => toggleSection("categories")}
-          className="w-full flex items-center justify-between text-white font-semibold mb-4"
+          className="w-full flex items-center justify-between text-gray-800 font-semibold mb-4"
         >
           <span className="text-sm uppercase tracking-wider">Categories</span>
           {expandedSections.categories ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -238,10 +238,10 @@ export default function ProductsScreen() {
                     </svg>
                   )}
                 </div>
-                <span className={`text-sm ${selectedCategories.includes(cat) ? "text-[#06a34f]" : "text-white/70"}`}>
+                <span className={`text-sm ${selectedCategories.includes(cat) ? "text-[#06a34f]" : "text-gray-600"}`}>
                   {cat}
                 </span>
-                <span className="ml-auto text-xs text-white/30">
+                <span className="ml-auto text-xs text-gray-400">
                   ({products.filter((p) => p.category?.toLowerCase() === cat.toLowerCase()).length})
                 </span>
               </label>
@@ -251,10 +251,10 @@ export default function ProductsScreen() {
       </div>
 
       {/* Brands */}
-      <div className="border-b border-white/10 pb-6">
+      <div className="border-b border-gray-200 pb-6">
         <button
           onClick={() => toggleSection("brands")}
-          className="w-full flex items-center justify-between text-white font-semibold mb-4"
+          className="w-full flex items-center justify-between text-gray-800 font-semibold mb-4"
         >
           <span className="text-sm uppercase tracking-wider">Brands</span>
           {expandedSections.brands ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -280,10 +280,10 @@ export default function ProductsScreen() {
                     </svg>
                   )}
                 </div>
-                <span className={`text-sm ${selectedBrands.includes(brand) ? "text-[#06a34f]" : "text-white/70"}`}>
+                <span className={`text-sm ${selectedBrands.includes(brand) ? "text-[#06a34f]" : "text-gray-600"}`}>
                   {brand}
                 </span>
-                <span className="ml-auto text-xs text-white/30">
+                <span className="ml-auto text-xs text-gray-400">
                   ({products.filter((p) => p.brand === brand).length})
                 </span>
               </label>
@@ -293,10 +293,10 @@ export default function ProductsScreen() {
       </div>
 
       {/* Price Range */}
-      <div className="border-b border-white/10 pb-6">
+      <div className="border-b border-gray-200 pb-6">
         <button
           onClick={() => toggleSection("price")}
-          className="w-full flex items-center justify-between text-white font-semibold mb-4"
+          className="w-full flex items-center justify-between text-gray-800 font-semibold mb-4"
         >
           <span className="text-sm uppercase tracking-wider">Price Range</span>
           {expandedSections.price ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -305,23 +305,23 @@ export default function ProductsScreen() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="flex-1">
-                <label className="text-xs text-white/40 mb-1 block">Min</label>
+                <label className="text-xs text-gray-400 mb-1 block">Min</label>
                 <input
                   type="number"
                   value={priceRange[0]}
                   onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
-                  className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#06a34f]/50"
+                  className="w-full bg-gray-100 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 outline-none focus:border-[#06a34f]/50"
                   placeholder="₹0"
                 />
               </div>
-              <span className="text-white/30 mt-5">–</span>
+              <span className="text-gray-400 mt-5">–</span>
               <div className="flex-1">
-                <label className="text-xs text-white/40 mb-1 block">Max</label>
+                <label className="text-xs text-gray-400 mb-1 block">Max</label>
                 <input
                   type="number"
                   value={priceRange[1]}
                   onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                  className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#06a34f]/50"
+                  className="w-full bg-gray-100 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 outline-none focus:border-[#06a34f]/50"
                   placeholder="₹15000"
                 />
               </div>
@@ -334,7 +334,7 @@ export default function ProductsScreen() {
               onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
               className="w-full accent-[#06a34f] cursor-pointer"
             />
-            <div className="flex justify-between text-xs text-white/40">
+            <div className="flex justify-between text-xs text-gray-400">
               <span>₹{priceRange[0].toLocaleString()}</span>
               <span>₹{priceRange[1].toLocaleString()}</span>
             </div>
@@ -346,7 +346,7 @@ export default function ProductsScreen() {
       <div className="pb-4">
         <button
           onClick={() => toggleSection("availability")}
-          className="w-full flex items-center justify-between text-white font-semibold mb-4"
+          className="w-full flex items-center justify-between text-gray-800 font-semibold mb-4"
         >
           <span className="text-sm uppercase tracking-wider">Availability</span>
           {expandedSections.availability ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -367,7 +367,7 @@ export default function ProductsScreen() {
                 </svg>
               )}
             </div>
-            <span className={`text-sm ${inStockOnly ? "text-[#06a34f]" : "text-white/70"}`}>
+            <span className={`text-sm ${inStockOnly ? "text-[#06a34f]" : "text-gray-600"}`}>
               In Stock Only
             </span>
           </label>
@@ -378,7 +378,7 @@ export default function ProductsScreen() {
       {activeFilterCount > 0 && (
         <button
           onClick={resetFilters}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 text-sm font-medium hover:bg-white/10 hover:text-white transition-all"
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-100 hover:text-gray-800 transition-all"
         >
           <RotateCcw size={16} />
           Reset All Filters
@@ -388,15 +388,15 @@ export default function ProductsScreen() {
   );
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-black via-[#080808] to-black text-white">
+    <div className="min-h-screen w-full bg-gradient-to-b from-gray-50 via-white to-gray-50 text-gray-800">
       {/* Header Section */}
       <div className="w-full px-4 md:px-8 lg:px-12 pt-8 pb-6">
         <div className="max-w-7xl mx-auto">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-white/40 mb-4">
+          <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
             <Link to="/" className="hover:text-[#06a34f] transition-colors">Home</Link>
             <span>/</span>
-            <span className="text-white/70">Products</span>
+            <span className="text-gray-600">Products</span>
           </div>
           
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
@@ -404,7 +404,7 @@ export default function ProductsScreen() {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight">
                 All <span className="text-[#06a34f]">Products</span>
               </h1>
-              <p className="text-white/50 mt-2 text-sm md:text-base">
+              <p className="text-gray-500 mt-2 text-sm md:text-base">
                 Explore our premium collection of supplements
               </p>
             </div>
@@ -412,13 +412,13 @@ export default function ProductsScreen() {
             {/* Search Bar - Desktop */}
             <div className="hidden lg:flex items-center gap-4">
               <div className="relative">
-                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" />
+                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search products..."
-                  className="w-80 bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/30 outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all"
+                  className="w-80 bg-gray-100 border border-gray-200 rounded-xl pl-11 pr-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all"
                 />
               </div>
             </div>
@@ -430,19 +430,19 @@ export default function ProductsScreen() {
       <div className="lg:hidden px-4 pb-4">
         <div className="max-w-7xl mx-auto space-y-3">
           <div className="relative">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" />
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/30 outline-none focus:border-[#06a34f]/50 transition-all"
+              className="w-full bg-gray-100 border border-gray-200 rounded-xl pl-11 pr-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 outline-none focus:border-[#06a34f]/50 transition-all"
             />
           </div>
           <div className="flex gap-3">
             <button
               onClick={() => setShowMobileFilters(true)}
-              className="flex-1 flex items-center justify-center gap-2 py-3 bg-white/5 border border-white/10 rounded-xl text-white/70 text-sm font-medium"
+              className="flex-1 flex items-center justify-center gap-2 py-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-600 text-sm font-medium"
             >
               <SlidersHorizontal size={16} />
               Filters
@@ -455,10 +455,10 @@ export default function ProductsScreen() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/70 outline-none appearance-none cursor-pointer"
+              className="flex-1 bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-600 outline-none appearance-none cursor-pointer"
             >
               {SORT_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value} className="bg-black">
+                <option key={opt.value} value={opt.value} className="bg-white">
                   {opt.label}
                 </option>
               ))}
@@ -473,9 +473,9 @@ export default function ProductsScreen() {
           <div className="flex gap-8">
             {/* Desktop Sidebar - visible on screens >= 1024px */}
             <aside className="hidden lg:flex w-72 flex-shrink-0">
-              <div className="w-full sticky top-24 bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-white/10 rounded-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.5)] h-fit">
+              <div className="w-full sticky top-24 bg-white border border-gray-200 rounded-2xl p-6 shadow-lg h-fit">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
                     <SlidersHorizontal size={18} className="text-[#06a34f]" />
                     Filters
                   </h2>
@@ -492,21 +492,21 @@ export default function ProductsScreen() {
             {/* Products Grid */}
             <div className="flex-1">
               {/* Toolbar */}
-              <div className="hidden lg:flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-                <p className="text-white/50 text-sm">
-                  Showing <span className="text-white font-semibold">{filteredProducts.length}</span> of{" "}
-                  <span className="text-white font-semibold">{products.length}</span> products
+              <div className="hidden lg:flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+                <p className="text-gray-500 text-sm">
+                  Showing <span className="text-gray-800 font-semibold">{filteredProducts.length}</span> of{" "}
+                  <span className="text-gray-800 font-semibold">{products.length}</span> products
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
-                    <ArrowUpDown size={16} className="text-white/40" />
+                    <ArrowUpDown size={16} className="text-gray-400" />
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="bg-transparent border border-white/10 rounded-lg px-3 py-2 text-sm text-white/70 outline-none cursor-pointer hover:border-[#06a34f]/30 transition-colors"
+                      className="bg-transparent border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-600 outline-none cursor-pointer hover:border-[#06a34f]/30 transition-colors"
                     >
                       {SORT_OPTIONS.map((opt) => (
-                        <option key={opt.value} value={opt.value} className="bg-black">
+                        <option key={opt.value} value={opt.value} className="bg-white">
                           {opt.label}
                         </option>
                       ))}
@@ -545,13 +545,13 @@ export default function ProductsScreen() {
               {loading ? (
                 <div className="flex flex-col items-center justify-center py-20">
                   <div className="w-12 h-12 border-2 border-[#06a34f]/30 border-t-[#06a34f] rounded-full animate-spin" />
-                  <p className="text-white/50 mt-4">Loading products...</p>
+                  <p className="text-gray-500 mt-4">Loading products...</p>
                 </div>
               ) : filteredProducts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center">
-                  <Package size={48} className="text-white/20 mb-4" />
-                  <h3 className="text-xl font-bold text-white mb-2">No products found</h3>
-                  <p className="text-white/50 text-sm mb-6 max-w-md">
+                  <Package size={48} className="text-gray-300 mb-4" />
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">No products found</h3>
+                  <p className="text-gray-500 text-sm mb-6 max-w-md">
                     Try adjusting your filters or search terms to find what you're looking for.
                   </p>
                   <button
@@ -568,24 +568,24 @@ export default function ProductsScreen() {
                     <Link
                       key={product._id}
                       to={`/product/${product._id}`}
-                      className="group relative bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden hover:border-[#06a34f]/40 hover:shadow-[0_0_30px_rgba(6,163,79,0.15)] transition-all duration-300"
+                      className="group relative bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-[#06a34f]/40 hover:shadow-[0_0_30px_rgba(6,163,79,0.15)] transition-all duration-300"
                     >
                       {/* Category Badge */}
                       {product.category && (
-                        <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-black/80 text-[#06a34f] text-[10px] font-bold uppercase rounded-md border border-[#06a34f]/30 backdrop-blur-sm">
+                        <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-white/95 text-[#06a34f] text-[10px] font-bold uppercase rounded-md border border-[#06a34f]/30 backdrop-blur-sm">
                           {product.category}
                         </span>
                       )}
                       
                       {/* Out of Stock Badge */}
                       {product.countInStock === 0 && (
-                        <div className="absolute top-3 right-3 z-20 px-3 py-1.5 bg-red-600 text-white text-[10px] font-bold uppercase rounded-lg shadow-[0_0_15px_rgba(220,38,38,0.5)] border border-red-400/50">
+                        <div className="absolute top-3 right-3 z-20 px-3 py-1.5 bg-red-600 text-gray-800 text-[10px] font-bold uppercase rounded-lg shadow-[0_0_15px_rgba(220,38,38,0.5)] border border-red-400/50">
                           Out of Stock
                         </div>
                       )}
 
                       {/* Image */}
-                      <div className="relative h-40 md:h-48 bg-white/5 flex items-center justify-center p-4 overflow-hidden">
+                      <div className="relative h-40 md:h-48 bg-gray-100 flex items-center justify-center p-4 overflow-hidden">
                         <img
                           src={product.image}
                           alt={product.name}
@@ -597,13 +597,13 @@ export default function ProductsScreen() {
                       <div className="p-4 space-y-2">
                         {/* Brand */}
                         {product.brand && (
-                          <p className="text-[10px] uppercase tracking-wider text-white/40 font-medium">
+                          <p className="text-[10px] uppercase tracking-wider text-gray-400 font-medium">
                             {product.brand}
                           </p>
                         )}
                         
                         {/* Name */}
-                        <h3 className="text-sm font-semibold text-white line-clamp-2 group-hover:text-[#06a34f] transition-colors">
+                        <h3 className="text-sm font-semibold text-gray-800 line-clamp-2 group-hover:text-[#06a34f] transition-colors">
                           {product.name}
                         </h3>
 
@@ -613,7 +613,7 @@ export default function ProductsScreen() {
                             ₹{product.price?.toLocaleString()}
                           </p>
                           {product.weight && (
-                            <span className="text-xs text-white/40">{product.weight}</span>
+                            <span className="text-xs text-gray-400">{product.weight}</span>
                           )}
                         </div>
                       </div>
@@ -633,7 +633,7 @@ export default function ProductsScreen() {
       >
         <Filter size={22} />
         {activeFilterCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-black text-[#06a34f] text-xs font-bold rounded-full flex items-center justify-center border border-[#06a34f]">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-white text-[#06a34f] text-xs font-bold rounded-full flex items-center justify-center border border-[#06a34f]">
             {activeFilterCount}
           </span>
         )}
@@ -643,20 +643,20 @@ export default function ProductsScreen() {
       {showMobileFilters && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-gray-50 backdrop-blur-sm lg:hidden"
             onClick={() => setShowMobileFilters(false)}
           />
-          <div className="fixed right-0 top-0 z-50 h-full w-full max-w-sm bg-gradient-to-b from-[#111] to-[#080808] border-l border-white/10 transform transition-transform duration-300 lg:hidden">
+          <div className="fixed right-0 top-0 z-50 h-full w-full max-w-sm bg-white border-l border-gray-200 transform transition-transform duration-300 lg:hidden">
             <div className="h-full flex flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between p-5 border-b border-white/10">
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <div className="flex items-center justify-between p-5 border-b border-gray-200">
+                <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
                   <SlidersHorizontal size={18} className="text-[#06a34f]" />
                   Filters
                 </h2>
                 <button
                   onClick={() => setShowMobileFilters(false)}
-                  className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+                  className="p-2 rounded-full bg-gray-100 hover:bg-gray-100 transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -668,11 +668,11 @@ export default function ProductsScreen() {
               </div>
 
               {/* Footer */}
-              <div className="p-5 border-t border-white/10 bg-black/50">
+              <div className="p-5 border-t border-gray-200 bg-gray-100">
                 <div className="flex gap-3">
                   <button
                     onClick={resetFilters}
-                    className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 text-sm font-medium"
+                    className="flex-1 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-600 text-sm font-medium"
                   >
                     Reset
                   </button>

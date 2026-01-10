@@ -22,7 +22,7 @@ app.use(
 
 // ================== LOGGER ==================
 app.use((req, res, next) => {
-  console.log(`➡️ ${req.method} ${req.originalUrl}`);
+  console.log(` ${req.method} ${req.originalUrl}`);
   next();
 });
 
@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 
 // ================== ERROR HANDLER ==================
 app.use((err, req, res, next) => {
-  console.error('❌ ERROR:', err.message);
+  console.error(' ERROR:', err.message);
   res.status(500).json({
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
@@ -67,12 +67,12 @@ const PORT = process.env.PORT || 5000;
 (async () => {
   try {
     await connectDB();
-    console.log('✅ MongoDB Connected');
+    console.log(' MongoDB Connected');
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(` Server running on port ${PORT}`);
     });
   } catch (err) {
-    console.error('❌ DB Error:', err.message);
+    console.error(' DB Error:', err.message);
     process.exit(1);
   }
 })();

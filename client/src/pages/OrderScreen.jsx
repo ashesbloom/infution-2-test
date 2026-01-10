@@ -73,14 +73,14 @@ const OrderScreen = () => {
   // =========================
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#050816] text-emerald-500">
+      <div className="min-h-screen flex items-center justify-center bg-white text-emerald-500">
         <h2 className="text-lg font-semibold tracking-wide">Loading your order...</h2>
       </div>
     );
 
   if (error)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#050816] px-4">
+      <div className="min-h-screen flex items-center justify-center bg-white px-4">
         <h2 className="text-center text-red-400 font-semibold">{error}</h2>
       </div>
     );
@@ -140,18 +140,18 @@ const OrderScreen = () => {
     : expectedRange;
 
   const boxColorClass = isCancelled
-    ? "border-red-500/40 bg-red-900/30"
+    ? "border-red-500/40 bg-red-50"
     : order.isDelivered
-    ? "border-emerald-500/30 bg-emerald-900/30"
-    : "border-emerald-500/30 bg-emerald-900/10";
+    ? "border-emerald-500/30 bg-emerald-50"
+    : "border-emerald-500/30 bg-emerald-50";
 
   // -------------------------
   // Components
   // -------------------------
 
   const ShippingCard = () => (
-    <div className="bg-[#0b1020] border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
-      <h2 className="text-xl font-bold text-emerald-500 border-b border-gray-700 pb-3 mb-3">
+    <div className="bg-gray-50 border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
+      <h2 className="text-xl font-bold text-emerald-500 border-b border-gray-300 pb-3 mb-3">
         Shipping To
       </h2>
       <div className="text-sm space-y-1">
@@ -168,24 +168,24 @@ const OrderScreen = () => {
   );
 
   const OrderItemsCard = () => (
-    <div className="bg-[#0b1020] border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
-      <h2 className="text-xl font-bold text-emerald-500 border-b border-gray-700 pb-3 mb-4">
+    <div className="bg-gray-50 border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
+      <h2 className="text-xl font-bold text-emerald-500 border-b border-gray-300 pb-3 mb-4">
         Order Items
       </h2>
       <div className="space-y-3">
         {order.orderItems.map((item) => (
           <div
             key={item.product}
-            className="flex items-center justify-between border-b border-gray-800 pb-2"
+            className="flex items-center justify-between border-b border-gray-200 pb-2"
           >
             <div className="flex gap-3">
               <img loading="lazy" src={item.image} className="w-12 h-12 rounded-lg" />
               <div>
                 <p className="font-medium">{item.name}</p>
-                <p className="text-gray-400 text-xs">Qty: {item.qty}</p>
+                <p className="text-gray-500 text-xs">Qty: {item.qty}</p>
               </div>
             </div>
-            <p className="text-emerald-400 font-semibold">
+            <p className="text-emerald-600 font-semibold">
               ₹{(item.qty * item.price).toFixed(2)}
             </p>
           </div>
@@ -195,13 +195,13 @@ const OrderScreen = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#050816] text-gray-100 px-4 py-6">
+    <div className="min-h-screen bg-white text-gray-700 px-4 py-6">
       <div className="max-w-6xl mx-auto">
 
         {/* Back Button */}
         <Link
           to={user?.isAdmin ? "/admin/orderlist" : "/myorders"}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/40"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/40"
         >
            Back to Orders
         </Link>
@@ -210,7 +210,7 @@ const OrderScreen = () => {
 
         {/* Cancel Banner */}
         {isCancelled && (
-          <div className="mt-4 p-3 rounded-xl bg-red-900/40 border border-red-600/40 text-red-200 font-semibold">
+          <div className="mt-4 p-3 rounded-xl bg-red-50 border border-red-600/40 text-red-600 font-semibold">
             This order has been cancelled.
           </div>
         )}
@@ -221,7 +221,7 @@ const OrderScreen = () => {
           <div className="lg:col-span-2 space-y-6">
 
             {/* Main Order Info */}
-            <div className="bg-[#0b1020] border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
+            <div className="bg-gray-50 border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
 
               {/* Status Box */}
               <div className={`rounded-xl p-4 border ${boxColorClass}`}>
@@ -231,9 +231,9 @@ const OrderScreen = () => {
                 {isCancelled ? (
                   <p className="text-red-300 text-xs mt-1">This order was cancelled.</p>
                 ) : order.isDelivered ? (
-                  <p className="text-emerald-200 text-xs mt-1">Your order has been delivered.</p>
+                  <p className="text-emerald-600 text-xs mt-1">Your order has been delivered.</p>
                 ) : (
-                  <p className="text-emerald-400 text-xs mt-1">
+                  <p className="text-emerald-600 text-xs mt-1">
                     We'll notify you when your order is out for delivery.
                   </p>
                 )}
@@ -258,7 +258,7 @@ const OrderScreen = () => {
           </div>
 
           {/* RIGHT - PRICE SUMMARY */}
-          <div className="bg-[#0b1020] border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
+          <div className="bg-gray-50 border border-emerald-500/20 rounded-2xl p-5 shadow-lg">
             <h2 className="text-xl font-bold text-emerald-500 mb-4">Price Summary</h2>
 
             <div className="space-y-2 text-sm">
@@ -273,14 +273,14 @@ const OrderScreen = () => {
               </p>
             </div>
 
-            <hr className="my-3 border-gray-700" />
+            <hr className="my-3 border-gray-300" />
 
-            <p className="flex justify-between text-lg font-bold text-emerald-400">
+            <p className="flex justify-between text-lg font-bold text-emerald-600">
               <span>Total</span>
               <span>₹{order.totalPrice}</span>
             </p>
 
-            <p className="text-gray-400 text-xs mt-3">Inclusive of all taxes.</p>
+            <p className="text-gray-500 text-xs mt-3">Inclusive of all taxes.</p>
           </div>
         </div>
       </div>

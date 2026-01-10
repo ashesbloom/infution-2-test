@@ -80,12 +80,12 @@ const ProductCreateScreen = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-5rem)] w-full bg-black text-white flex items-center justify-center px-4 pb-10">
-      <div className="w-full max-w-3xl bg-[#050505] border border-white/10 rounded-3xl shadow-[0_0_35px_rgba(0,0,0,0.9)] px-6 sm:px-8 py-8 md:py-10">
+    <div className="min-h-[calc(100vh-5rem)] w-full bg-white text-gray-800 flex items-center justify-center px-4 pb-10">
+      <div className="w-full max-w-3xl bg-white border border-gray-200 rounded-3xl shadow-[0_0_35px_rgba(0,0,0,0.9)] px-6 sm:px-8 py-8 md:py-10">
         {/* Back */}
         <button
           onClick={() => navigate('/admin/productlist')}
-          className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#111] text-white border border-white/10 hover:bg-[#1a1a1a] transition text-sm"
+          className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 transition text-sm"
         >
           ← Back to Products
         </button>
@@ -98,7 +98,7 @@ const ProductCreateScreen = () => {
           <h1 className="text-2xl md:text-3xl font-black tracking-tight uppercase">
             Create <span className="text-[#06a34f]">Product</span>
           </h1>
-          <p className="mt-2 text-xs md:text-sm text-zinc-400">
+          <p className="mt-2 text-xs md:text-sm text-gray-500">
             Add a new product with price, stock and multiple images. First image will be used as the main display.
           </p>
         </div>
@@ -111,12 +111,12 @@ const ProductCreateScreen = () => {
           {/* Name + Price */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
                 Name
               </label>
               <input
                 type="text"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#06a34f]"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -124,13 +124,13 @@ const ProductCreateScreen = () => {
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
                 Price (₹)
               </label>
               <input
                 type="number"
                 min="0"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#06a34f]"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
@@ -140,13 +140,13 @@ const ProductCreateScreen = () => {
 
           {/* Images */}
           <div>
-            <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+            <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
               Images (you can select multiple)
             </label>
 
             <input
               type="text"
-              className="w-full bg-[#101010] border border-zinc-800 rounded-lg px-3.5 py-2 text-[11px] text-zinc-400 mb-2"
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3.5 py-2 text-[11px] text-gray-500 mb-2"
               placeholder="Uploaded image paths will appear here"
               value={images.join(', ')}
               readOnly
@@ -156,7 +156,7 @@ const ProductCreateScreen = () => {
               type="file"
               multiple
               onChange={uploadFileHandler}
-              className="block w-full text-sm text-zinc-300
+              className="block w-full text-sm text-gray-600
                 file:mr-4 file:py-2 file:px-4
                 file:rounded-full file:border-0
                 file:text-sm file:font-semibold
@@ -175,7 +175,7 @@ const ProductCreateScreen = () => {
                 {images.map((img, idx) => (
                   <div
                     key={idx}
-                    className="w-16 h-16 rounded-lg border border-white/10 overflow-hidden bg-[#111] flex items-center justify-center"
+                    className="w-16 h-16 rounded-lg border border-gray-200 overflow-hidden bg-gray-100 flex items-center justify-center"
                   >
                     <img
                       src={img}
@@ -191,12 +191,12 @@ const ProductCreateScreen = () => {
           {/* Category + Stock + Weight */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
                 Category
               </label>
               <input
                 type="text"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#06a34f]"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
@@ -204,13 +204,13 @@ const ProductCreateScreen = () => {
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
                 Count In Stock
               </label>
               <input
                 type="number"
                 min="0"
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#06a34f]"
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
                 required
@@ -219,11 +219,11 @@ const ProductCreateScreen = () => {
 
             {/* ✅ NEW: Weight dropdown */}
             <div>
-              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+              <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
                 Weight
               </label>
               <select
-                className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#06a34f]"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
               >
@@ -235,11 +235,11 @@ const ProductCreateScreen = () => {
 
           {/* Description */}
           <div>
-            <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+            <label className="block text-[11px] font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
               Description
             </label>
             <textarea
-              className="w-full bg-[#101010] border border-zinc-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#06a34f]"
+              className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#06a34f]"
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -250,7 +250,7 @@ const ProductCreateScreen = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="mt-2 w-full bg-[#06a34f] hover:bg-[#058a42] text-white font-black text-xs md:text-sm tracking-[0.3em] uppercase py-3 rounded-xl shadow-[0_0_25px_rgba(6,163,79,0.7)] transition"
+            className="mt-2 w-full bg-[#06a34f] hover:bg-[#058a42] text-gray-800 font-black text-xs md:text-sm tracking-[0.3em] uppercase py-3 rounded-xl shadow-[0_0_25px_rgba(6,163,79,0.7)] transition"
           >
             Create Product
           </button>

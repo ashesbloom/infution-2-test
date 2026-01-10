@@ -80,13 +80,13 @@ const ShippingScreen = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-5rem)] w-full bg-black text-white flex items-center justify-center px-4 pb-10">
-      <div className="w-full max-w-xl bg-[#050505] border border-white/10 rounded-3xl shadow-[0_0_35px_rgba(0,0,0,0.9)] px-6 sm:px-8 py-8 md:py-10">
+    <div className="min-h-[calc(100vh-5rem)] w-full bg-white text-gray-800 flex items-center justify-center px-4 pb-10">
+      <div className="w-full max-w-xl bg-white border border-gray-200 rounded-3xl shadow-[0_0_35px_rgba(0,0,0,0.9)] px-6 sm:px-8 py-8 md:py-10">
 
         {/* BACK */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#111] text-white border border-white/10 hover:bg-[#1a1a1a] transition text-sm"
+          className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 transition text-sm"
         >
           ← Back
         </button>
@@ -99,7 +99,7 @@ const ShippingScreen = () => {
           <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tight">
             Shipping <span className="text-[#06a34f]">Address</span>
           </h1>
-          <p className="mt-2 text-xs md:text-sm text-zinc-400">
+          <p className="mt-2 text-xs md:text-sm text-gray-500">
             Enter your delivery details. Only Uttar Pradesh pincodes are serviceable.
           </p>
         </div>
@@ -109,7 +109,7 @@ const ShippingScreen = () => {
           
           {/* NAME */}
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
               Full Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -118,13 +118,13 @@ const ShippingScreen = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter recipient's name"
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
+              className="w-full rounded-lg bg-gray-50 border border-gray-300 focus:border-[#06a34f] text-sm px-4 py-2.5 text-gray-800"
             />
           </div>
 
           {/* ADDRESS */}
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
               Address <span className="text-red-500">*</span>
             </label>
             <input
@@ -133,13 +133,13 @@ const ShippingScreen = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="House No, Street, Landmark"
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
+              className="w-full rounded-lg bg-gray-50 border border-gray-300 focus:border-[#06a34f] text-sm px-4 py-2.5 text-gray-800"
             />
           </div>
 
           {/* MOBILE */}
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
               Mobile Number <span className="text-red-500">*</span>
             </label>
             <input
@@ -150,14 +150,14 @@ const ShippingScreen = () => {
               placeholder="10-digit mobile number"
               pattern="[0-9]{10}"
               maxLength="10"
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
+              className="w-full rounded-lg bg-gray-50 border border-gray-300 focus:border-[#06a34f] text-sm px-4 py-2.5 text-gray-800"
             />
           </div>
 
           {/* PINCODE */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400">
+              <label className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">
                 Pincode <span className="text-red-500">*</span>
               </label>
               {pinLoading && (
@@ -174,14 +174,14 @@ const ShippingScreen = () => {
               onChange={(e) => setPostalCode(e.target.value)}
               maxLength="6"
               placeholder="e.g. 221001"
-              className={`w-full rounded-lg bg-[#101010] border ${
-                pinError ? "border-emerald-400" : "border-zinc-700"
-              } focus:border-[#06a34f] text-sm px-4 py-2.5 text-white`}
+              className={`w-full rounded-lg bg-gray-50 border ${
+                pinError ? "border-emerald-400" : "border-gray-300"
+              } focus:border-[#06a34f] text-sm px-4 py-2.5 text-gray-800`}
             />
 
             {/* CLEAN ERROR MESSAGE */}
             {pinError && (
-              <div className="mt-2 text-[11px] text-emerald-400 bg-emerald-400/10 border border-emerald-400/30 px-3 py-2 rounded-lg">
+              <div className="mt-2 text-[11px] text-emerald-600 bg-emerald-400/10 border border-emerald-400/30 px-3 py-2 rounded-lg">
                 {pinError}
               </div>
             )}
@@ -190,7 +190,7 @@ const ShippingScreen = () => {
           {/* CITY + STATE */}
           <div className="flex flex-col md:flex-row gap-4">
             <div className="w-full md:w-1/2">
-              <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
+              <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
                 City <span className="text-red-500">*</span>
               </label>
               <input
@@ -198,12 +198,12 @@ const ShippingScreen = () => {
                 required
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
+                className="w-full rounded-lg bg-gray-50 border border-gray-300 focus:border-[#06a34f] text-sm px-4 py-2.5 text-gray-800"
               />
             </div>
 
             <div className="w-full md:w-1/2">
-              <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
+              <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
                 State <span className="text-red-500">*</span>
               </label>
               <input
@@ -211,14 +211,14 @@ const ShippingScreen = () => {
                 required
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
+                className="w-full rounded-lg bg-gray-50 border border-gray-300 focus:border-[#06a34f] text-sm px-4 py-2.5 text-gray-800"
               />
             </div>
           </div>
 
           {/* COUNTRY */}
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 mb-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">
               Country <span className="text-red-500">*</span>
             </label>
             <input
@@ -226,7 +226,7 @@ const ShippingScreen = () => {
               required
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              className="w-full rounded-lg bg-[#101010] border border-zinc-700 focus:border-[#06a34f] text-sm px-4 py-2.5 text-white"
+              className="w-full rounded-lg bg-gray-50 border border-gray-300 focus:border-[#06a34f] text-sm px-4 py-2.5 text-gray-800"
             />
           </div>
 

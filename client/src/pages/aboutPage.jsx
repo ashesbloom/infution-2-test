@@ -9,16 +9,16 @@ import {
 
 // --- REUSABLE VALUE CARD COMPONENT ---
 const ValueCard = ({ icon: Icon, title, description }) => (
-    <div className="group bg-zinc-900/50 border border-white/5 p-8 rounded-xl hover:border-emerald-500/30 transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+    <div className="group bg-gray-100/50 border border-gray-200 p-8 rounded-xl hover:border-emerald-500/30 transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
             <Icon size={100} className="text-emerald-500 -rotate-12" />
         </div>
         <div className="relative z-10">
-            <div className="w-14 h-14 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500 text-emerald-500 group-hover:text-black transition-colors duration-300">
+            <div className="w-14 h-14 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500 text-emerald-500 group-hover:text-white transition-colors duration-300">
                 <Icon size={28} />
             </div>
-            <h3 className="text-2xl font-black text-white italic uppercase mb-3">{title}</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+            <h3 className="text-2xl font-black text-gray-800 italic uppercase mb-3">{title}</h3>
+            <p className="text-gray-500 text-sm leading-relaxed">{description}</p>
         </div>
     </div>
 );
@@ -59,14 +59,14 @@ const ProcessSection = () => {
                         className={`flex items-center gap-6 p-6 rounded-xl border transition-all duration-300 text-left group ${
                             activeStep === index
                                 ? 'bg-emerald-500 border-emerald-500'
-                                : 'bg-zinc-900/50 border-white/5 hover:border-white/20'
+                                : 'bg-gray-100/50 border-gray-200 hover:border-gray-300'
                         }`}
                     >
-                        <div className={`p-3 rounded-lg ${activeStep === index ? 'bg-black text-emerald-500' : 'bg-white/5 text-gray-400 group-hover:text-white'}`}>
+                        <div className={`p-3 rounded-lg ${activeStep === index ? 'bg-white text-emerald-500' : 'bg-gray-100 text-gray-500 group-hover:text-gray-800'}`}>
                             <step.icon size={24} />
                         </div>
                         <div>
-                            <h4 className={`text-xl font-black italic uppercase ${activeStep === index ? 'text-black' : 'text-white'}`}>
+                            <h4 className={`text-xl font-black italic uppercase ${activeStep === index ? 'text-black' : 'text-gray-800'}`}>
                                 {step.title}
                             </h4>
                         </div>
@@ -75,9 +75,9 @@ const ProcessSection = () => {
             </div>
 
             {/* Right: Display Content */}
-            <div className="relative h-full min-h-[300px] bg-zinc-900 border border-white/10 rounded-2xl p-8 flex flex-col justify-center">
+            <div className="relative h-full min-h-[300px] bg-gray-100 border border-gray-200 rounded-2xl p-8 flex flex-col justify-center">
                 <div className="absolute top-0 right-0 p-8 opacity-5">
-                    <FlaskConical size={200} className="text-white" />
+                    <FlaskConical size={200} className="text-gray-800" />
                 </div>
 
                 {steps.map((step, index) => (
@@ -88,10 +88,10 @@ const ProcessSection = () => {
                         }`}
                     >
                         <step.icon size={48} className="text-emerald-500 mb-6" />
-                        <h3 className="text-3xl font-black text-white italic uppercase mb-4">
+                        <h3 className="text-3xl font-black text-gray-800 italic uppercase mb-4">
                             {step.title}
                         </h3>
-                        <p className="text-gray-400 text-lg leading-relaxed">
+                        <p className="text-gray-500 text-lg leading-relaxed">
                             {step.text}
                         </p>
                     </div>
@@ -117,7 +117,7 @@ function About_page() {
     };
 
     return (
-        <div className="bg-black font-sans selection:bg-emerald-500 selection:text-black min-h-screen relative overflow-x-hidden">
+        <div className="bg-white font-sans selection:bg-emerald-500 selection:text-white min-h-screen relative overflow-x-hidden">
 
             {/* --- BACKGROUND DOODLES --- */}
             <div className="fixed inset-0 pointer-events-none h-full w-full z-0 overflow-hidden">
@@ -139,7 +139,7 @@ function About_page() {
                             <Link
                                 to="/"
                                 onClick={scrollToTopSmooth}
-                                className="inline-flex items-center gap-2 py-2 px-4 rounded-full border border-white/10 text-white text-xs font-medium uppercase tracking-widest bg-white/5 hover:bg-emerald-500 hover:text-black transition-colors duration-300 group shadow-md"
+                                className="inline-flex items-center gap-2 py-2 px-4 rounded-full border border-gray-200 text-gray-800 text-xs font-medium uppercase tracking-widest bg-gray-100 hover:bg-emerald-500 hover:text-white transition-colors duration-300 group shadow-md"
                             >
                                 <ArrowLeft size={16} className="group-hover:translate-x-[-2px] transition-transform" />
                                 Back to Home
@@ -149,18 +149,18 @@ function About_page() {
                         <span className="inline-block py-1 px-3 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-bold tracking-[0.2em] uppercase text-[10px] mb-6 backdrop-blur-md">
                             EST. 2025 • The New Standard
                         </span>
-                        <h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white italic uppercase leading-[0.85] tracking-tighter mb-8">
+                        <h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-gray-800 italic uppercase leading-[0.85] tracking-tighter mb-8">
                             Forged In <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">
                                 The Fire
                             </span>
                         </h1>
-                        <p className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl font-medium leading-relaxed border-l-4 border-emerald-500 pl-6 text-left md:text-center md:border-l-0 md:border-t-4 md:pt-6">
+                        <p className="max-w-2xl mx-auto text-gray-500 text-lg md:text-xl font-medium leading-relaxed border-l-4 border-emerald-500 pl-6 text-left md:text-center md:border-l-0 md:border-t-4 md:pt-6">
                             We are a new breed of supplement company. No legacy. No outdated formulas. Just pure, unadulterated performance for the modern athlete.
                         </p>
                     </div>
 
-                    <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-0"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-800/80 to-transparent z-0"></div>
                 </section>
 
                 {/* --- SCROLLING MARQUEE --- */}
@@ -180,20 +180,20 @@ function About_page() {
                 </div>
 
                 {/* --- OUR MISSION --- */}
-                <section className="py-24 px-6 md:px-16 bg-zinc-950">
+                <section className="py-24 px-6 md:px-16 bg-gray-50">
                     <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                         <div className="order-2 lg:order-1">
-                            <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase mb-6 leading-none">
+                            <h2 className="text-3xl md:text-5xl font-black text-gray-800 italic uppercase mb-6 leading-none">
                                 Disrupting The <br />
                                 <span className="text-emerald-500">Status Quo.</span>
                             </h2>
-                            <div className="space-y-6 text-gray-400 text-lg">
+                            <div className="space-y-6 text-gray-500 text-lg">
                                 <p>
                                     We looked around the supplement industry and didn't like what we saw. Under-dosed proprietary blends, artificial dyes, and marketing hype masquerading as science.
                                 </p>
                                 <p>
-                                    <strong className="text-white">Nutry Health</strong> was born from frustration. As athletes, we wanted products that actually worked. When we couldn't find them, we decided to make them.
+                                    <strong className="text-gray-800">Nutry Health</strong> was born from frustration. As athletes, we wanted products that actually worked. When we couldn't find them, we decided to make them.
                                 </p>
                                 <p>
                                     We might be the new kids on the block, but that's our advantage. We aren't stuck in the past. We are building the future of sports nutrition.
@@ -203,18 +203,18 @@ function About_page() {
 
                         <div className="order-1 lg:order-2 relative group">
                             <div className="absolute inset-0 bg-emerald-500 blur-[60px] opacity-20 rounded-full group-hover:opacity-30 transition-opacity duration-500"></div>
-                            <div className="relative z-10 bg-zinc-900 border border-white/10 p-2 rounded-2xl rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                                <div className="aspect-[4/5] bg-zinc-800 rounded-xl overflow-hidden relative">
+                            <div className="relative z-10 bg-gray-100 border border-gray-200 p-2 rounded-2xl rotate-2 group-hover:rotate-0 transition-transform duration-500">
+                                <div className="aspect-[4/5] bg-gray-200 rounded-xl overflow-hidden relative">
                                     <img
                                         src="/images/product_image.png"
                                         alt="Our Mission"
                                         className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
                                         onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop"; }}
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-800/80 via-transparent to-transparent"></div>
 
-                                    <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
-                                        <p className="text-white font-bold italic text-sm text-center">"We don't cut corners. We create them."</p>
+                                    <div className="absolute bottom-6 left-6 right-6 p-4 bg-gray-200 backdrop-blur-md border border-white/20 rounded-lg">
+                                        <p className="text-gray-800 font-bold italic text-sm text-center">"We don't cut corners. We create them."</p>
                                     </div>
                                 </div>
                             </div>
@@ -224,18 +224,18 @@ function About_page() {
                 </section>
 
                 {/* --- COMPARISON SECTION --- */}
-                <section className="py-24 px-6 md:px-16 bg-black relative border-y border-white/10">
+                <section className="py-24 px-6 md:px-16 bg-white relative border-y border-gray-200">
                     <div className="max-w-[1000px] mx-auto">
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-black text-white uppercase italic tracking-tighter">
+                            <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase italic tracking-tighter">
                                 The <span className="text-emerald-500">Difference</span>
                             </h2>
-                            <p className="text-gray-400 mt-4">Why we are worth the switch.</p>
+                            <p className="text-gray-500 mt-4">Why we are worth the switch.</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* The Others */}
-                            <div className="bg-zinc-900/30 p-8 rounded-2xl border border-white/5 grayscale opacity-70 hover:opacity-100 transition-opacity">
+                            <div className="bg-gray-100/30 p-8 rounded-2xl border border-gray-200 grayscale opacity-70 hover:opacity-100 transition-opacity">
                                 <h3 className="text-xl font-bold text-gray-500 uppercase mb-6 flex items-center gap-2">
                                     <XCircle size={20} /> Industry Standard
                                 </h3>
@@ -248,16 +248,16 @@ function About_page() {
                             </div>
 
                             {/* Us */}
-                            <div className="bg-zinc-900 p-8 rounded-2xl border border-emerald-500/30 relative overflow-hidden shadow-[0_0_30px_rgba(234,179,8,0.1)] hover:scale-[1.02] transition-transform">
+                            <div className="bg-gray-100 p-8 rounded-2xl border border-emerald-500/30 relative overflow-hidden shadow-[0_0_30px_rgba(234,179,8,0.1)] hover:scale-[1.02] transition-transform">
                                 <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/20 blur-[40px]"></div>
-                                <h3 className="text-xl font-black text-white italic uppercase mb-6 flex items-center gap-2">
+                                <h3 className="text-xl font-black text-gray-800 italic uppercase mb-6 flex items-center gap-2">
                                     <CheckCircle2 size={20} className="text-emerald-500" /> The Nutry Health Way
                                 </h3>
                                 <ul className="space-y-4">
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> 100% Fully Transparent Labels</li>
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Zero Artificial Colors</li>
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Clinical Effective Dosages</li>
-                                    <li className="flex items-center gap-3 text-white font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Premium Patented Ingredients</li>
+                                    <li className="flex items-center gap-3 text-gray-800 font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> 100% Fully Transparent Labels</li>
+                                    <li className="flex items-center gap-3 text-gray-800 font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Zero Artificial Colors</li>
+                                    <li className="flex items-center gap-3 text-gray-800 font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Clinical Effective Dosages</li>
+                                    <li className="flex items-center gap-3 text-gray-800 font-medium"><CheckCircle2 size={16} className="text-emerald-500" /> Premium Patented Ingredients</li>
                                 </ul>
                             </div>
                         </div>
@@ -268,10 +268,10 @@ function About_page() {
                 <section className="py-24 px-6 md:px-16 relative">
                     <div className="max-w-[1400px] mx-auto">
                         <div className="mb-16">
-                            <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
+                            <h2 className="text-4xl md:text-6xl font-black text-gray-800 uppercase italic tracking-tighter">
                                 Inside The <span className="text-emerald-500">Lab</span>
                             </h2>
-                            <p className="text-gray-400 mt-4 max-w-lg">
+                            <p className="text-gray-500 mt-4 max-w-lg">
                                 See exactly how we craft the highest quality supplements on the market.
                             </p>
                         </div>
@@ -303,14 +303,14 @@ function About_page() {
                 </section>
 
                 {/* --- CTA SECTION --- */}
-                <section className="py-32 px-6 md:px-16 text-center relative overflow-hidden bg-gradient-to-b from-black to-zinc-900 border-t border-white/5">
+                <section className="py-32 px-6 md:px-16 text-center relative overflow-hidden bg-gradient-to-b from-gray-100 to-gray-50 border-t border-gray-200">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
                     <div className="relative z-10 max-w-3xl mx-auto">
-                        <h2 className="text-4xl md:text-6xl font-black text-white italic uppercase mb-8">
+                        <h2 className="text-4xl md:text-6xl font-black text-gray-800 italic uppercase mb-8">
                             Be Part of the <br /><span className="text-emerald-500">Beginning.</span>
                         </h2>
-                        <p className="text-gray-400 mb-10 text-lg">
+                        <p className="text-gray-500 mb-10 text-lg">
                             We are just getting started. Join the Nutry Health movement today and experience the difference of a brand that puts performance first.
                         </p>
 

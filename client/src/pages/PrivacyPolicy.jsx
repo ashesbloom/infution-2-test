@@ -9,11 +9,11 @@ const Section = ({ icon: Icon, title, children }) => (
       <div className="p-2 bg-emerald-500/10 rounded text-emerald-500">
         <Icon size={20} />
       </div>
-      <h2 className="text-xl md:text-2xl font-black text-white uppercase italic">
+      <h2 className="text-xl md:text-2xl font-black text-gray-800 uppercase italic">
         {title}
       </h2>
     </div>
-    <div className="text-gray-400 leading-relaxed space-y-4 pl-[52px] text-sm md:text-base">
+    <div className="text-gray-500 leading-relaxed space-y-4 pl-[52px] text-sm md:text-base">
       {children}
     </div>
   </div>
@@ -25,23 +25,23 @@ function PrivacyPage() {
   }, []);
 
   return (
-    <div className="bg-black min-h-screen font-sans">
+    <div className="bg-white min-h-screen font-sans">
       <Navbar />
 
       <div className="relative pt-3 pb-10 px-6 md:px-16 max-w-[1000px] mx-auto">
 
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-6 hover:text-white"
+          className="inline-flex items-center gap-2 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-6 hover:text-gray-800"
         >
           <ArrowLeft size={14} /> Back to Home
         </Link>
 
-        <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic mb-6">
+        <h1 className="text-4xl md:text-6xl font-black text-gray-800 uppercase italic mb-6">
           Privacy <span className="text-emerald-500">Policy</span>
         </h1>
 
-        <div className="bg-zinc-900/30 p-8 md:p-12 rounded-2xl border border-white/5">
+        <div className="bg-gray-100/30 p-8 md:p-12 rounded-2xl border border-gray-200">
 
           <Section icon={Database} title="Information We Collect">
             <p>We collect personal details like name, email, and address when you place an order.</p>

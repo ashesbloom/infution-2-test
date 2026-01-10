@@ -99,10 +99,10 @@ function MobileLoginUI() {
   };
 
   return (
-    <div className="min-h-screen fixed inset-0 overflow-hidden bg-gradient-to-b from-zinc-900 via-zinc-950 to-black flex items-start justify-center p-4 sm:p-6 md:p-8 pt-16 font-sans selection:bg-emerald-500 selection:text-black relative">
+    <div className="min-h-screen fixed inset-0 overflow-hidden bg-gradient-to-b from-gray-50 via-gray-100 to-white flex items-start justify-center p-4 sm:p-6 md:p-8 pt-16 font-sans selection:bg-emerald-500 selection:text-white relative">
       {/* BACKGROUND DOODLES (hidden on desktop via wrapper) */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-zinc-800/30 via-transparent to-transparent z-0" />
+        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gray-200/30 via-transparent to-transparent z-0" />
 
         <div className="absolute -top-24 -left-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-[120px]" />
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-[120px]" />
@@ -110,18 +110,18 @@ function MobileLoginUI() {
 
         <div className="absolute inset-0 opacity-[0.12] z-0">
           <Dumbbell className="absolute top-8 left-8 w-20 h-20 -rotate-12 text-emerald-500" />
-          <Target className="absolute top-6 left-[30%] w-12 h-12 rotate-12 text-emerald-400" />
-          <Zap className="absolute top-16 left-[45%] w-10 h-10 -rotate-12 text-emerald-300" />
+          <Target className="absolute top-6 left-[30%] w-12 h-12 rotate-12 text-emerald-600" />
+          <Zap className="absolute top-16 left-[45%] w-10 h-10 -rotate-12 text-emerald-600" />
           <Flame className="absolute top-6 right-[30%] w-16 h-16 rotate-6 text-emerald-600" />
           <Trophy className="absolute top-8 right-16 w-24 h-24 rotate-12 text-emerald-500" />
-          <Timer className="absolute top-[20%] right-36 w-12 h-12 -rotate-12 text-emerald-400" />
+          <Timer className="absolute top-[20%] right-36 w-12 h-12 -rotate-12 text-emerald-600" />
           <Heart className="absolute bottom-[30%] left-[35%] w-10 h-10 rotate-12 text-emerald-500" />
           <Target className="absolute bottom-[25%] right-[30%] w-12 h-12 -rotate-12 text-emerald-600" />
           <Flame className="absolute bottom-16 left-36 w-20 h-20 rotate-6 text-emerald-500" />
           <Trophy className="absolute bottom-8 left-8 w-12 h-12 -rotate-12 text-emerald-600" />
-          <Star className="absolute bottom-8 left-[45%] w-10 h-10 rotate-45 text-emerald-400" />
+          <Star className="absolute bottom-8 left-[45%] w-10 h-10 rotate-45 text-emerald-600" />
           <Dumbbell className="absolute bottom-36 right-56 w-16 h-16 -rotate-45 text-emerald-500" />
-          <Zap className="absolute bottom-8 right-16 w-20 h-20 rotate-12 text-emerald-400" />
+          <Zap className="absolute bottom-8 right-16 w-20 h-20 rotate-12 text-emerald-600" />
           <Timer className="absolute bottom-28 right-8 w-10 h-10 -rotate-6 text-emerald-600" />
         </div>
       </div>
@@ -131,8 +131,8 @@ function MobileLoginUI() {
         className="
           w-full max-w-sm
           mt-0 md:mt-0
-          bg-black/85
-          border border-white/10
+          bg-white/95
+          border border-gray-200
           rounded-3xl
           backdrop-blur-sm
           px-6 py-10
@@ -146,7 +146,7 @@ function MobileLoginUI() {
         style={cardStyle}
       >
         {/* BRAND */}
-        <p to="/" className="text-2xl text-center md:text-3xl font-black italic tracking-tighter text-white group">
+        <p to="/" className="text-2xl text-center md:text-3xl font-black italic tracking-tighter text-gray-800 group">
                     Nutry Health
                     <span className="text-emerald-500 group-hover:drop-shadow-[0_0_10px_rgba(234,179,8,0.8)]">
                       D.
@@ -171,7 +171,7 @@ function MobileLoginUI() {
         <form onSubmit={handleLogin} className="space-y-5 w-full mt-2">
           {/* EMAIL */}
           <div>
-            <label className="block mb-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-400">
+            <label className="block mb-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-500">
               Email Address
             </label>
             <div className="relative">
@@ -183,8 +183,8 @@ function MobileLoginUI() {
                 placeholder="you@example.com"
                 className="
                   w-full pl-11 pr-3 py-3
-                  rounded-lg bg-transparent text-white
-                  border border-neutral-800
+                  rounded-lg bg-transparent text-gray-800
+                  border border-gray-300
                   focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f]
                   text-sm
                 "
@@ -196,7 +196,7 @@ function MobileLoginUI() {
 
           {/* PASSWORD */}
           <div>
-            <label className="block mb-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-400">
+            <label className="block mb-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-500">
               Password
             </label>
             <div className="relative">
@@ -208,8 +208,8 @@ function MobileLoginUI() {
                 placeholder="••••••••"
                 className="
                   w-full pl-11 pr-10 py-3
-                  rounded-lg bg-transparent text-white
-                  border border-neutral-800
+                  rounded-lg bg-transparent text-gray-800
+                  border border-gray-300
                   focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f]
                   text-sm
                 "
@@ -220,7 +220,7 @@ function MobileLoginUI() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-neutral-400 hover:text-white"
+                className="absolute right-3 top-3 text-neutral-400 hover:text-gray-800"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -314,13 +314,13 @@ function DesktopLoginUI() {
   };
 
   const inputClasses =
-    "w-full bg-black/40 border border-zinc-800 text-white rounded-lg py-2.5 pl-12 pr-4 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all placeholder:text-zinc-700 [&:-webkit-autofill]:shadow-[0_0_0_1000px_#000000_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:#ffffff]";
+    "w-full bg-gray-100 border border-gray-200 text-gray-800 rounded-lg py-2.5 pl-12 pr-4 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all placeholder:text-gray-400 [&:-webkit-autofill]:shadow-[0_0_0_1000px_#000000_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:#ffffff]";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-950 to-black flex items-start md:items-start justify-center pt-24 md:pt-20 p-4 sm:p-6 md:p-8 font-sans selection:bg-emerald-500 selection:text-black relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-gray-100 to-white flex items-start md:items-start justify-center pt-24 md:pt-20 p-4 sm:p-6 md:p-8 font-sans selection:bg-emerald-500 selection:text-white relative overflow-hidden">
       {/* Background Doodles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-zinc-800/30 via-transparent to-transparent z-0"></div>
+        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gray-200/30 via-transparent to-transparent z-0"></div>
 
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]"></div>
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]"></div>
@@ -328,20 +328,20 @@ function DesktopLoginUI() {
 
         <div className="absolute inset-0 opacity-[0.12] z-0">
           <Dumbbell className="absolute top-10 left-10 w-24 h-24 -rotate-12 text-emerald-500" />
-          <Target className="absolute top-5 left-[30%] w-16 h-16 rotate-12 text-emerald-400" />
-          <Zap className="absolute top-20 left-[45%] w-12 h-12 -rotate-12 text-emerald-300" />
+          <Target className="absolute top-5 left-[30%] w-16 h-16 rotate-12 text-emerald-600" />
+          <Zap className="absolute top-20 left-[45%] w-12 h-12 -rotate-12 text-emerald-600" />
           <Flame className="absolute top-5 right-[30%] w-20 h-20 rotate-6 text-emerald-600" />
           <Trophy className="absolute top-10 right-20 w-32 h-32 rotate-12 text-emerald-500" />
 
           <Activity className="absolute top-[25%] left-20 w-16 h-16 rotate-45 text-emerald-600" />
-          <Star className="absolute top-[30%] left-[40%] w-10 h-10 -rotate-12 text-emerald-400" />
-          <Timer className="absolute top-[20%] right-40 w-16 h-16 -rotate-12 text-emerald-400" />
+          <Star className="absolute top-[30%] left-[40%] w-10 h-10 -rotate-12 text-emerald-600" />
+          <Timer className="absolute top-[20%] right-40 w-16 h-16 -rotate-12 text-emerald-600" />
 
           <Timer className="absolute top-1/2 left-10 w-16 h-16 rotate-12 text-emerald-500" />
           <Dumbbell className="absolute top-[60%] left-32 w-28 h-28 -rotate-45 text-emerald-600/80" />
 
           <Activity className="absolute top-1/2 right-10 w-24 h-24 -rotate-12 text-emerald-500" />
-          <Zap className="absolute top-[55%] right-40 w-14 h-14 rotate-12 text-emerald-400" />
+          <Zap className="absolute top-[55%] right-40 w-14 h-14 rotate-12 text-emerald-600" />
 
           <Heart className="absolute bottom-[30%] left-[35%] w-12 h-12 rotate-12 text-emerald-500" />
           <Target className="absolute bottom-[25%] right-[30%] w-16 h-16 -rotate-12 text-emerald-600" />
@@ -349,16 +349,16 @@ function DesktopLoginUI() {
           <Flame className="absolute bottom-20 left-40 w-28 h-28 rotate-6 text-emerald-500" />
           <Trophy className="absolute bottom-10 left-10 w-16 h-16 -rotate-12 text-emerald-600" />
 
-          <Star className="absolute bottom-10 left-[45%] w-14 h-14 rotate-45 text-emerald-400" />
+          <Star className="absolute bottom-10 left-[45%] w-14 h-14 rotate-45 text-emerald-600" />
 
           <Dumbbell className="absolute bottom-40 right-60 w-20 h-20 -rotate-45 text-emerald-500" />
-          <Zap className="absolute bottom-10 right-20 w-24 h-24 rotate-12 text-emerald-400" />
+          <Zap className="absolute bottom-10 right-20 w-24 h-24 rotate-12 text-emerald-600" />
           <Timer className="absolute bottom-32 right-10 w-14 h-14 -rotate-6 text-emerald-600" />
         </div>
       </div>
 
       {/* Main Card */}
-      <div className="group w-full max-w-4xl h-full md:h-[600px] bg-zinc-900/60 backdrop-blur-xl rounded-sm shadow-2xl overflow-hidden flex flex-col md:flex-row border border-white/5 relative z-10 transition-all duration-500 hover:shadow-[0_0_50px_rgba(245,158,11,0.3)] hover:border-emerald-500/30 hover:scale-[1.005]">
+      <div className="group w-full max-w-4xl h-full md:h-[600px] bg-gray-100/60 backdrop-blur-xl rounded-sm shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-200 relative z-10 transition-all duration-500 hover:shadow-[0_0_50px_rgba(245,158,11,0.3)] hover:border-emerald-500/30 hover:scale-[1.005]">
         {/* Left Visual / Character */}
         <div className="w-full md:w-1/2 h-56 md:h-full bg-gradient-to-br from-emerald-600 to-emerald-800 p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-700">
           <div className="absolute inset-0 opacity-20">
@@ -465,33 +465,33 @@ function DesktopLoginUI() {
         </div>
 
         {/* Right: Actual Login Form */}
-        <div className="w-full md:w-1/2 p-4 sm:p-6 md:p-10 flex flex-col justify-center bg-zinc-950/80 relative">
+        <div className="w-full md:w-1/2 p-4 sm:p-6 md:p-10 flex flex-col justify-center bg-gray-50/80 relative">
           <div className="transition-all duration-300 ease-in-out transform">
-            <h3 className="text-2xl md:text-3xl font-black text-white mb-1.5 uppercase italic tracking-tighter">
+            <h3 className="text-2xl md:text-3xl font-black text-gray-800 mb-1.5 uppercase italic tracking-tighter">
               Welcome
               <span className="text-emerald-500 ml-2 ">Back</span>
             </h3>
-            <p className="text-xs sm:text-sm text-zinc-400 mb-3">Enter your details to access your workout plan.</p>
+            <p className="text-xs sm:text-sm text-gray-500 mb-3">Enter your details to access your workout plan.</p>
 
-            {successMsg && <div className="mb-2 text-center text-xs sm:text-sm text-emerald-400 font-semibold">{successMsg}</div>}
+            {successMsg && <div className="mb-2 text-center text-xs sm:text-sm text-emerald-600 font-semibold">{successMsg}</div>}
 
             <form onSubmit={handleLogin} className="space-y-3">
               {/* Email */}
               <div className="group">
-                <label className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1.5 ml-1">Email Address</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 ml-1">Email Address</label>
                 <div className="relative">
-                  <Mail className={`absolute left-4 top-3.5 h-5 w-5 transition-colors ${email ? "text-emerald-600 drop-shadow-[0_0_5px_rgba(251,191,36,0.5)]" : "text-zinc-600"}`} />
+                  <Mail className={`absolute left-4 top-3.5 h-5 w-5 transition-colors ${email ? "text-emerald-600 drop-shadow-[0_0_5px_rgba(251,191,36,0.5)]" : "text-gray-400"}`} />
                   <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className={inputClasses} />
                 </div>
               </div>
 
               {/* Password */}
               <div className="group">
-                <label className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1.5 ml-1">Password</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 ml-1">Password</label>
                 <div className="relative">
-                  <Lock className={`absolute left-4 top-3.5 h-5 w-5 transition-colors ${password ? "text-emerald-600 drop-shadow-[0_0_5px_rgba(251,191,36,0.5)]" : "text-zinc-600"}`} />
+                  <Lock className={`absolute left-4 top-3.5 h-5 w-5 transition-colors ${password ? "text-emerald-600 drop-shadow-[0_0_5px_rgba(251,191,36,0.5)]" : "text-gray-400"}`} />
                   <input type={showPassword ? "text" : "password"} name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className={inputClasses} />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-3.5 text-zinc-600 hover:text-white transition-colors">
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-3.5 text-gray-400 hover:text-gray-800 transition-colors">
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
@@ -505,30 +505,30 @@ function DesktopLoginUI() {
               </div>
 
               {/* Submit */}
-              <button type="submit" className="w-full bg-[#06a34f] hover: text-white font-black uppercase tracking-wider py-2.5 rounded-sm shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(251,191,36,0.6)] flex items-center justify-center gap-2 mt-3 group">
+              <button type="submit" className="w-full bg-[#06a34f] hover: text-gray-800 font-black uppercase tracking-wider py-2.5 rounded-sm shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(251,191,36,0.6)] flex items-center justify-center gap-2 mt-3 group">
                 Login
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
               </button>
             </form>
 
             {/* Register link */}
-            <div className="mt-4 text-center text-[11px] text-zinc-500">
+            <div className="mt-4 text-center text-[11px] text-gray-500">
               New customer?{" "}
-              <Link to="/register" className="text-emerald-500 hover:text-emerald-400 font-semibold">
+              <Link to="/register" className="text-emerald-500 hover:text-emerald-600 font-semibold">
                 Register
               </Link>
             </div>
 
             {/* Back to Home */}
             <div className="mt-4 flex justify-center">
-              <Link to="/" className="flex items-center gap-2 text-zinc-600 hover:text-emerald-500 transition-colors group text-[10px] font-bold uppercase tracking-widest hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]">
+              <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-emerald-500 transition-colors group text-[10px] font-bold uppercase tracking-widest hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]">
                 <ArrowLeft className="group-hover:-translate-x-1 transition-transform" size={13} />
                 Back to Home
               </Link>
             </div>
           </div>
 
-          <div className="absolute top-4 right-4 text-zinc-800/50">
+          <div className="absolute top-4 right-4 text-gray-300">
             <Dumbbell size={40} />
           </div>
         </div>

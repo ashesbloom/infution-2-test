@@ -87,25 +87,25 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-zinc-950 text-white overflow-x-hidden pt-6 pb-8">
+    <div className="min-h-screen w-full bg-gray-50 text-gray-800 overflow-x-hidden pt-6 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-16 pt-2 pb-8">
-        <div className="bg-zinc-900/80 rounded-2xl shadow-2xl border border-white/10 px-4 sm:px-8 py-6 sm:py-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-3 text-gray-300 italic tracking-tighter">
+        <div className="bg-gray-100/80 rounded-2xl shadow-2xl border border-gray-200 px-4 sm:px-8 py-6 sm:py-8">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-3 text-gray-500 italic tracking-tighter">
             Admin <span className="text-emerald-500">Dashboard</span>
           </h2>
 
-          <p className="text-xs sm:text-sm md:text-base mb-6 text-gray-400">
+          <p className="text-xs sm:text-sm md:text-base mb-6 text-gray-500">
             Welcome back, {user ? user.name : 'Administrator'}...Start Managing products, orders, and user accounts.
           </p>
 
           {showTokenCard && (
-            <div className="mb-8 p-4 sm:p-6 bg-zinc-800/50 border border-emerald-500/30 rounded-xl shadow-lg">
+            <div className="mb-8 p-4 sm:p-6 bg-gray-100 border border-emerald-500/30 rounded-xl shadow-lg">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <h3 className="text-lg sm:text-xl font-black italic uppercase text-emerald-500">
                     Product Authentication Code
                   </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm mt-1">
+                  <p className="text-gray-500 text-xs sm:text-sm mt-1">
                     Generate a unique code to print on Nutry Health products for verification.
                   </p>
                 </div>
@@ -131,7 +131,7 @@ const AdminDashboard = () => {
 
               <div className="mt-4">
                 <div className="relative">
-                  <div className="bg-black/50 p-3 sm:p-4 rounded-lg border border-white/10 text-center font-mono text-sm sm:text-lg tracking-widest text-emerald-500 break-words">
+                  <div className="bg-gray-100 p-3 sm:p-4 rounded-lg border border-gray-200 text-center font-mono text-sm sm:text-lg tracking-widest text-emerald-500 break-words">
                     {generatedToken ? generatedToken : 'No Code Generated Yet'}
                   </div>
 
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
                     <button
                       onClick={handleCopyToken}
                       className={`absolute top-1/2 right-2 transform -translate-y-1/2 p-2 rounded-full transition-all duration-300 ${
-                        copySuccess ? 'bg-green-600 text-white' : 'bg-zinc-700 text-gray-400 hover:bg-zinc-600'
+                        copySuccess ? 'bg-green-600 text-gray-800' : 'bg-gray-200 text-gray-500 hover:bg-gray-300'
                       }`}
                       title={copySuccess ? 'Copied!' : 'Copy to Clipboard'}
                     >
@@ -164,7 +164,7 @@ const AdminDashboard = () => {
                       disabled={isMarkingUsed}
                       className="w-4 h-4 accent-emerald-500 cursor-pointer"
                     />
-                    <span className="text-gray-300 text-xs sm:text-sm">
+                    <span className="text-gray-500 text-xs sm:text-sm">
                       Mark this code as used (cannot be generated again)
                     </span>
                   </div>
@@ -174,10 +174,10 @@ const AdminDashboard = () => {
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-            <div className="bg-zinc-800/50 p-4 sm:p-6 rounded-xl border border-emerald-500/30 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(245,158,11,0.4)]">
+            <div className="bg-gray-100 p-4 sm:p-6 rounded-xl border border-emerald-500/30 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(245,158,11,0.4)]">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">
-                  <div className="p-2 rounded-md bg-zinc-900/30 inline-flex">
+                  <div className="p-2 rounded-md bg-gray-100/30 inline-flex">
                     <ShoppingBag size={24} className="text-emerald-500" />
                   </div>
                 </div>
@@ -185,7 +185,7 @@ const AdminDashboard = () => {
                   <h3 className="text-lg sm:text-xl font-black italic uppercase mb-1">
                     Product Management
                   </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm">
+                  <p className="text-gray-500 text-xs sm:text-sm">
                     Add, edit, or delete products and update inventory stock.
                   </p>
                 </div>
@@ -198,16 +198,16 @@ const AdminDashboard = () => {
               </Link>
             </div>
 
-            <div className="bg-zinc-800/50 p-4 sm:p-6 rounded-xl border border-emerald-500/30 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(245,158,11,0.4)]">
+            <div className="bg-gray-100 p-4 sm:p-6 rounded-xl border border-emerald-500/30 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(245,158,11,0.4)]">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">
-                  <div className="p-2 rounded-md bg-zinc-900/30 inline-flex">
+                  <div className="p-2 rounded-md bg-gray-100/30 inline-flex">
                     <Package size={24} className="text-emerald-500" />
                   </div>
                 </div>
                 <div>
                   <h3 className="text-lg sm:text-xl font-black italic uppercase mb-1">Order Management</h3>
-                  <p className="text-gray-400 text-xs sm:text-sm">View and update the status of all customer orders.</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">View and update the status of all customer orders.</p>
                 </div>
               </div>
 
@@ -218,16 +218,16 @@ const AdminDashboard = () => {
               </Link>
             </div>
 
-            <div className="bg-zinc-800/50 p-4 sm:p-6 rounded-xl border border-emerald-500/30 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(245,158,11,0.4)]">
+            <div className="bg-gray-100 p-4 sm:p-6 rounded-xl border border-emerald-500/30 flex flex-col justify-between transition-all duration-300 group hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(245,158,11,0.4)]">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">
-                  <div className="p-2 rounded-md bg-zinc-900/30 inline-flex">
+                  <div className="p-2 rounded-md bg-gray-100/30 inline-flex">
                     <Users size={24} className="text-emerald-500" />
                   </div>
                 </div>
                 <div>
                   <h3 className="text-lg sm:text-xl font-black italic uppercase mb-1">User Management</h3>
-                  <p className="text-gray-400 text-xs sm:text-sm">Review and manage registered user accounts.</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">Review and manage registered user accounts.</p>
                 </div>
               </div>
 

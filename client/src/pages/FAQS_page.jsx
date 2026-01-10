@@ -23,7 +23,7 @@ const sections = [
     color: "from-emerald-500/20 to-emerald-500/5",
     borderColor: "border-emerald-500/30",
     iconBg: "bg-emerald-500/10",
-    iconColor: "text-emerald-400",
+    iconColor: "text-emerald-600",
     faqs: [
       {
         q: "Are your supplements third-party tested?",
@@ -138,7 +138,7 @@ export default function FAQS_page() {
   return (
     <section
       id="faqs-section"
-      className="relative w-full bg-gradient-to-b from-black via-[#080808] to-black px-4 md:px-8 lg:px-12 py-16 sm:py-20 overflow-hidden"
+      className="relative w-full bg-gradient-to-b from-gray-50 via-white to-gray-50 px-4 md:px-8 lg:px-12 py-16 sm:py-20 overflow-hidden"
     >
       {/* Decorative background elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -157,10 +157,10 @@ export default function FAQS_page() {
             </span>
           </div>
           
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-800 mb-4 tracking-tight">
             How Can We <span className="text-[#06a34f]">Help</span> You?
           </h2>
-          <p className="text-white/50 text-sm sm:text-base max-w-lg mx-auto">
+          <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
             Find answers to common questions or reach out to our support team
           </p>
 
@@ -172,7 +172,7 @@ export default function FAQS_page() {
               className={`group relative flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === "faq"
                   ? "bg-[#06a34f] text-white shadow-[0_0_30px_rgba(6,163,79,0.4)]"
-                  : "bg-white/5 text-white/70 border border-white/10 hover:border-[#06a34f]/50 hover:text-[#06a34f]"
+                  : "bg-gray-100 text-gray-600 border border-gray-200 hover:border-[#06a34f]/50 hover:text-[#06a34f]"
               }`}
             >
               <HelpCircle size={18} />
@@ -185,7 +185,7 @@ export default function FAQS_page() {
               className={`group relative flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === "contact"
                   ? "bg-[#06a34f] text-white shadow-[0_0_30px_rgba(6,163,79,0.4)]"
-                  : "bg-white/5 text-white/70 border border-white/10 hover:border-[#06a34f]/50 hover:text-[#06a34f]"
+                  : "bg-gray-100 text-gray-600 border border-gray-200 hover:border-[#06a34f]/50 hover:text-[#06a34f]"
               }`}
             >
               <MessageCircle size={18} />
@@ -210,10 +210,10 @@ export default function FAQS_page() {
                   <div className="relative p-6">
                     {/* Section Header */}
                     <div className="flex items-center gap-3 mb-6">
-                      <div className={`w-12 h-12 rounded-2xl ${section.iconBg} border border-white/10 flex items-center justify-center`}>
+                      <div className={`w-12 h-12 rounded-2xl ${section.iconBg} border border-gray-200 flex items-center justify-center`}>
                         <IconComponent size={22} className={section.iconColor} />
                       </div>
-                      <h3 className="text-lg font-bold text-white">
+                      <h3 className="text-lg font-bold text-gray-800">
                         {section.title}
                       </h3>
                     </div>
@@ -228,8 +228,8 @@ export default function FAQS_page() {
                             key={item.q}
                             className={`rounded-xl border transition-all duration-300 overflow-hidden ${
                               isOpen 
-                                ? "bg-black/60 border-[#06a34f]/40 shadow-[0_0_20px_rgba(6,163,79,0.1)]" 
-                                : "bg-black/30 border-white/10 hover:border-white/20"
+                                ? "bg-gray-50/80 border-[#06a34f]/40 shadow-[0_0_20px_rgba(6,163,79,0.1)]" 
+                                : "bg-gray-100 border-gray-200 hover:border-gray-300"
                             }`}
                           >
                             <button
@@ -238,7 +238,7 @@ export default function FAQS_page() {
                               className="w-full flex items-start justify-between gap-3 px-4 py-3.5 text-left"
                             >
                               <span className={`text-sm font-medium transition-colors ${
-                                isOpen ? "text-[#06a34f]" : "text-white/90"
+                                isOpen ? "text-[#06a34f]" : "text-gray-700"
                               }`}>
                                 {item.q}
                               </span>
@@ -247,7 +247,7 @@ export default function FAQS_page() {
                                 className={`flex-shrink-0 mt-0.5 transition-all duration-300 ${
                                   isOpen 
                                     ? "rotate-180 text-[#06a34f]" 
-                                    : "text-white/40"
+                                    : "text-gray-400"
                                 }`}
                               />
                             </button>
@@ -256,7 +256,7 @@ export default function FAQS_page() {
                               isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                             }`}>
                               <div className="overflow-hidden">
-                                <p className="px-4 pb-4 text-sm text-white/60 leading-relaxed">
+                                <p className="px-4 pb-4 text-sm text-gray-500 leading-relaxed">
                                   {item.a}
                                 </p>
                               </div>
@@ -275,7 +275,7 @@ export default function FAQS_page() {
         {/* ============== CONTACT TAB ============== */}
         {activeTab === "contact" && (
           <div className="max-w-2xl mx-auto animate-fadeIn">
-            <div className="relative rounded-3xl bg-gradient-to-b from-[#111] to-[#080808] border border-white/10 overflow-hidden">
+            <div className="relative rounded-3xl bg-white border border-gray-200 overflow-hidden">
               {/* Decorative top gradient */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#06a34f] to-transparent" />
               
@@ -284,10 +284,10 @@ export default function FAQS_page() {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#06a34f]/10 border border-[#06a34f]/30 mb-4">
                     <Send size={28} className="text-[#06a34f]" />
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
                     Get in Touch
                   </h3>
-                  <p className="text-white/50 text-sm">
+                  <p className="text-gray-500 text-sm">
                     Our team typically responds within 24 hours
                   </p>
                 </div>
@@ -295,11 +295,11 @@ export default function FAQS_page() {
                 <form onSubmit={handleContactSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="relative">
-                      <label className="block text-xs font-semibold uppercase text-white/40 mb-2 tracking-wider">
+                      <label className="block text-xs font-semibold uppercase text-gray-400 mb-2 tracking-wider">
                         Your Name
                       </label>
                       <div className="relative">
-                        <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+                        <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input
                           type="text"
                           name="name"
@@ -307,16 +307,16 @@ export default function FAQS_page() {
                           onChange={handleContactChange}
                           required
                           placeholder="John Doe"
-                          className="w-full bg-black/50 text-white border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all placeholder:text-white/20"
+                          className="w-full bg-gray-100 text-gray-800 border border-gray-200 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all placeholder:text-gray-300"
                         />
                       </div>
                     </div>
                     <div className="relative">
-                      <label className="block text-xs font-semibold uppercase text-white/40 mb-2 tracking-wider">
+                      <label className="block text-xs font-semibold uppercase text-gray-400 mb-2 tracking-wider">
                         Email Address
                       </label>
                       <div className="relative">
-                        <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+                        <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input
                           type="email"
                           name="email"
@@ -324,18 +324,18 @@ export default function FAQS_page() {
                           onChange={handleContactChange}
                           required
                           placeholder="john@example.com"
-                          className="w-full bg-black/50 text-white border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all placeholder:text-white/20"
+                          className="w-full bg-gray-100 text-gray-800 border border-gray-200 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all placeholder:text-gray-300"
                         />
                       </div>
                     </div>
                   </div>
 
                   <div className="relative">
-                    <label className="block text-xs font-semibold uppercase text-white/40 mb-2 tracking-wider">
+                    <label className="block text-xs font-semibold uppercase text-gray-400 mb-2 tracking-wider">
                       Subject
                     </label>
                     <div className="relative">
-                      <FileText size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+                      <FileText size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                       <input
                         type="text"
                         name="subject"
@@ -343,17 +343,17 @@ export default function FAQS_page() {
                         onChange={handleContactChange}
                         required
                         placeholder="How can we help?"
-                        className="w-full bg-black/50 text-white border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all placeholder:text-white/20"
+                        className="w-full bg-gray-100 text-gray-800 border border-gray-200 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all placeholder:text-gray-300"
                       />
                     </div>
                   </div>
 
                   <div className="relative">
-                    <label className="block text-xs font-semibold uppercase text-white/40 mb-2 tracking-wider">
+                    <label className="block text-xs font-semibold uppercase text-gray-400 mb-2 tracking-wider">
                       Message
                     </label>
                     <div className="relative">
-                      <MessageSquare size={16} className="absolute left-4 top-4 text-white/30" />
+                      <MessageSquare size={16} className="absolute left-4 top-4 text-gray-400" />
                       <textarea
                         name="message"
                         rows={4}
@@ -361,7 +361,7 @@ export default function FAQS_page() {
                         onChange={handleContactChange}
                         required
                         placeholder="Tell us more about your inquiry..."
-                        className="w-full bg-black/50 text-white border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all resize-none placeholder:text-white/20"
+                        className="w-full bg-gray-100 text-gray-800 border border-gray-200 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#06a34f]/50 focus:shadow-[0_0_20px_rgba(6,163,79,0.1)] transition-all resize-none placeholder:text-gray-300"
                       />
                     </div>
                   </div>
@@ -410,10 +410,10 @@ export default function FAQS_page() {
           ].map((stat, i) => (
             <div 
               key={i}
-              className="text-center p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-[#06a34f]/20 transition-colors"
+              className="text-center p-4 rounded-2xl bg-gray-100 border border-gray-200 hover:border-[#06a34f]/20 transition-colors"
             >
               <p className="text-2xl sm:text-3xl font-black text-[#06a34f]">{stat.value}</p>
-              <p className="text-xs text-white/40 mt-1">{stat.label}</p>
+              <p className="text-xs text-gray-400 mt-1">{stat.label}</p>
             </div>
           ))}
         </div>

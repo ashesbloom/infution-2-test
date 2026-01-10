@@ -96,19 +96,19 @@ const Register = () => {
 
   return (
     <>
-    <div className="min-h-screen w-full overflow-y-auto bg-gradient-to-b from-zinc-900 via-zinc-950 to-black flex items-start justify-center p-4 sm:p-6 md:p-8 pt-16 font-sans relative">
+    <div className="min-h-screen w-full overflow-y-auto bg-gradient-to-b from-gray-50 via-gray-100 to-white flex items-start justify-center p-4 sm:p-6 md:p-8 pt-16 font-sans relative">
 
 
         {/* Background doodles */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none hidden md:block">
           <div className="absolute inset-0 opacity-[0.12] z-0">
             <Dumbbell className="absolute top-8 left-8 w-20 h-20 -rotate-12 text-emerald-500" />
-            <Target className="absolute top-6 left-[30%] w-12 h-12 rotate-12 text-emerald-400" />
-            <Zap className="absolute top-16 left-[45%] w-10 h-10 -rotate-12 text-emerald-300" />
+            <Target className="absolute top-6 left-[30%] w-12 h-12 rotate-12 text-emerald-600" />
+            <Zap className="absolute top-16 left-[45%] w-10 h-10 -rotate-12 text-emerald-600" />
             <Flame className="absolute top-6 right-[30%] w-16 h-16 rotate-6 text-emerald-600" />
             <Trophy className="absolute top-8 right-16 w-24 h-24 rotate-12 text-emerald-500" />
             <Heart className="absolute bottom-[30%] left-[35%] w-10 h-10 rotate-12 text-emerald-500" />
-            <Star className="absolute bottom-8 left-[45%] w-10 h-10 rotate-45 text-emerald-400" />
+            <Star className="absolute bottom-8 left-[45%] w-10 h-10 rotate-45 text-emerald-600" />
           </div>
         </div>
 
@@ -116,8 +116,8 @@ const Register = () => {
         <div
           className="
             w-full max-w-sm 
-            bg-black/80 
-            border border-white/10 
+            bg-white/95 
+            border border-gray-200 
             rounded-2xl 
             backdrop-blur-xl 
             px-4 py-6 
@@ -153,12 +153,12 @@ const Register = () => {
           {/* FORM */}
           <form onSubmit={handleRegister} className="space-y-2">
             <div>
-              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-400">
+              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-500">
                 Full Name
               </label>
               <input
                 type="text"
-                className="w-full px-3 py-2 rounded-lg bg-transparent text-white border border-neutral-800 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
+                className="w-full px-3 py-2 rounded-lg bg-transparent text-gray-800 border border-gray-300 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
                 placeholder="Enter your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -166,12 +166,12 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-400">
+              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-500">
                 Email Address
               </label>
               <input
                 type="email"
-                className="w-full px-3 py-2 rounded-lg bg-transparent text-white border border-neutral-800 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
+                className="w-full px-3 py-2 rounded-lg bg-transparent text-gray-800 border border-gray-300 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
                 placeholder="you@mail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -179,12 +179,12 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-400">
+              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-500">
                 Password
               </label>
               <input
                 type="password"
-                className="w-full px-3 py-2 rounded-lg bg-transparent text-white border border-neutral-800 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
+                className="w-full px-3 py-2 rounded-lg bg-transparent text-gray-800 border border-gray-300 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
                 placeholder="Ex: Pass@123"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -192,12 +192,12 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-400">
+              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-500">
                 Confirm Password
               </label>
               <input
                 type="password"
-                className="w-full px-3 py-2 rounded-lg bg-transparent text-white border border-neutral-800 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
+                className="w-full px-3 py-2 rounded-lg bg-transparent text-gray-800 border border-gray-300 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
                 placeholder="Confirm password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -205,28 +205,28 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-400">
+              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-500">
                 Security Question
               </label>
               <select
-                className="w-full px-3 py-2 rounded-lg bg-transparent text-white border border-neutral-800 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
+                className="w-full px-3 py-2 rounded-lg bg-transparent text-gray-800 border border-gray-300 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
                 value={securityQuestion}
                 onChange={(e) => setSecurityQuestion(e.target.value)}
               >
-                <option className="bg-black text-white">What is your favorite sport?</option>
-                <option className="bg-black text-white">What is your favorite movie?</option>
-                <option className="bg-black text-white">What is your childhood nickname?</option>
-                <option className="bg-black text-white">What is your favourite teacher&apos;s name?</option>
+                <option className="bg-white text-gray-800">What is your favorite sport?</option>
+                <option className="bg-white text-gray-800">What is your favorite movie?</option>
+                <option className="bg-white text-gray-800">What is your childhood nickname?</option>
+                <option className="bg-white text-gray-800">What is your favourite teacher&apos;s name?</option>
               </select>
             </div>
 
             <div>
-              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-400">
+              <label className="block mb-1 text-[10px] font-semibold uppercase text-gray-500">
                 Security Answer
               </label>
               <input
                 type="text"
-                className="w-full px-3 py-2 rounded-lg bg-transparent text-white border border-neutral-800 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
+                className="w-full px-3 py-2 rounded-lg bg-transparent text-gray-800 border border-gray-300 focus:border-[#06a34f] focus:ring-[#06a34f] text-sm"
                 placeholder="Your answer"
                 value={securityAnswer}
                 onChange={(e) => setSecurityAnswer(e.target.value)}

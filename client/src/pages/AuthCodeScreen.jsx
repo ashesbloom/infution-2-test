@@ -133,7 +133,7 @@ const AuthCodeScreen = () => {
           className={`px-4 py-2 rounded text-sm font-semibold ${
             tab === "generate"
               ? "bg-emerald-500 text-black"
-              : "bg-gray-800 text-gray-200"
+              : "bg-gray-800 text-gray-600"
           }`}
           onClick={() => setTab("generate")}
         >
@@ -143,7 +143,7 @@ const AuthCodeScreen = () => {
           className={`px-4 py-2 rounded text-sm font-semibold ${
             tab === "list"
               ? "bg-emerald-500 text-black"
-              : "bg-gray-800 text-gray-200"
+              : "bg-gray-800 text-gray-600"
           }`}
           onClick={() => {
             setTab("list");
@@ -156,7 +156,7 @@ const AuthCodeScreen = () => {
           className={`px-4 py-2 rounded text-sm font-semibold ${
             tab === "verify"
               ? "bg-emerald-500 text-black"
-              : "bg-gray-800 text-gray-200"
+              : "bg-gray-800 text-gray-600"
           }`}
           onClick={() => setTab("verify")}
         >
@@ -166,7 +166,7 @@ const AuthCodeScreen = () => {
 
       {/* -------- Generate Tab -------- */}
       {tab === "generate" && (
-        <div className="bg-gray-900 rounded-lg p-6 shadow">
+        <div className="bg-white rounded-lg p-6 shadow">
           <h3 className="text-lg font-semibold mb-4">Generate Codes</h3>
           <form onSubmit={generateCodes} className="space-y-4">
             <div>
@@ -174,7 +174,7 @@ const AuthCodeScreen = () => {
               <input
                 type="number"
                 min="1"
-                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm"
+                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-300 text-sm"
                 value={count}
                 onChange={(e) => setCount(e.target.value)}
               />
@@ -185,7 +185,7 @@ const AuthCodeScreen = () => {
               <input
                 type="number"
                 min="4"
-                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm"
+                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-300 text-sm"
                 value={length}
                 onChange={(e) => setLength(e.target.value)}
               />
@@ -196,7 +196,7 @@ const AuthCodeScreen = () => {
                 Product ID (optional – link codes to product)
               </label>
               <input
-                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm"
+                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-300 text-sm"
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
               />
@@ -215,7 +215,7 @@ const AuthCodeScreen = () => {
 
       {/* -------- List Tab -------- */}
       {tab === "list" && (
-        <div className="bg-gray-900 rounded-lg p-6 shadow">
+        <div className="bg-white rounded-lg p-6 shadow">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold">Codes List</h3>
             <button
@@ -228,7 +228,7 @@ const AuthCodeScreen = () => {
 
           <div className="flex gap-2 mb-4">
             <select
-              className="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm"
+              className="px-3 py-2 rounded bg-gray-800 border border-gray-300 text-sm"
               value={filterUsed}
               onChange={(e) => setFilterUsed(e.target.value)}
             >
@@ -245,12 +245,12 @@ const AuthCodeScreen = () => {
           </div>
 
           {loadingList ? (
-            <p className="text-sm text-gray-400">Loading…</p>
+            <p className="text-sm text-gray-500">Loading…</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-700 text-gray-300">
+                  <tr className="border-b border-gray-300 text-gray-500">
                     <th className="text-left py-2 px-2">Code</th>
                     <th className="text-left py-2 px-2">Product</th>
                     <th className="text-left py-2 px-2">Used</th>
@@ -271,7 +271,7 @@ const AuthCodeScreen = () => {
                   {codes.map((c) => (
                     <tr
                       key={c._id}
-                      className="border-b border-gray-800 hover:bg-gray-800/40"
+                      className="border-b border-gray-200 hover:bg-gray-100/40"
                     >
                       <td className="py-2 px-2 font-mono text-xs">{c.code}</td>
                       <td className="py-2 px-2 text-xs">
@@ -296,13 +296,13 @@ const AuthCodeScreen = () => {
 
       {/* -------- Verify Tab -------- */}
       {tab === "verify" && (
-        <div className="bg-gray-900 rounded-lg p-6 shadow">
+        <div className="bg-white rounded-lg p-6 shadow">
           <h3 className="text-lg font-semibold mb-4">Verify Code</h3>
           <form onSubmit={verifyHandler} className="space-y-4">
             <div>
               <label className="block text-sm mb-1">Code</label>
               <input
-                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm"
+                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-300 text-sm"
                 value={verifyCode}
                 onChange={(e) => setVerifyCode(e.target.value)}
               />
@@ -318,7 +318,7 @@ const AuthCodeScreen = () => {
           </form>
 
           {verifyResult && (
-            <div className="mt-4 rounded bg-gray-800 px-4 py-3 text-xs font-mono text-gray-100">
+            <div className="mt-4 rounded bg-gray-800 px-4 py-3 text-xs font-mono text-gray-700">
               <pre>{JSON.stringify(verifyResult, null, 2)}</pre>
             </div>
           )}

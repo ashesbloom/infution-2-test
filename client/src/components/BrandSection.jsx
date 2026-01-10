@@ -72,16 +72,16 @@ const BrandSection = ({ brandName, products = [], onAddToCart }) => {
               <IconComponent className="text-[#06a34f]" size={20} />
             </div>
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black text-gray-800 uppercase tracking-tight">
                 {brandName}
               </h2>
-              <p className="text-white/50 text-xs sm:text-sm">{config.tagline}</p>
+              <p className="text-gray-500 text-xs sm:text-sm">{config.tagline}</p>
             </div>
           </div>
 
           <button
             onClick={() => navigate(`/products?brand=${encodeURIComponent(brandName)}`)}
-            className="group flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-white/70 text-sm font-medium hover:bg-[#06a34f]/10 hover:border-[#06a34f]/30 hover:text-[#06a34f] transition-all self-start sm:self-auto"
+            className="group flex items-center gap-2 px-4 py-2 bg-gray-100 border border-gray-200 rounded-full text-gray-600 text-sm font-medium hover:bg-[#06a34f]/10 hover:border-[#06a34f]/30 hover:text-[#06a34f] transition-all self-start sm:self-auto"
           >
             View All
             <ChevronRight

@@ -60,7 +60,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
             {/* BLURRED OVERLAY */}
             <div
                 onClick={onClose}
-                className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity ${isOpen
+                className={`fixed inset-0 bg-gray-50/80 backdrop-blur-sm transition-opacity ${isOpen
                         ? 'opacity-100 pointer-events-auto'
                         : 'opacity-0 pointer-events-none'
                     } z-40`}
@@ -68,11 +68,11 @@ const CartSidebar = ({ isOpen, onClose }) => {
 
             {/* SIDEBAR */}
             <div
-                className={`fixed top-0 right-0 h-full w-80 sm:w-96 max-w-full bg-[#050505] text-white shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-0 right-0 h-full w-80 sm:w-96 max-w-full bg-white text-gray-800 shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'
                     } z-50 flex flex-col`}
             >
                 {/* HEADER */}
-                <div className="h-16 px-4 flex items-center justify-between border-b border-gray-800 bg-black/60">
+                <div className="h-16 px-4 flex items-center justify-between border-b border-gray-200 bg-gray-50">
                     <div className="flex flex-col">
                         <h2 className="text-lg font-bold tracking-wide">Your Cart</h2>
                         {isAdmin && (
@@ -82,9 +82,9 @@ const CartSidebar = ({ isOpen, onClose }) => {
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-1 rounded-full hover:bg-gray-800 transition-colors"
+                        className="p-1 rounded-full hover:bg-gray-100 transition-colors"
                     >
-                        <X size={20} className="text-gray-300" />
+                        <X size={20} className="text-gray-500" />
                     </button>
                 </div>
 
@@ -93,7 +93,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                     {/* ITEMS LIST */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-3">
                         {cartItems.length === 0 ? (
-                            <p className="text-gray-400 text-center mt-10">
+                            <p className="text-gray-500 text-center mt-10">
                                 Your cart is empty
                             </p>
                         ) : (
@@ -107,7 +107,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                 return (
                                     <div
                                         key={item._id}
-                                        className="flex gap-3 items-center bg-black/70 rounded-xl p-3 border border-gray-800 hover:border-[#06a34f]/70 transition-colors"
+                                        className="flex gap-3 items-center bg-gray-50 rounded-xl p-3 border border-gray-200 hover:border-[#06a34f] transition-colors"
                                     >
                                         {/* ✅ Selection checkbox */}
                                         <input
@@ -125,7 +125,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                         <img
                                             src={item.image}
                                             alt={item.name}
-                                            className="w-14 h-14 object-contain rounded-lg bg-black flex-shrink-0 border border-gray-800"
+                                            className="w-14 h-14 object-contain rounded-lg bg-white flex-shrink-0 border border-gray-200"
                                         />
 
                                         <div className="flex-1 min-w-0">
@@ -153,8 +153,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                     }}
                                                     disabled={isAdmin}
                                                     className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition ${isAdmin
-                                                            ? 'bg-gray-900 text-gray-500 cursor-not-allowed'
-                                                            : 'bg-gray-800 hover:bg-gray-700'
+                                                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                                            : 'bg-gray-200 hover:bg-gray-300'
                                                         }`}
                                                 >
                                                     -
@@ -164,7 +164,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                     value={item.qty}
                                                     onChange={(e) => addToCart(item, Number(e.target.value))}
                                                     disabled={isAdmin || maxQty === 0} // Disabled if maxQty is 0
-                                                    className="text-sm font-semibold w-16 text-center bg-transparent border border-gray-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    className="text-sm font-semibold w-16 text-center bg-transparent border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     {/* MODIFIED: Limit options array to maxQty */}
                                                     {/* We generate options from 1 up to maxQty. If maxQty is 0, we show 1 option to display the current qty */}
@@ -184,8 +184,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                                     // MODIFIED: Disable if already at max stock or if stock is 0
                                                     disabled={isAdmin || isMaxed || maxQty === 0}
                                                     className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition ${isAdmin || isMaxed || maxQty === 0
-                                                            ? 'bg-gray-900 text-gray-500 cursor-not-allowed'
-                                                            : 'bg-gray-800 hover:bg-gray-700'
+                                                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                                            : 'bg-gray-200 hover:bg-gray-300'
                                                         }`}
                                                 >
                                                     +
@@ -216,9 +216,9 @@ const CartSidebar = ({ isOpen, onClose }) => {
                     </div>
 
                     {/* FOOTER: subtotal + proceed button */}
-                    <div className="border-t border-gray-800 px-4 py-3 bg-black/70">
+                    <div className="border-t border-gray-200 px-4 py-3 bg-gray-50">
                         <div className="flex justify-between text-sm mb-2">
-                            <span className="text-gray-300">
+                            <span className="text-gray-600">
                                 Subtotal ({itemsCount} item{itemsCount !== 1 ? 's' : ''})
                             </span>
                             <span className="font-bold text-[#06a34f]">
@@ -237,7 +237,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                             onClick={handleCheckout}
                             disabled={selectedItems.length === 0 || isAdmin}
                             className={`w-full mt-1 py-2 text-sm font-bold uppercase tracking-widest rounded-md transition-colors ${selectedItems.length === 0 || isAdmin
-                                    ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
+                                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                                     : 'bg-[#06a34f] text-white hover:bg-[#058a42]'
                                 }`}
                         >

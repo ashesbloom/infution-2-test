@@ -41,7 +41,7 @@ router.post(
       price,
       description,
       image,
-      images,        // ✅ NEW: array of images
+      images,        
       brand,
       category,
       countInStock,
@@ -56,10 +56,10 @@ router.post(
       price: Number(price),
       user: req.user._id,
 
-      // ✅ main image (backward compatible)
+      //  main image (backward compatible)
       image: image || allImages[0] || '',
 
-      // ✅ store all image paths here
+      //  store all image paths here
       images: allImages,
 
       // default brand + description so mongoose "required" doesn’t fail
@@ -69,7 +69,7 @@ router.post(
       numReviews: 0,
       description: (description && description.trim()) || 'N/A',
 
-      // ✅ save weight
+      //  save weight
       weight: weight || '1 kg', // or just `weight` if you don't want a default
     });
 
@@ -107,7 +107,7 @@ router.put(
       price,
       description,
       image,
-      images,        // ✅ NEW: images array on update too
+      images,       
       brand,
       category,
       countInStock,
@@ -127,12 +127,12 @@ router.put(
       product.description =
         description !== undefined ? description : product.description;
 
-      // ✅ main image
+      
       if (image !== undefined) {
         product.image = image;
       }
 
-      // ✅ update images array if provided
+      //  update images array if provided
       if (Array.isArray(images)) {
         product.images = images;
 
@@ -150,7 +150,7 @@ router.put(
           ? Number(countInStock)
           : product.countInStock;
 
-      // ✅ update weight if sent
+      //  update weight if sent
       if (weight !== undefined) {
         product.weight = weight;
       }

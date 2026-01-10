@@ -141,7 +141,7 @@ const ProfileScreen = () => {
 
   if (loadingProfile) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="min-h-screen bg-white text-gray-800 flex items-center justify-center">
         Loading profile...
       </div>
     );
@@ -161,7 +161,7 @@ const ProfileScreen = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-black text-white">
+    <div className="min-h-screen w-full bg-white text-gray-800">
       {/* ⬇️ reduced top padding here */}
       <div className="max-w-2xl mx-auto px-4 pt-4 pb-10">
         <h1 className="text-2xl md:text-3xl font-black mb-4 tracking-tight">
@@ -169,13 +169,13 @@ const ProfileScreen = () => {
         </h1>
 
         {error && (
-          <div className="mb-4 bg-red-900/40 text-red-200 px-4 py-2 rounded-lg border border-red-500/50 text-sm">
+          <div className="mb-4 bg-red-50 text-red-600 px-4 py-2 rounded-lg border border-red-500/50 text-sm">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="mb-4 bg-emerald-900/40 text-emerald-200 px-4 py-2 rounded-lg border border-emerald-500/50 text-sm">
+          <div className="mb-4 bg-emerald-50 text-emerald-600 px-4 py-2 rounded-lg border border-emerald-500/50 text-sm">
             {success}
           </div>
         )}
@@ -183,20 +183,20 @@ const ProfileScreen = () => {
         {/* BASIC INFO ONLY */}
         <form
           onSubmit={submitHandler}
-          className="bg-[#060606] rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.85)] border border-white/10 p-6 md:p-8 space-y-8"
+          className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 md:p-8 space-y-8"
         >
           <div>
-            <h2 className="text-lg font-semibold mb-4 border-b border-white/10 pb-2 uppercase tracking-[0.15em] text-zinc-200">
+            <h2 className="text-lg font-semibold mb-4 border-b border-gray-200 pb-2 uppercase tracking-[0.15em] text-gray-700">
               Basic Information
             </h2>
 
             <div className="mb-4">
-              <label className="block text-xs font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+              <label className="block text-xs font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
                 Name
               </label>
               <input
                 type="text"
-                className="w-full bg-[#111111] border border-zinc-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#06a34f]"
+                className="w-full bg-gray-50 border border-gray-300 rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#06a34f]"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -204,16 +204,16 @@ const ProfileScreen = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-xs font-semibold mb-2 uppercase tracking-[0.2em] text-zinc-400">
+              <label className="block text-xs font-semibold mb-2 uppercase tracking-[0.2em] text-gray-500">
                 Email
               </label>
               <input
                 type="email"
-                className="w-full bg-[#080808] border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-400 cursor-not-allowed"
+                className="w-full bg-gray-100 border border-gray-200 rounded px-3 py-2 text-sm text-gray-500 cursor-not-allowed"
                 value={email}
                 disabled
               />
-              <p className="text-[10px] text-zinc-500 mt-1">
+              <p className="text-[10px] text-gray-500 mt-1">
                 Email is used for login and cannot be changed.
               </p>
             </div>
@@ -222,51 +222,51 @@ const ProfileScreen = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#06a34f] hover:bg-[#058a42] text-white font-black py-3 rounded-md text-xs uppercase tracking-[0.3em] disabled:opacity-60 transition shadow-[0_0_25px_rgba(6,163,79,0.6)]"
+            className="w-full bg-[#06a34f] hover:bg-[#058a42] text-gray-800 font-black py-3 rounded-md text-xs uppercase tracking-[0.3em] disabled:opacity-60 transition shadow-[0_0_25px_rgba(6,163,79,0.6)]"
           >
             {loading ? 'Updating...' : 'Update Profile'}
           </button>
         </form>
 
         {/* ACCOUNT STATS SECTION */}
-        <div className="mt-8 bg-[#050505] rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.9)] p-6 md:p-7">
-          <h2 className="text-lg md:text-xl font-semibold uppercase tracking-[0.18em] text-zinc-200 border-b border-white/10 pb-3">
+        <div className="mt-8 bg-white rounded-2xl border border-gray-200 shadow-lg p-6 md:p-7">
+          <h2 className="text-lg md:text-xl font-semibold uppercase tracking-[0.18em] text-gray-700 border-b border-gray-200 pb-3">
             Order Overview
           </h2>
 
-          <p className="mt-2 text-[11px] md:text-xs text-zinc-500 italic">
+          <p className="mt-2 text-[11px] md:text-xs text-gray-500 italic">
             Since you created your account on{' '}
             <span className="text-emerald-500">{createdDateText}</span>
           </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* TOTAL ORDERS */}
-            <div className="bg-[#0b0b0b] border border-white/15 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_18px_rgba(255,255,255,0.08)]">
-              <span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-zinc-400">
+            <div className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_18px_rgba(255,255,255,0.08)]">
+              <span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-gray-500">
                 Total Orders
               </span>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-3xl md:text-4xl font-black text-white">
+                <span className="text-3xl md:text-4xl font-black text-gray-800">
                   {loadingStats ? '—' : totalOrders}
                 </span>
               </div>
             </div>
 
             {/* DELIVERED */}
-            <div className="bg-[#0b0b0b] border border-emerald-500/40 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_22px_rgba(16,185,129,0.25)]">
-              <span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-zinc-400">
+            <div className="bg-gray-50 border border-emerald-500/40 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_22px_rgba(16,185,129,0.25)]">
+              <span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-gray-500">
                 Delivered
               </span>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-3xl md:text-4xl font-black text-emerald-400">
+                <span className="text-3xl md:text-4xl font-black text-emerald-600">
                   {loadingStats ? '—' : deliveredCount}
                 </span>
               </div>
             </div>
 
             {/* PENDING */}
-            <div className="bg-[#0b0b0b] border border-emerald-500/40 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_22px_rgba(6,163,79,0.25)]">
-              <span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-zinc-400">
+            <div className="bg-gray-50 border border-emerald-500/40 rounded-xl px-4 py-4 flex flex-col justify-between shadow-[0_0_22px_rgba(6,163,79,0.25)]">
+              <span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-gray-500">
                 Pending
               </span>
               <div className="mt-2 flex items-baseline gap-2">
@@ -274,7 +274,7 @@ const ProfileScreen = () => {
                   {loadingStats ? '—' : pendingCount}
                 </span>
               </div>
-              <p className="mt-2 text-[10px] text-zinc-500">
+              <p className="mt-2 text-[10px] text-gray-500">
                 Orders that haven&apos;t been marked as delivered yet.
               </p>
             </div>

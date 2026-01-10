@@ -138,24 +138,24 @@ const ProductEditScreen = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen w-full bg-black text-gray-300 flex items-center justify-center">
+      <div className="min-h-screen w-full bg-white text-gray-500 flex items-center justify-center">
         Loading...
       </div>
     );
 
   if (error)
     return (
-      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center px-4 text-center">
+      <div className="min-h-screen w-full bg-white text-red-500 flex items-center justify-center px-4 text-center">
         Error: {error}
       </div>
     );
 
   return (
-    <div className="min-h-screen w-full bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white text-gray-800 overflow-x-hidden">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <Link
           to="/admin/productlist"
-          className="text-sm sm:text-base text-gray-400 hover:text-emerald-500 transition-colors inline-flex items-center gap-1 mb-4"
+          className="text-sm sm:text-base text-gray-500 hover:text-emerald-500 transition-colors inline-flex items-center gap-1 mb-4"
         >
           <span className="text-lg">&larr;</span>
           Go Back
@@ -167,37 +167,37 @@ const ProductEditScreen = () => {
 
         <form
           onSubmit={submitHandler}
-          className="bg-[#050814] border border-white/10 rounded-2xl shadow-2xl px-5 sm:px-8 py-6 sm:py-8 space-y-5"
+          className="bg-gray-50 border border-gray-200 rounded-2xl shadow-2xl px-5 sm:px-8 py-6 sm:py-8 space-y-5"
         >
           {/* NAME */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Name
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
           {/* PRICE */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Price
             </label>
             <input
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
           {/* IMAGE 1 */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Image URL (Primary)
             </label>
             <input
@@ -205,7 +205,7 @@ const ProductEditScreen = () => {
               value={image}
               onChange={(e) => setImage(e.target.value)}
               placeholder="https:// or /uploads/filename.jpg"
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -213,20 +213,20 @@ const ProductEditScreen = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => uploadFileHandler(e, setImage)}
-                className="text-xs sm:text-sm text-gray-200"
+                className="text-xs sm:text-sm text-gray-600"
               />
               {uploading && (
-                <span className="text-xs text-gray-400">Uploading...</span>
+                <span className="text-xs text-gray-500">Uploading...</span>
               )}
             </div>
 
             {image && (
               <div className="mt-3">
-                <p className="text-[11px] text-gray-400 mb-1">Preview:</p>
+                <p className="text-[11px] text-gray-500 mb-1">Preview:</p>
                 <img
                   src={image}
                   alt="Product 1"
-                  className="h-24 rounded-md border border-white/10 object-contain bg-black"
+                  className="h-24 rounded-md border border-gray-200 object-contain bg-white"
                 />
               </div>
             )}
@@ -234,7 +234,7 @@ const ProductEditScreen = () => {
 
           {/* IMAGE 2 */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Image URL 2 (Optional)
             </label>
             <input
@@ -242,7 +242,7 @@ const ProductEditScreen = () => {
               value={image2}
               onChange={(e) => setImage2(e.target.value)}
               placeholder="Additional image URL"
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -250,20 +250,20 @@ const ProductEditScreen = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => uploadFileHandler(e, setImage2)}
-                className="text-xs sm:text-sm text-gray-200"
+                className="text-xs sm:text-sm text-gray-600"
               />
               {uploading && (
-                <span className="text-xs text-gray-400">Uploading...</span>
+                <span className="text-xs text-gray-500">Uploading...</span>
               )}
             </div>
 
             {image2 && (
               <div className="mt-3">
-                <p className="text-[11px] text-gray-400 mb-1">Preview 2:</p>
+                <p className="text-[11px] text-gray-500 mb-1">Preview 2:</p>
                 <img
                   src={image2}
                   alt="Product 2"
-                  className="h-24 rounded-md border border-white/10 object-contain bg-black"
+                  className="h-24 rounded-md border border-gray-200 object-contain bg-white"
                 />
               </div>
             )}
@@ -271,7 +271,7 @@ const ProductEditScreen = () => {
 
           {/* IMAGE 3 */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Image URL 3 (Optional)
             </label>
             <input
@@ -279,7 +279,7 @@ const ProductEditScreen = () => {
               value={image3}
               onChange={(e) => setImage3(e.target.value)}
               placeholder="Additional image URL"
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -287,20 +287,20 @@ const ProductEditScreen = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => uploadFileHandler(e, setImage3)}
-                className="text-xs sm:text-sm text-gray-200"
+                className="text-xs sm:text-sm text-gray-600"
               />
               {uploading && (
-                <span className="text-xs text-gray-400">Uploading...</span>
+                <span className="text-xs text-gray-500">Uploading...</span>
               )}
             </div>
 
             {image3 && (
               <div className="mt-3">
-                <p className="text-[11px] text-gray-400 mb-1">Preview 3:</p>
+                <p className="text-[11px] text-gray-500 mb-1">Preview 3:</p>
                 <img
                   src={image3}
                   alt="Product 3"
-                  className="h-24 rounded-md border border-white/10 object-contain bg-black"
+                  className="h-24 rounded-md border border-gray-200 object-contain bg-white"
                 />
               </div>
             )}
@@ -308,27 +308,27 @@ const ProductEditScreen = () => {
 
           {/* BRAND */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Brand
             </label>
             <input
               type="text"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
           {/* CATEGORY */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Category
             </label>
             <input
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
@@ -336,26 +336,26 @@ const ProductEditScreen = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* COUNT IN STOCK */}
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
                 Count In Stock
               </label>
               <input
                 type="number"
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
-                className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+                className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
               />
             </div>
 
             {/* ✅ WEIGHT */}
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
                 Weight
               </label>
               <select
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
-                className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+                className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
               >
                 <option value="1 kg">1 kg</option>
                 <option value="2 kg">2 kg</option>
@@ -365,19 +365,19 @@ const ProductEditScreen = () => {
 
           {/* DESCRIPTION */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-500 mb-2">
               Description
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-lg bg-[#020617] border border-white/10 py-2.5 px-3 sm:px-4 text-sm text-gray-100 h-24 resize-none focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
+              className="w-full rounded-lg bg-gray-50 border border-gray-200 py-2.5 px-3 sm:px-4 text-sm text-gray-700 h-24 resize-none focus:outline-none focus:border-[#06a34f] focus:ring-2 focus:ring-[#06a34f]/60 transition shadow-[0_0_0_rgba(0,0,0,0)] focus:shadow-[0_0_18px_rgba(6,163,79,0.35)]"
             />
           </div>
 
           <button
             type="submit"
-            className="mt-2 inline-flex items-center justify-center rounded-md bg-[#06a34f] px-6 sm:px-8 py-2.5 text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-white shadow-[0_0_0_rgba(0,0,0,0)] hover:bg-[#058a42] hover:shadow-[0_0_24px_rgba(6,163,79,0.6)] transition-all"
+            className="mt-2 inline-flex items-center justify-center rounded-md bg-[#06a34f] px-6 sm:px-8 py-2.5 text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-gray-800 shadow-[0_0_0_rgba(0,0,0,0)] hover:bg-[#058a42] hover:shadow-[0_0_24px_rgba(6,163,79,0.6)] transition-all"
           >
             Update Product
           </button>

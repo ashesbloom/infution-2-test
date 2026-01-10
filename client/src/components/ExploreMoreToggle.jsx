@@ -19,15 +19,15 @@ const ExploreMoreToggle = ({ brands = [], groupedProducts = {}, onAddToCart }) =
       {/* Toggle Button */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="mx-auto flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-white/5 to-white/10 border border-white/20 rounded-full text-white font-semibold hover:border-[#06a34f]/50 hover:from-[#06a34f]/5 hover:to-[#06a34f]/10 transition-all duration-300 group"
+        className="mx-auto flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-white/5 to-white/10 border border-white/20 rounded-full text-gray-800 font-semibold hover:border-[#06a34f]/50 hover:from-[#06a34f]/5 hover:to-[#06a34f]/10 transition-all duration-300 group"
       >
         <span>
           {isExpanded ? 'Show Less' : `Explore ${brandsWithProducts.length} More Brands`}
         </span>
         {isExpanded ? (
-          <ChevronUp size={18} className="text-white/60 group-hover:text-[#06a34f]" />
+          <ChevronUp size={18} className="text-gray-500 group-hover:text-[#06a34f]" />
         ) : (
-          <ChevronDown size={18} className="text-white/60 group-hover:text-[#06a34f]" />
+          <ChevronDown size={18} className="text-gray-500 group-hover:text-[#06a34f]" />
         )}
       </button>
 
@@ -39,7 +39,7 @@ const ExploreMoreToggle = ({ brands = [], groupedProducts = {}, onAddToCart }) =
       >
         <div className="space-y-6">
           {brandsWithProducts.map((brand) => (
-            <div key={brand} className="pt-4 first:pt-0 border-t border-white/5 first:border-t-0">
+            <div key={brand} className="pt-4 first:pt-0 border-t border-gray-200 first:border-t-0">
               <BrandSection
                 brandName={brand}
                 products={groupedProducts[brand] || []}

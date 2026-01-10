@@ -5,11 +5,11 @@ import Navbar from "../components/Navbar";
 
 
 const Section = ({ title, children }) => (
-  <div className="mb-10 border-l-2 border-white/10 pl-6 hover:border-emerald-500 transition-colors duration-300">
-    <h2 className="text-2xl font-black text-white uppercase italic mb-4 flex items-center gap-3">
+  <div className="mb-10 border-l-2 border-gray-200 pl-6 hover:border-emerald-500 transition-colors duration-300">
+    <h2 className="text-2xl font-black text-gray-800 uppercase italic mb-4 flex items-center gap-3">
       {title}
     </h2>
-    <div className="text-gray-400 leading-relaxed space-y-4 text-sm md:text-base">
+    <div className="text-gray-500 leading-relaxed space-y-4 text-sm md:text-base">
       {children}
     </div>
   </div>
@@ -21,29 +21,29 @@ function TermsPage() {
   }, []);
 
   return (
-    <div className="bg-black min-h-screen font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="bg-white min-h-screen font-sans selection:bg-emerald-500 selection:text-white">
       <Navbar />
 
       <div className="relative pt-3 pb-20 px-6 md:px-16 max-w-[1000px] mx-auto">
 
         {/* Header */}
-        <div className=" border-b border-white/10 pb-10">
-          <Link to="/" className="inline-flex items-center gap-2 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-6 hover:text-white transition-colors">
+        <div className=" border-b border-gray-200 pb-10">
+          <Link to="/" className="inline-flex items-center gap-2 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-6 hover:text-gray-800 transition-colors">
             <ArrowLeft size={14} /> Back to Home
           </Link>
-          <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic mb-4">
+          <h1 className="text-4xl md:text-6xl font-black text-gray-800 uppercase italic mb-4">
             Terms <span className="text-emerald-500">&</span> Conditions
           </h1>
           <p className="text-gray-500 text-sm">Last Updated: October 2025</p>
         </div>
 
         {/* Legal Content */}
-        <div className="bg-zinc-900/30 p-8 md:p-12 rounded-2xl border border-white/5 backdrop-blur-sm">
+        <div className="bg-gray-100/30 p-8 md:p-12 rounded-2xl border border-gray-200 backdrop-blur-sm">
 
           <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-lg mb-12 flex gap-4 items-start">
             <ShieldAlert className="text-emerald-500 shrink-0 mt-1" size={24} />
             <div>
-              <h3 className="text-white font-bold uppercase mb-2">Important Health Disclaimer</h3>
+              <h3 className="text-gray-800 font-bold uppercase mb-2">Important Health Disclaimer</h3>
               <p className="text-emerald-500/80 text-sm leading-relaxed">
                 The products and claims made about specific products on or through this site have not been evaluated by the FDA.
                 These products are not intended to diagnose, treat, cure, or prevent any disease.
@@ -79,7 +79,7 @@ function TermsPage() {
             <p>Nutry Health shall not be liable for any special or consequential damages that result from the use of, or the inability to use, the materials on this site or the performance of the products, even if Nutry Health has been advised of the possibility of such damages.</p>
           </Section>
 
-          <div className="mt-12 pt-8 border-t border-white/10 text-center">
+          <div className="mt-12 pt-8 border-t border-gray-200 text-center">
             <p className="text-gray-500 text-sm">
               Questions regarding these Terms should be sent to us at{" "}
               <a

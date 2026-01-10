@@ -97,7 +97,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-black text-white relative overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white text-gray-800 relative overflow-x-hidden">
       {/* Toast for cart actions */}
       {addedMessage && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#06a34f] text-white font-bold px-6 py-3 rounded-full shadow-[0_0_25px_rgba(6,163,79,0.7)] text-sm tracking-wide z-50 animate-fadeIn">
@@ -146,7 +146,7 @@ export default function Home() {
                 <h2 className="text-3xl sm:text-4xl font-black tracking-tight uppercase">
                   Shop by <span className="text-[#06a34f]">Brand</span>
                 </h2>
-                <p className="text-white/50 text-sm mt-2 max-w-md mx-auto">
+                <p className="text-gray-500 text-sm mt-2 max-w-md mx-auto">
                   Explore top-quality supplements from the world's most trusted brands
                 </p>
               </div>
@@ -154,7 +154,7 @@ export default function Home() {
               {/* FEATURED BRANDS */}
               <div className="space-y-6">
                 {FEATURED_BRANDS.map((brand) => (
-                  <div key={brand} className="pt-4 first:pt-0 border-t border-white/5 first:border-t-0">
+                  <div key={brand} className="pt-4 first:pt-0 border-t border-gray-200 first:border-t-0">
                     <BrandSection
                       brandName={brand}
                       products={groupedProducts[brand] || []}
@@ -173,7 +173,7 @@ export default function Home() {
 
               {/* ACCESSORIES SECTION */}
               {accessories.length > 0 && (
-                <div className="mt-12 pt-8 border-t border-white/5">
+                <div className="mt-12 pt-8 border-t border-gray-200">
                   <AccessoriesGrid
                     products={accessories}
                     onAddToCart={handleAddToCart}
@@ -206,12 +206,12 @@ export default function Home() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="rounded-2xl bg-gradient-to-b from-[#151515] to-[#050505] border border-white/5 px-5 py-4 sm:px-7 sm:py-6 shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col items-center text-center"
+                className="rounded-2xl bg-gradient-to-b from-white to-gray-50 border border-gray-200 px-5 py-4 sm:px-7 sm:py-6 shadow-xl flex flex-col items-center text-center"
               >
                 <h3 className="text-xs sm:text-sm font-semibold tracking-[0.25em] text-emerald-500 uppercase mb-2 sm:mb-3">
                   {item.title}
                 </h3>
-                <p className="text-[11px] sm:text-sm text-gray-300 leading-relaxed max-w-xs">
+                <p className="text-[11px] sm:text-sm text-gray-500 leading-relaxed max-w-xs">
                   {item.desc}
                 </p>
               </div>
@@ -219,7 +219,7 @@ export default function Home() {
           </div>
 
           {/* BENEFITS GRID */}
-          <div className="rounded-[40px] bg-gradient-to-b from-[#0b0b0b] via-[#080808] to-[#020202] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.9)] px-4 sm:px-10 py-12 relative overflow-hidden">
+          <div className="rounded-[40px] bg-gradient-to-b from-white via-gray-50 to-white border border-gray-200 shadow-2xl px-4 sm:px-10 py-12 relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center relative z-10">
               <div className="space-y-10 text-center lg:text-right">
                 {[
@@ -229,14 +229,14 @@ export default function Home() {
                 ].map((item, i) => (
                   <div key={i} className="space-y-2">
                     <div className="flex items-center justify-center lg:justify-end">
-                      <div className="h-10 w-10 rounded-full bg-emerald-500/10 border border-emerald-500/60 flex items-center justify-center text-emerald-400 text-lg">
+                      <div className="h-10 w-10 rounded-full bg-emerald-500/10 border border-emerald-500/60 flex items-center justify-center text-emerald-600 text-lg">
                         {item.icon}
                       </div>
                     </div>
                     <p className="text-xs font-semibold tracking-[0.25em] text-emerald-500 uppercase">
                       {item.title}
                     </p>
-                    <p className="mt-1 text-xs text-gray-300 leading-relaxed">
+                    <p className="mt-1 text-xs text-gray-500 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -244,7 +244,7 @@ export default function Home() {
               </div>
 
               <div className="flex items-center justify-center">
-                <div className="relative bg-gradient-to-b from-[#1a1a1a] to-black px-10 py-10 rounded-[32px] shadow-[0_36px_90px_rgba(0,0,0,1)] border border-white/10">
+                <div className="relative bg-gradient-to-b from-gray-50 to-gray-100 px-10 py-10 rounded-[32px] shadow-[0_36px_90px_rgba(0,0,0,1)] border border-gray-200">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#facc1540,transparent_70%)] blur-2xl" />
                   <img
                     src="/images/product_image.png"
@@ -262,14 +262,14 @@ export default function Home() {
                 ].map((item, i) => (
                   <div key={i} className="space-y-2">
                     <div className="flex items-center justify-center lg:justify-start">
-                      <div className="h-10 w-10 rounded-full bg-emerald-500/10 border border-emerald-500/60 flex items-center justify-center text-emerald-400 text-lg">
+                      <div className="h-10 w-10 rounded-full bg-emerald-500/10 border border-emerald-500/60 flex items-center justify-center text-emerald-600 text-lg">
                         {item.icon}
                       </div>
                     </div>
                     <p className="text-xs font-semibold tracking-[0.25em] text-emerald-500 uppercase">
                       {item.title}
                     </p>
-                    <p className="mt-1 text-xs text-gray-300 leading-relaxed">
+                    <p className="mt-1 text-xs text-gray-500 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -284,19 +284,19 @@ export default function Home() {
       <FAQS_page />
 
       {/* FOOTER */}
-      <footer className="w-full border-t border-white/10 bg-[#050505] px-4 md:px-8 lg:px-12 py-8 mt-10">
+      <footer className="w-full border-t border-gray-200 bg-white px-4 md:px-8 lg:px-12 py-8 mt-10">
         <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center sm:items-start justify-between gap-8">
           <div className="flex-1 flex flex-col items-center sm:items-start gap-4">
             <Link
               to="/"
-              className="text-2xl md:text-3xl font-black italic tracking-tighter text-white group"
+              className="text-2xl md:text-3xl font-black italic tracking-tighter text-gray-800 group"
             >
               Nutry
               <span className="text-emerald-500">Health</span>
               <span className="text-emerald-500 text-[12px] ml-1">®</span>
             </Link>
 
-            <p className="text-[12px] sm:text-sm text-gray-300 max-w-xs text-center sm:text-left leading-relaxed">
+            <p className="text-[12px] sm:text-sm text-gray-500 max-w-xs text-center sm:text-left leading-relaxed">
               Clean. Potent. Performance-focused formulas built with integrity.
             </p>
 
@@ -304,8 +304,8 @@ export default function Home() {
               {["IG", "X"].map((label) => (
                 <button
                   key={label}
-                  className="h-9 w-9 rounded-full bg-[#0b0b0b] border border-white/10 flex items-center justify-center 
-                       text-[11px] text-gray-300 hover:text-emerald-500 hover:border-emerald-500 transition"
+                  className="h-9 w-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center 
+                       text-[11px] text-gray-500 hover:text-emerald-500 hover:border-emerald-500 transition"
                 >
                   {label}
                 </button>
@@ -323,10 +323,10 @@ export default function Home() {
 
           <div className="flex-1 flex flex-col gap-5 items-center sm:items-end text-center sm:text-right">
             <div>
-              <h3 className="text-[12px] sm:text-sm font-semibold tracking-[0.22em] uppercase text-gray-200 mb-2">
+              <h3 className="text-[12px] sm:text-sm font-semibold tracking-[0.22em] uppercase text-gray-600 mb-2">
                 Contact
               </h3>
-              <p className="text-[12px] sm:text-sm text-gray-300">
+              <p className="text-[12px] sm:text-sm text-gray-500">
                 <span className="text-gray-500 mr-1">Email:</span>
                 <a
                   href="mailto:nutryhealthretail@gmail.com"
@@ -335,7 +335,7 @@ export default function Home() {
                   nutryhealthretail@gmail.com
                 </a>
               </p>
-              <p className="text-[12px] sm:text-sm text-gray-300">
+              <p className="text-[12px] sm:text-sm text-gray-500">
                 <span className="text-gray-500 mr-1">Phone:</span>
                 <a
                   href="tel:+919140946739"
@@ -353,21 +353,21 @@ export default function Home() {
                   navigate("/about");
                   window.scrollTo(0, 0);
                 }}
-                className="text-[12px] sm:text-sm font-semibold tracking-[0.22em] uppercase text-emerald-400 mb-2 hover:text-emerald-500 transition"
+                className="text-[12px] sm:text-sm font-semibold tracking-[0.22em] uppercase text-emerald-600 mb-2 hover:text-emerald-500 transition"
               >
                 About Us
               </button>
               <br />
               <button
                 onClick={scrollToSupport}
-                className="mt-3 text-[12px] sm:text-sm text-emerald-500 hover:text-emerald-400 underline underline-offset-4"
+                className="mt-3 text-[12px] sm:text-sm text-emerald-500 hover:text-emerald-600 underline underline-offset-4"
               >
                 Support & FAQs
               </button>
               <br />
               <button
                 onClick={() => navigate("/terms")}
-                className="mt-3 text-[12px] sm:text-sm text-emerald-500 hover:text-emerald-400 underline underline-offset-4"
+                className="mt-3 text-[12px] sm:text-sm text-emerald-500 hover:text-emerald-600 underline underline-offset-4"
               >
                 Terms & Conditions
               </button>
@@ -378,7 +378,7 @@ export default function Home() {
                   navigate("/privacy");
                   window.scrollTo(0, 0);
                 }}
-                className="mt-3 text-[12px] sm:text-sm text-emerald-500 hover:text-emerald-400 underline underline-offset-4"
+                className="mt-3 text-[12px] sm:text-sm text-emerald-500 hover:text-emerald-600 underline underline-offset-4"
               >
                 Privacy & Policy
               </button>
@@ -386,7 +386,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-8 pt-4 border-t border-white/10">
+        <div className="mt-8 pt-4 border-t border-gray-200">
           <p className="text-[11px] sm:text-[12px] text-gray-500 text-center">
             © 2025 Nutry Health Supplements Inc. All rights reserved.
           </p>

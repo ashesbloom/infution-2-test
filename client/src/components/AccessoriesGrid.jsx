@@ -51,14 +51,14 @@ const AccessoriesGrid = ({ products = [], onAddToCart }) => {
     <section className="py-8">
       {/* Section Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center">
           <Package className="text-[#06a34f]" size={20} />
         </div>
         <div>
-          <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-black text-gray-800 uppercase tracking-tight">
             Accessories
           </h2>
-          <p className="text-white/50 text-xs sm:text-sm">Gear up for your fitness journey</p>
+          <p className="text-gray-500 text-xs sm:text-sm">Gear up for your fitness journey</p>
         </div>
       </div>
 
@@ -67,12 +67,12 @@ const AccessoriesGrid = ({ products = [], onAddToCart }) => {
         {validProducts.map((product) => (
           <div
             key={product._id}
-            className={`${getCardClasses()} bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden hover:border-[#06a34f]/50 transition-all duration-300 group`}
+            className={`${getCardClasses()} bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-[#06a34f]/50 transition-all duration-300 group`}
           >
             {/* Image */}
             <div
               onClick={() => navigate(`/product/${product._id}`)}
-              className="relative h-32 sm:h-36 bg-white/5 flex items-center justify-center cursor-pointer overflow-hidden"
+              className="relative h-32 sm:h-36 bg-gray-100 flex items-center justify-center cursor-pointer overflow-hidden"
             >
               <img
                 src={product.image}
@@ -81,7 +81,7 @@ const AccessoriesGrid = ({ products = [], onAddToCart }) => {
               />
               {/* Out of Stock Badge */}
               {product.countInStock === 0 && (
-                <div className="absolute top-2 right-2 z-10 px-2 py-1 bg-red-600 text-white text-[9px] font-bold uppercase rounded-md shadow-lg">
+                <div className="absolute top-2 right-2 z-10 px-2 py-1 bg-red-600 text-gray-800 text-[9px] font-bold uppercase rounded-md shadow-lg">
                   Out of Stock
                 </div>
               )}
@@ -91,7 +91,7 @@ const AccessoriesGrid = ({ products = [], onAddToCart }) => {
             <div className="p-3 sm:p-4 space-y-2">
               <h3
                 onClick={() => navigate(`/product/${product._id}`)}
-                className="text-white font-semibold text-xs sm:text-sm line-clamp-2 cursor-pointer hover:text-[#06a34f] transition-colors min-h-[2.5rem]"
+                className="text-gray-800 font-semibold text-xs sm:text-sm line-clamp-2 cursor-pointer hover:text-[#06a34f] transition-colors min-h-[2.5rem]"
               >
                 {product.name}
               </h3>
@@ -101,7 +101,7 @@ const AccessoriesGrid = ({ products = [], onAddToCart }) => {
                   ₹{product.price?.toLocaleString()}
                 </span>
                 {product.weight && (
-                  <span className="text-white/40 text-[10px]">{product.weight}</span>
+                  <span className="text-gray-400 text-[10px]">{product.weight}</span>
                 )}
               </div>
 
@@ -110,7 +110,7 @@ const AccessoriesGrid = ({ products = [], onAddToCart }) => {
                 disabled={product.countInStock === 0}
                 className={`w-full py-2 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wide flex items-center justify-center gap-1.5 transition-all ${
                   product.countInStock === 0
-                    ? 'bg-white/10 text-white/30 cursor-not-allowed'
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     : 'bg-[#06a34f] text-white hover:bg-[#058a42] hover:shadow-[0_0_15px_rgba(6,163,79,0.3)]'
                 }`}
               >

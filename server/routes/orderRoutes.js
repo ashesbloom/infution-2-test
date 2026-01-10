@@ -12,24 +12,12 @@ const User = require('../models/User');
 const Product = require('../models/Product');
 const { protect, admin } = require('../middleware/authMiddleware');
 
-// ------------------------------------------------
+
 // EMAIL SETUP (BREVO SMTP – PRODUCTION SAFE)
-// ------------------------------------------------
-
-
-// // Verify only in development (avoid delays on Render)
-// if (process.env.NODE_ENV !== 'production') {
-//   transporter.verify((err) => {
-//     if (err) console.log('❌ Order email error:', err.message);
-//     else console.log('✅ Brevo email service ready');
-//   });
-// }
-
 const EMAIL_FROM = `"Nutry Health" <no-reply@nutryhealth.com>`;
 
-// ------------------------------------------------
+
 // EMAIL HELPER (NON-BLOCKING)
-// ------------------------------------------------
 const sendOrderMail = async (user, order, label = '') => {
   try {
     if (!user || !order) return;
@@ -121,9 +109,8 @@ if (label === 'CANCELLED')
   }
 };
 
-// ------------------------------------------------
+
 // CREATE ORDER
-// ------------------------------------------------
 router.post(
   '/',
   protect,
@@ -194,16 +181,15 @@ router.post(
   })
 );
 
-// ------------------------------------------------
+
 // RAZORPAY CONFIG
-// ------------------------------------------------
 router.get('/config/razorpay', protect, (req, res) => {
   res.json({ key: process.env.RAZORPAY_KEY_ID });
 });
 
-// ------------------------------------------------
+
 // CREATE RAZORPAY ORDER
-// ------------------------------------------------
+
 router.post(
   '/razorpay',
   protect,
@@ -223,9 +209,9 @@ router.post(
   })
 );
 
-// ------------------------------------------------
+
 // USER ORDERS
-// ------------------------------------------------
+
 router.get(
   '/myorders',
   protect,
@@ -235,9 +221,9 @@ router.get(
   })
 );
 
-// ------------------------------------------------
+
 // ADMIN – GET ALL ORDERS
-// ------------------------------------------------
+
 router.get(
   '/',
   protect,
@@ -248,9 +234,9 @@ router.get(
   })
 );
 
-// ------------------------------------------------
+
 // GET ORDER BY ID
-// ------------------------------------------------
+
 router.get(
   '/:id',
   protect,
@@ -269,9 +255,8 @@ router.get(
   })
 );
 
-// ------------------------------------------------
+
 // PAY ORDER (RAZORPAY)
-// ------------------------------------------------
 router.put(
   '/:id/pay',
   protect,
@@ -296,9 +281,9 @@ router.put(
   })
 );
 
-// ------------------------------------------------
+
 // UPDATE SHIPPING STATUS (ADMIN)
-// ------------------------------------------------
+
 router.put(
   '/:id/status',
   protect,
@@ -341,9 +326,9 @@ if (status === 'Out for Delivery') {
   })
 );
 
-// ------------------------------------------------
+
 // CANCEL ORDER
-// ------------------------------------------------
+
 router.put(
   '/:id/cancel',
   protect,

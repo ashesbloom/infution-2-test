@@ -115,7 +115,7 @@ export default function HeroSlider() {
   };
 
   return (
-    <div className="w-full bg-black text-white overflow-hidden relative pb-10">
+    <div className="w-full bg-white text-gray-800 overflow-hidden relative pb-10">
       {/* Loading state */}
       {loading && (
         <div className="min-h-[400px] flex items-center justify-center">
@@ -147,7 +147,7 @@ export default function HeroSlider() {
                     <br />
                     <span className="text-[#06a34f] italic">{s.highlight}</span>
                   </h1>
-                  <p className="text-xs sm:text-sm md:text-lg text-gray-300 border-l-2 border-[#06a34f] pl-4">{s.description}</p>
+                  <p className="text-xs sm:text-sm md:text-lg text-gray-500 border-l-2 border-[#06a34f] pl-4">{s.description}</p>
                   <Link to={`/product/${s.id}`}>
                     <button className="mt-3 bg-[#06a34f] text-white px-8 sm:px-10 py-3 rounded-md font-bold text-xs sm:text-sm tracking-widest uppercase shadow-[0_0_25px_rgba(6,163,79,0.7)] hover:bg-[#058a42] transition">
                       SHOP NOW

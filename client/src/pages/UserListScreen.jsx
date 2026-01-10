@@ -75,7 +75,7 @@ useEffect(() => {
 
   if (loading) {
     return (
-      <div className="min-h-screen w-full bg-black text-gray-300 flex items-center justify-center">
+      <div className="min-h-screen w-full bg-white text-gray-500 flex items-center justify-center">
         Loading users...
       </div>
     );
@@ -83,19 +83,19 @@ useEffect(() => {
 
   if (error) {
     return (
-      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center px-4 text-center">
+      <div className="min-h-screen w-full bg-white text-red-500 flex items-center justify-center px-4 text-center">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen w-full bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white text-gray-800 overflow-x-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-16">
        
        <div className="mb-5">
           <Link to="/admin/dashboard">
-            <button className="inline-flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gray-300 border border-gray-700 hover:bg-gray-700 hover:text-white transition-all hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+            <button className="inline-flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gray-500 border border-gray-300 hover:bg-gray-700 hover:text-gray-800 transition-all hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]">
               ← Back
             </button>
           </Link>
@@ -106,30 +106,30 @@ useEffect(() => {
         </h1>
 
         {users.length === 0 ? (
-          <p className="text-gray-300 text-sm">No users found.</p>
+          <p className="text-gray-500 text-sm">No users found.</p>
         ) : (
           <>
             {/* -----------------------
                 DESKTOP / TABLE (md+)
                 ----------------------- */}
-            <div className="hidden md:block w-full rounded-2xl bg-[#050814] border border-white/10 shadow-xl">
+            <div className="hidden md:block w-full rounded-2xl bg-gray-50 border border-gray-200 shadow-xl">
               <div className="overflow-hidden rounded-2xl">
                 <table className="w-full table-auto">
-                  <thead className="bg-[#0b1220]">
+                  <thead className="bg-gray-100">
                     <tr>
-                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-wider">ID</th>
-                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-wider">Name</th>
-                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-wider">Email</th>
-                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-wider">Admin</th>
-                      <th className="px-3 sm:px-6 py-3 text-right text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-wider">Actions</th>
+                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wider">ID</th>
+                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</th>
+                      <th className="px-3 sm:px-6 py-3 text-left text-[10px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wider">Admin</th>
+                      <th className="px-3 sm:px-6 py-3 text-right text-[10px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {users.map((user, idx) => (
-                      <tr key={user._id} className={`border-t border-white/5 transition-all ${idx % 2 === 0 ? 'bg-[#050814]' : 'bg-[#050814]/80'} hover:bg-[#0f172a] hover:shadow-[0_0_18px_rgba(15,23,42,0.9)]`}>
-                        <td className="px-3 sm:px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-200">{user._id}</td>
-                        <td className="px-3 sm:px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-200">{user.name}</td>
-                        <td className="px-3 sm:px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-300">{user.email}</td>
+                      <tr key={user._id} className={`border-t border-gray-200 transition-all ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-gray-50/80'} hover:bg-gray-100 hover:shadow-[0_0_18px_rgba(15,23,42,0.9)]`}>
+                        <td className="px-3 sm:px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-600">{user._id}</td>
+                        <td className="px-3 sm:px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-600">{user.name}</td>
+                        <td className="px-3 sm:px-6 py-3 whitespace-nowrap text-xs sm:text-sm text-gray-500">{user.email}</td>
                         <td className="px-3 sm:px-6 py-3 whitespace-nowrap text-xs sm:text-sm">
                           {user.isAdmin ? <Check className="text-green-500" size={18} /> : <X className="text-red-500" size={18} />}
                         </td>
@@ -160,24 +160,24 @@ useEffect(() => {
                 ----------------------- */}
             <div className="md:hidden space-y-4">
               {users.map((u) => (
-                <div key={u._id} className="bg-[#050814] border border-white/8 rounded-xl p-4 shadow-sm">
+                <div key={u._id} className="bg-gray-50 border border-white/8 rounded-xl p-4 shadow-sm">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-extrabold text-gray-200 truncate">{u.name || '—'}</h3>
+                        <h3 className="text-sm font-extrabold text-gray-600 truncate">{u.name || '—'}</h3>
                         {u.isAdmin ? <span className="text-green-400 text-xs font-bold">ADMIN</span> : null}
                       </div>
 
-                      <p className="text-xs text-gray-300 mt-1 truncate">{u.email}</p>
+                      <p className="text-xs text-gray-500 mt-1 truncate">{u.email}</p>
 
-                      <div className="mt-2 flex items-center gap-2 text-xs text-gray-400">
+                      <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
                         <span className="font-mono text-[12px] text-emerald-500 break-all">{shortId(u._id)}</span>
                         <button
                           onClick={() => copyToClipboard(u._id, u._id)}
-                          className="p-1 rounded-md hover:bg-zinc-900 transition"
+                          className="p-1 rounded-md hover:bg-gray-100 transition"
                           title="Copy full ID"
                         >
-                          <Copy size={14} className="text-gray-300" />
+                          <Copy size={14} className="text-gray-500" />
                         </button>
                         {copySuccessId === u._id && <span className="text-green-400 text-xs font-bold">Copied</span>}
                       </div>
@@ -212,10 +212,10 @@ useEffect(() => {
 
       {/* Delete Confirmation Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-[#0b1220] border border-white/10 rounded-xl shadow-[0_0_25px_rgba(6,163,79,0.4)] w-80 max-w-[90%] p-6 text-center">
+        <div className="fixed inset-0 bg-gray-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-gray-100 border border-gray-200 rounded-xl shadow-[0_0_25px_rgba(6,163,79,0.4)] w-80 max-w-[90%] p-6 text-center">
             <h2 className="text-xl font-bold text-emerald-500 mb-2">Confirm Delete</h2>
-            <p className="text-gray-300 text-sm mb-6">Are you sure you want to delete this user?</p>
+            <p className="text-gray-500 text-sm mb-6">Are you sure you want to delete this user?</p>
 
             <div className="flex justify-center gap-4">
               <button
@@ -224,7 +224,7 @@ useEffect(() => {
                   setShowModal(false);
                   setDeleteId(null);
                 }}
-                className="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-md text-white font-bold shadow-[0_0_15px_rgba(239,68,68,0.6)] transition"
+                className="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-md text-gray-800 font-bold shadow-[0_0_15px_rgba(239,68,68,0.6)] transition"
               >
                 Delete
               </button>
@@ -233,7 +233,7 @@ useEffect(() => {
                   setShowModal(false);
                   setDeleteId(null);
                 }}
-                className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-white font-bold"
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-gray-800 font-bold"
               >
                 Cancel
               </button>

@@ -95,8 +95,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-screen bg-black flex items-center justify-center px-4 text-white overflow-hidden">
-      <div className="w-full max-w-md bg-black/80 border border-white/10 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.9)] backdrop-blur-xl px-6 py-8 flex flex-col justify-center">
+    <div className="fixed inset-0 w-screen h-screen bg-white flex items-center justify-center px-4 text-gray-800 overflow-hidden">
+      <div className="w-full max-w-md bg-white/95 border border-gray-200 rounded-2xl shadow-lg backdrop-blur-xl px-6 py-8 flex flex-col justify-center">
         {/* BRAND */}
         <div className="mb-5 text-center">
           <span className="text-3xl sm:text-4xl font-extrabold tracking-[0.3em] uppercase">
@@ -123,13 +123,13 @@ const ForgotPassword = () => {
         {step === 1 && (
           <form onSubmit={handleGetQuestion}>
             <div className="mb-4">
-              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
+              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-500">
                 Email Address
               </label>
               <input
                 type="email"
                 placeholder="you@example.com"
-                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
+                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-gray-800 border border-gray-300 
                            focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={email}
@@ -153,22 +153,22 @@ const ForgotPassword = () => {
         {step === 2 && (
           <form onSubmit={handleResetWithSecurity}>
             <div className="mb-3">
-              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
+              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-500">
                 Security Question
               </label>
-              <div className="w-full px-4 py-2.5 rounded-lg bg-transparent text-[#06a34f] border border-neutral-800 text-sm">
+              <div className="w-full px-4 py-2.5 rounded-lg bg-transparent text-[#06a34f] border border-gray-300 text-sm">
                 {securityQuestion}
               </div>
             </div>
 
             <div className="mb-3">
-              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
+              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-500">
                 Your Answer
               </label>
               <input
                 type="text"
                 placeholder="Enter your answer"
-                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
+                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-gray-800 border border-gray-300 
                            focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={securityAnswer}
@@ -178,13 +178,13 @@ const ForgotPassword = () => {
             </div>
 
             <div className="mb-3">
-              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
+              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-500">
                 New Password
               </label>
               <input
                 type="password"
                 placeholder="Ex: Pass@123"
-                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
+                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-gray-800 border border-gray-300 
                            focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={password}
@@ -194,13 +194,13 @@ const ForgotPassword = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
+              <label className="block mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-gray-500">
                 Confirm New Password
               </label>
               <input
                 type="password"
                 placeholder="Confirm new password"
-                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-white border border-neutral-800 
+                className="w-full px-4 py-2.5 rounded-lg bg-transparent text-gray-800 border border-gray-300 
                            focus:border-[#06a34f] focus:ring-1 focus:ring-[#06a34f] outline-none transition-all 
                            placeholder:text-neutral-500 text-sm"
                 value={confirmPassword}

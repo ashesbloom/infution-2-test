@@ -113,7 +113,7 @@ const OrderListScreen = () => {
         );
       case 'Out for Delivery':
         return (
-          <span className={base + 'bg-emerald-900/45 text-emerald-400 border-emerald-500/30'}>
+          <span className={base + 'bg-emerald-100 text-emerald-600 border-emerald-500/30'}>
             {text}
           </span>
         );
@@ -125,13 +125,13 @@ const OrderListScreen = () => {
         );
       case 'Cancelled':
         return (
-          <span className={base + 'bg-red-900/45 text-red-300 border-red-400/30'}>
+          <span className={base + 'bg-red-100 text-red-600 border-red-400/30'}>
             {text}
           </span>
         );
       default:
         return (
-          <span className={base + 'bg-gray-800 text-gray-300 border-gray-700'}>
+          <span className={base + 'bg-gray-800 text-gray-500 border-gray-300'}>
             {text}
           </span>
         );
@@ -189,7 +189,7 @@ const sortedOrders = [...orders].sort(
   // UNAUTHORIZED
   if (!user || !user.isAdmin) {
     return (
-      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center">
+      <div className="min-h-screen w-full bg-white text-red-500 flex items-center justify-center">
         Unauthorized
         </div>
     );
@@ -198,7 +198,7 @@ const sortedOrders = [...orders].sort(
   // LOADING
   if (loading)
     return (
-      <div className="min-h-screen w-full bg-black text-gray-300 flex items-center justify-center">
+      <div className="min-h-screen w-full bg-white text-gray-500 flex items-center justify-center">
         Loading orders...
       </div>
     );
@@ -206,18 +206,18 @@ const sortedOrders = [...orders].sort(
   // ERROR
   if (error)
     return (
-      <div className="min-h-screen w-full bg-black text-red-500 flex items-center justify-center">
+      <div className="min-h-screen w-full bg-white text-red-500 flex items-center justify-center">
         Error: {error}
       </div>
     );
 
   return (
-    <div className="min-h-screen w-full bg-black text-white">
+    <div className="min-h-screen w-full bg-white text-gray-800">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-10">
 
         <Link to="/admin/dashboard">
-          <button className="mb-5 inline-flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gray-300 border border-gray-700 hover:bg-gray-700">
+          <button className="mb-5 inline-flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-gray-500 border border-gray-300 hover:bg-gray-700">
             ← Back
           </button>
         </Link>
@@ -234,7 +234,7 @@ const sortedOrders = [...orders].sort(
           <button
             type="button"
             onClick={() => setFilterOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500 text-emerald-400 bg-black/40 text-[11px] font-semibold uppercase tracking-[0.25em] hover:bg-emerald-500/10 transition"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500 text-emerald-600 bg-gray-100 text-[11px] font-semibold uppercase tracking-[0.25em] hover:bg-emerald-500/10 transition"
           >
             <Filter size={14} />
             Filter
@@ -242,18 +242,18 @@ const sortedOrders = [...orders].sort(
         </div>
 
         {/* DESKTOP TABLE */}
-        <div className="hidden md:block w-full rounded-2xl bg-[#050814] border border-white/10 shadow-xl overflow-x-auto">
+        <div className="hidden md:block w-full rounded-2xl bg-gray-50 border border-gray-200 shadow-xl overflow-x-auto">
           <table className="min-w-full">
-            <thead className="bg-[#0b1220] sticky top-0">
+            <thead className="bg-gray-100 sticky top-0">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">User</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">Total</th>
-                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase">Payment</th>
-                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase">Delivered</th>
-                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-400 uppercase">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">ID</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">User</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Total</th>
+                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase">Payment</th>
+                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase">Delivered</th>
+                <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
               </tr>
             </thead>
 
@@ -277,24 +277,24 @@ const sortedOrders = [...orders].sort(
                 return (
                   <tr
                     key={order._id}
-                    className={`border-t border-white/5 ${idx % 2 ? "bg-[#050814]/80" : "bg-[#050814]"} hover:bg-[#0f172a]`}
+                    className={`border-t border-gray-200 ${idx % 2 ? "bg-gray-50/80" : "bg-gray-50"} hover:bg-gray-100`}
                   >
-                    <td className="px-6 py-3 text-gray-200 text-sm">{order._id.substring(19)}</td>
-                    <td className="px-6 py-3 text-gray-300 text-sm">
+                    <td className="px-6 py-3 text-gray-600 text-sm">{order._id.substring(19)}</td>
+                    <td className="px-6 py-3 text-gray-500 text-sm">
                       {order.user?.name || "Deleted User"}
                     </td>
-                    <td className="px-6 py-3 text-gray-300 text-sm">
+                    <td className="px-6 py-3 text-gray-500 text-sm">
                       {order.createdAt.substring(0, 10)}
                     </td>
-                    <td className="px-6 py-3 text-gray-300 text-sm">₹{order.totalPrice}</td>
+                    <td className="px-6 py-3 text-gray-500 text-sm">₹{order.totalPrice}</td>
 
                     <td className="px-6 py-3 text-center">
                       {order.paymentMethod === "COD" ? (
-                        <span className="px-3 py-1 rounded-full text-[11px] bg-gray-500/20 text-gray-100 border border-gray-500/50">COD</span>
+                        <span className="px-3 py-1 rounded-full text-[11px] bg-gray-500/20 text-gray-700 border border-gray-500/50">COD</span>
                       ) : order.isPaid ? (
                         <span className="px-3 py-1 rounded-full text-[11px] bg-green-500/20 text-green-300 border border-green-600/50">Prepaid</span>
                       ) : (
-                        <span className="px-3 py-1 rounded-full text-[11px] bg-red-500/20 text-red-300 border border-red-600/50">Pending</span>
+                        <span className="px-3 py-1 rounded-full text-[11px] bg-red-500/20 text-red-600 border border-red-600/50">Pending</span>
                       )}
                     </td>
 
@@ -311,7 +311,7 @@ const sortedOrders = [...orders].sort(
                         <button
                           onClick={() => promptCancel(order._id)}
                           disabled={cancellingId === order._id}
-                          className="px-3 py-1 text-[11px] bg-red-600 text-white rounded disabled:opacity-50"
+                          className="px-3 py-1 text-[11px] bg-red-600 text-gray-800 rounded disabled:opacity-50"
                         >
                           {cancellingId === order._id ? "Cancelling..." : "Cancel"}
                         </button>
@@ -321,7 +321,7 @@ const sortedOrders = [...orders].sort(
                         <button
                           onClick={() => updateStatus(order._id, "Shipped")}
                           disabled={updatingId === order._id}
-                          className="px-3 py-1 text-[11px] bg-blue-500 text-white rounded disabled:opacity-50"
+                          className="px-3 py-1 text-[11px] bg-blue-500 text-gray-800 rounded disabled:opacity-50"
                         >
                           {updatingId === order._id ? "Updating..." : "Shipped"}
                         </button>
@@ -341,14 +341,14 @@ const sortedOrders = [...orders].sort(
                         <button
                           onClick={() => updateStatus(order._id, "Delivered")}
                           disabled={updatingId === order._id}
-                          className="px-3 py-1 text-[11px] bg-green-500 text-white rounded disabled:opacity-50"
+                          className="px-3 py-1 text-[11px] bg-green-500 text-gray-800 rounded disabled:opacity-50"
                         >
                           {updatingId === order._id ? "Updating..." : "Delivered"}
                         </button>
                       )}
 
                       <Link to={`/order/${order._id}`}>
-                        <button className="px-4 py-1 mt-2 text-[11px] bg-gray-700 text-white rounded hover:bg-gray-600">
+                        <button className="px-4 py-1 mt-2 text-[11px] bg-gray-700 text-gray-800 rounded hover:bg-gray-600">
                           Details
                         </button>
                       </Link>
@@ -379,29 +379,29 @@ const sortedOrders = [...orders].sort(
             const firstItem = order.orderItems?.[0];
 
             return (
-              <div key={order._id} className="bg-[#0d0d0d] border border-white/10 rounded-2xl p-4 shadow-lg">
+              <div key={order._id} className="bg-[#0d0d0d] border border-gray-200 rounded-2xl p-4 shadow-lg">
                 <div className="flex gap-3 items-start">
                   <img
                     src={firstItem?.image || "/images/placeholder.png"}
-                    className="w-20 h-20 object-contain rounded-md bg-black/40 p-2"
+                    className="w-20 h-20 object-contain rounded-md bg-gray-100 p-2"
                   />
 
                   <div className="flex-1">
-                    <h3 className="font-bold text-sm text-gray-200">
+                    <h3 className="font-bold text-sm text-gray-600">
                       {firstItem?.name}
                     </h3>
 
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-500">
                       {order.user?.name || "Deleted User"}
                     </p>
 
                     <div className="mt-2">{renderStatusBadge(statusText)}</div>
 
-                    <div className="grid grid-cols-2 gap-2 mt-3 text-xs text-gray-300">
-                      <div><span className="text-gray-400">Date:</span> {order.createdAt.substring(0, 10)}</div>
-                      <div><span className="text-gray-400">Items:</span> {order.orderItems?.length}</div>
-                      <div><span className="text-gray-400">Payment:</span> {order.paymentMethod === "COD" ? "COD" : order.isPaid ? "Prepaid" : "Pending"}</div>
-                      <div><span className="text-gray-400">Delivered:</span> {order.isDelivered ? "Yes" : "No"}</div>
+                    <div className="grid grid-cols-2 gap-2 mt-3 text-xs text-gray-500">
+                      <div><span className="text-gray-500">Date:</span> {order.createdAt.substring(0, 10)}</div>
+                      <div><span className="text-gray-500">Items:</span> {order.orderItems?.length}</div>
+                      <div><span className="text-gray-500">Payment:</span> {order.paymentMethod === "COD" ? "COD" : order.isPaid ? "Prepaid" : "Pending"}</div>
+                      <div><span className="text-gray-500">Delivered:</span> {order.isDelivered ? "Yes" : "No"}</div>
                     </div>
 
                     <div className="flex flex-wrap gap-2 mt-4">
@@ -409,7 +409,7 @@ const sortedOrders = [...orders].sort(
                         <button
                           onClick={() => promptCancel(order._id)}
                           disabled={cancellingId === order._id}
-                          className="px-3 py-1.5 bg-red-600 text-white text-[12px] rounded disabled:opacity-50"
+                          className="px-3 py-1.5 bg-red-600 text-gray-800 text-[12px] rounded disabled:opacity-50"
                         >
                           {cancellingId === order._id ? "Cancelling..." : "Cancel"}
                         </button>
@@ -419,7 +419,7 @@ const sortedOrders = [...orders].sort(
                         <button
                           onClick={() => updateStatus(order._id, "Shipped")}
                           disabled={updatingId === order._id}
-                          className="px-3 py-1.5 bg-blue-500 text-white text-[12px] rounded disabled:opacity-50"
+                          className="px-3 py-1.5 bg-blue-500 text-gray-800 text-[12px] rounded disabled:opacity-50"
                         >
                           {updatingId === order._id ? "Updating..." : "Shipped"}
                         </button>
@@ -439,14 +439,14 @@ const sortedOrders = [...orders].sort(
                         <button
                           onClick={() => updateStatus(order._id, "Delivered")}
                           disabled={updatingId === order._id}
-                          className="px-3 py-1.5 bg-green-500 text-white text-[12px] rounded disabled:opacity-50"
+                          className="px-3 py-1.5 bg-green-500 text-gray-800 text-[12px] rounded disabled:opacity-50"
                         >
                           {updatingId === order._id ? "Updating..." : "Delivered"}
                         </button>
                       )}
 
                       <Link to={`/order/${order._id}`}>
-                        <button className="px-3 py-1.5 bg-gray-700 text-white text-[12px] rounded">Details</button>
+                        <button className="px-3 py-1.5 bg-gray-700 text-gray-800 text-[12px] rounded">Details</button>
                       </Link>
                     </div>
                   </div>
@@ -461,12 +461,12 @@ const sortedOrders = [...orders].sort(
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-40"
+            className="px-4 py-2 bg-gray-800 text-gray-800 rounded-lg disabled:opacity-40"
           >
             ← Previous
           </button>
 
-          <span className="text-gray-300 text-sm">
+          <span className="text-gray-500 text-sm">
             Page {currentPage} / {Math.ceil(filteredOrders.length / ordersPerPage)}
           </span>
 
@@ -477,7 +477,7 @@ const sortedOrders = [...orders].sort(
               )
             }
             disabled={indexOfLastOrder >= filteredOrders.length}
-            className="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-40"
+            className="px-4 py-2 bg-gray-800 text-gray-800 rounded-lg disabled:opacity-40"
           >
             Next →
           </button>
@@ -486,24 +486,24 @@ const sortedOrders = [...orders].sort(
       </div>
       {/* CANCEL CONFIRM MODAL */}
       {showConfirm && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-          <div className="bg-[#0b0b0b] p-6 rounded-2xl border border-white/10 w-[90%] max-w-md">
+        <div className="fixed inset-0 z-50 bg-gray-50/80 flex items-center justify-center">
+          <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 w-[90%] max-w-md">
             <h3 className="text-lg font-bold mb-2">Cancel Order</h3>
-            <p className="text-sm text-gray-300 mb-4">
+            <p className="text-sm text-gray-500 mb-4">
               Are you sure you want to cancel this order?
             </p>
 
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowConfirm(false)}
-                className="px-4 py-2 bg-[#111] text-gray-300 border border-white/10 rounded-md"
+                className="px-4 py-2 bg-gray-100 text-gray-500 border border-gray-200 rounded-md"
               >
                 No
               </button>
 
               <button
                 onClick={() => cancelOrder(selectedCancelId)}
-                className="px-4 py-2 bg-red-600 text-white font-bold rounded-md"
+                className="px-4 py-2 bg-red-600 text-gray-800 font-bold rounded-md"
               >
                 Yes, Cancel
               </button>
@@ -515,22 +515,22 @@ const sortedOrders = [...orders].sort(
       {/* ⭐ FILTER POPUP (Mobile Center Popup) */}
       {filterOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-gray-600/50 z-40 flex items-center justify-center p-4"
           onClick={() => setFilterOpen(false)}
         >
           <div
-            className="bg-[#030712] w-full max-w-xs p-4 rounded-2xl border border-white/10"
+            className="bg-[#030712] w-full max-w-xs p-4 rounded-2xl border border-gray-200"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-gray-200 text-sm font-semibold">Filters</h3>
+              <h3 className="text-gray-600 text-sm font-semibold">Filters</h3>
               <button onClick={() => setFilterOpen(false)}>
-                <X size={16} className="text-gray-400" />
+                <X size={16} className="text-gray-500" />
               </button>
             </div>
 
             {/* STATUS FILTER */}
-            <p className="uppercase text-xs text-gray-400 mb-1">Status</p>
+            <p className="uppercase text-xs text-gray-500 mb-1">Status</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {[
                 "all",
@@ -545,8 +545,8 @@ const sortedOrders = [...orders].sort(
                   onClick={() => setFilterStatus(opt)}
                   className={`px-2 py-1 rounded border ${
                     filterStatus === opt
-                      ? "border-emerald-500 text-emerald-400"
-                      : "border-white/20 text-gray-300"
+                      ? "border-emerald-500 text-emerald-600"
+                      : "border-white/20 text-gray-500"
                   }`}
                 >
                   {opt}
@@ -555,7 +555,7 @@ const sortedOrders = [...orders].sort(
             </div>
 
             {/* PAYMENT FILTER */}
-            <p className="uppercase text-xs text-gray-400 mb-1">Payment</p>
+            <p className="uppercase text-xs text-gray-500 mb-1">Payment</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {["all", "COD", "Prepaid", "Pending"].map((opt) => (
                 <button
@@ -563,8 +563,8 @@ const sortedOrders = [...orders].sort(
                   onClick={() => setFilterPayment(opt)}
                   className={`px-2 py-1 rounded border ${
                     filterPayment === opt
-                      ? "border-emerald-500 text-emerald-400"
-                      : "border-white/20 text-gray-300"
+                      ? "border-emerald-500 text-emerald-600"
+                      : "border-white/20 text-gray-500"
                   }`}
                 >
                   {opt}
@@ -573,7 +573,7 @@ const sortedOrders = [...orders].sort(
             </div>
 
             {/* USER STATUS FILTER */}
-            <p className="uppercase text-xs text-gray-400 mb-1">User Status</p>
+            <p className="uppercase text-xs text-gray-500 mb-1">User Status</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {["all", "active", "deleted"].map((opt) => (
                 <button
@@ -581,8 +581,8 @@ const sortedOrders = [...orders].sort(
                   onClick={() => setFilterUser(opt)}
                   className={`px-2 py-1 rounded border ${
                     filterUser === opt
-                      ? "border-emerald-500 text-emerald-400"
-                      : "border-white/20 text-gray-300"
+                      ? "border-emerald-500 text-emerald-600"
+                      : "border-white/20 text-gray-500"
                   }`}
                 >
                   {opt}
@@ -607,7 +607,7 @@ const sortedOrders = [...orders].sort(
 
       {/* TOAST */}
       {toast && (
-        <div className="fixed bottom-6 right-6 bg-black/90 border border-white/10 text-white px-4 py-2 rounded-lg">
+        <div className="fixed bottom-6 right-6 bg-gray-100 border border-gray-200 text-gray-800 px-4 py-2 rounded-lg">
           {toast}
         </div>
       )}

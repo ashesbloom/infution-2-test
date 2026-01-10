@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apply your Gym Theme to the whole body */
+/* Apply Light Theme to the whole body */
 body {
-  background-color: theme('colors.brand.bg');
-  color: theme('colors.brand.text');
+  background-color: #ffffff;
+  color: #1e293b;
   font-family: theme('fontFamily.sans');
 }
 

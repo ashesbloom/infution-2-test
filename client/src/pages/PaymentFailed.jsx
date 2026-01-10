@@ -26,7 +26,7 @@ const PaymentFailed = () => {
 
         <Link
           to="/cart"
-          className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg shadow"
+          className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-800 font-semibold rounded-lg shadow"
         >
           Go to Cart
         </Link>

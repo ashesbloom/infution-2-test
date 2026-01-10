@@ -292,7 +292,7 @@ const PlaceOrderScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden">
       {successMessage && (
         <div className="fixed top-24 left-0 right-0 z-50 flex justify-center mx-2">
           <div className="max-w-md w-full bg-emerald-500 text-white px-5 py-3 rounded-full text-sm font-semibold text-center">
@@ -303,7 +303,7 @@ const PlaceOrderScreen = () => {
 
       {failureMessage && (
         <div className="fixed top-24 left-0 right-0 z-50 flex justify-center mx-2">
-          <div className="max-w-md w-full bg-red-500 text-white px-5 py-3 rounded-full text-sm font-semibold text-center">
+          <div className="max-w-md w-full bg-red-500 text-gray-800 px-5 py-3 rounded-full text-sm font-semibold text-center">
             {failureMessage}
           </div>
         </div>
@@ -313,13 +313,13 @@ const PlaceOrderScreen = () => {
         <h1 className="text-3xl md:text-4xl font-black uppercase mb-2">
           Review <span className="text-[#06a34f]">Your Order</span>
         </h1>
-        <div className="text-zinc-400 text-xs md:text-sm max-w-xl">
+        <div className="text-gray-500 text-xs md:text-sm max-w-xl">
           Confirm your details and complete your payment securely.
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           <div className="space-y-6">
-            <div className="bg-[#0a0a0a] p-5 rounded-2xl border border-white/10">
+            <div className="bg-white p-5 rounded-2xl border border-gray-200">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold">Shipping</h2>
                 <button
@@ -330,8 +330,8 @@ const PlaceOrderScreen = () => {
                 </button>
               </div>
 
-              <div className="mt-4 text-sm text-zinc-300">
-                <p className="font-semibold text-white text-base">
+              <div className="mt-4 text-sm text-gray-600">
+                <p className="font-semibold text-gray-800 text-base">
                   {shippingAddress?.name}
                 </p>
                 <p className="mt-1">
@@ -344,7 +344,7 @@ const PlaceOrderScreen = () => {
               </div>
             </div>
 
-            <div className="bg-[#0a0a0a] p-5 rounded-2xl border border-white/10">
+            <div className="bg-white p-5 rounded-2xl border border-gray-200">
               <h2 className="text-xl font-bold mb-4">Items</h2>
 
               {!hasItems ? (
@@ -354,7 +354,7 @@ const PlaceOrderScreen = () => {
                   {items.map((item, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center border-b border-white/5 pb-3"
+                      className="flex justify-between items-center border-b border-gray-200 pb-3"
                     >
                       <div className="flex items-center gap-4">
                         <img
@@ -370,21 +370,21 @@ const PlaceOrderScreen = () => {
                         <div>
                           <Link
                             to={`/product/${item._id}`}
-                            className="text-sm text-white hover:text-emerald-500"
+                            className="text-sm text-gray-800 hover:text-emerald-500"
                           >
                             {item.name}
                           </Link>
-                          <p className="text-xs text-zinc-500">
+                          <p className="text-xs text-gray-500">
                             Qty: {item.qty}
                           </p>
                         </div>
                       </div>
 
                       <div className="text-right text-sm">
-                        <p className="text-zinc-400">
+                        <p className="text-gray-500">
                           {item.qty} × ₹{item.price}
                         </p>
-                        <p className="font-semibold text-white">
+                        <p className="font-semibold text-gray-800">
                           ₹{(item.qty * item.price).toFixed(2)}
                         </p>
                       </div>
@@ -396,28 +396,28 @@ const PlaceOrderScreen = () => {
           </div>
 
           <div className="w-full">
-            <div className="bg-[#111111] p-6 rounded-2xl border border-emerald-500/30 shadow-[0_0_35px_rgba(6,163,79,0.35)]">
+            <div className="bg-gray-50 p-6 rounded-2xl border border-emerald-500/30 shadow-[0_0_35px_rgba(6,163,79,0.35)]">
               <h2 className="text-xl font-black mb-5">Order Summary</h2>
 
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">Items</span>
+                  <span className="text-gray-500">Items</span>
                   <strong>₹{itemsPrice}</strong>
                 </div>
 
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">Shipping</span>
+                  <span className="text-gray-500">Shipping</span>
                   <strong>₹{shippingPrice}</strong>
                 </div>
 
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">Tax (18%)</span>
+                  <span className="text-gray-500">Tax (18%)</span>
                   <strong>₹{taxPrice}</strong>
                 </div>
               </div>
 
-              <div className="border-t border-white/10 mt-4 pt-4 flex justify-between items-center">
-                <span className="text-xs text-zinc-400">Total</span>
+              <div className="border-t border-gray-200 mt-4 pt-4 flex justify-between items-center">
+                <span className="text-xs text-gray-500">Total</span>
                 <span className="text-2xl font-black text-[#06a34f]">
                   ₹{totalPrice}
                 </span>
@@ -436,14 +436,14 @@ const PlaceOrderScreen = () => {
                 <button
                   onClick={codOrderHandler}
                   disabled={!hasItems || placing}
-                  className="w-full bg-black text-white font-bold text-sm py-3 rounded-xl border border-white/20 
-                  hover:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-white text-gray-800 font-bold text-sm py-3 rounded-xl border border-white/20 
+                  hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {placing ? "Processing…" : "Cash on Delivery (COD)"}
                 </button>
               </div>
 
-              <p className="text-xs text-zinc-500 text-center mt-3">
+              <p className="text-xs text-gray-500 text-center mt-3">
                 100% Secure Payments via Razorpay
               </p>
             </div>

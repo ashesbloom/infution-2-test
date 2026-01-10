@@ -24,7 +24,7 @@ const upload = multer({ storage });
 
 // Route
 router.post("/", upload.single("image"), (req, res) => {
-  res.json(req.file.path); // ✅ Cloudinary URL
+  res.json(req.file.path); 
 });
 
 module.exports = router;

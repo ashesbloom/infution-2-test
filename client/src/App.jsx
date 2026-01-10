@@ -50,7 +50,7 @@ export default function App() {
   const isAdmin = user?.isAdmin;
 
   return (
-    <div className="min-h-screen w-full bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white text-gray-800 overflow-x-hidden">
       {/* Fixed Navbar */}
       <Navbar />
 

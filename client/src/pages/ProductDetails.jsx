@@ -264,7 +264,7 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center text-xl">
+      <div className="min-h-screen bg-white text-gray-800 flex items-center justify-center text-xl">
         Loading...
       </div>
     );
@@ -272,11 +272,11 @@ const ProductDetails = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center text-xl gap-4">
+      <div className="min-h-screen bg-white text-gray-800 flex flex-col items-center justify-center text-xl gap-4">
         <p>Error: {error}</p>
         <Link
           to="/"
-          className="text-emerald-500 hover:text-emerald-400 text-base underline"
+          className="text-emerald-500 hover:text-emerald-600 text-base underline"
         >
           Go back to products
         </Link>
@@ -286,7 +286,7 @@ const ProductDetails = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center text-xl">
+      <div className="min-h-screen bg-white text-gray-800 flex items-center justify-center text-xl">
         Product not found
       </div>
     );
@@ -303,22 +303,22 @@ const ProductDetails = () => {
   const maxQty = Math.min(product?.countInStock || 0, 10);
 
   return (
-    <div className="min-h-screen w-full bg-black text-white px-4 md:px-8 lg:px-12 pt-2 pb-8 sm:pt-3 sm:pb-10 overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white text-gray-800 px-4 md:px-8 lg:px-12 pt-2 pb-8 sm:pt-3 sm:pb-10 overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-zinc-400 hover:text-emerald-500 mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-[0.25em]"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-emerald-500 mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-[0.25em]"
         >
           <ArrowLeft size={18} />
           Back to Products
         </Link>
 
-        <div className="rounded-[32px] border-emerald-400 text-emerald-400 shadow-[0_0_26px_rgba(6,163,79,0.6)] bg-gradient-to-br from-[#111111] via-[#050505] to-[#111111] p-5 sm:p-7 lg:p-10 shadow-[0_32px_80px_rgba(0,0,0,0.9)] border border-white/10">
+        <div className="rounded-[32px] border-emerald-400 text-emerald-600 shadow-[0_0_26px_rgba(6,163,79,0.6)] bg-gray-50 p-5 sm:p-7 lg:p-10 shadow-[0_32px_80px_rgba(0,0,0,0.9)] border border-gray-200">
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 sm:gap-10 lg:gap-14 items-start lg:items-center">
 
             <div ref={imageTopRef}>
               <div
-                className="relative rounded-[26px] bg-gradient-to-b from-[#171717] to-black p-5 sm:p-7 lg:p-10 shadow-[0_24px_60px_rgba(0,0,0,0.95)] border border-white/5 flex items-center justify-center overflow-hidden touch-pan-y"
+                className="relative rounded-[26px] bg-gradient-to-b from-gray-50 to-gray-100 p-5 sm:p-7 lg:p-10 shadow-[0_24px_60px_rgba(0,0,0,0.95)] border border-gray-200 flex items-center justify-center overflow-hidden touch-pan-y"
                 onPointerDown={onPointerDown}
                 onPointerMove={onPointerMove}
                 onPointerUp={onPointerUp}
@@ -334,7 +334,7 @@ const ProductDetails = () => {
                     <button
                       type="button"
                       onClick={handlePrevImage}
-                      className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-black/60 border border-white/20 flex items-center justify-center hover:bg-black/80 transition z-10"
+                      className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-50/80 border border-white/20 flex items-center justify-center hover:bg-white/95 transition z-10"
                     >
                       <ChevronLeft size={18} />
                     </button>
@@ -342,7 +342,7 @@ const ProductDetails = () => {
                     <button
                       type="button"
                       onClick={handleNextImage}
-                      className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-black/60 border border-white/20 flex items-center justify-center hover:bg-black/80 transition z-10"
+                      className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-50/80 border border-white/20 flex items-center justify-center hover:bg-white/95 transition z-10"
                     >
                       <ChevronRight size={18} />
                     </button>
@@ -358,7 +358,7 @@ const ProductDetails = () => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = fallbackImage;
                   }}
-                  className="relative max-h-80 sm:max-h-96 w-full object-contain transition-transform duration-300 ease-out hover:scale-105 drop-shadow-[0_0_30px_rgba(0,0,0,0.9)]"
+                  className="relative max-h-80 sm:max-h-96 w-full object-contain transition-transform duration-300 ease-out hover:scale-105 drop-shadow-lg"
                   draggable={false}
                 />
               </div>
@@ -375,8 +375,8 @@ const ProductDetails = () => {
                       }}
                       className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl border ${imageIndex === idx
                           ? "border-[#06a34f] shadow-[0_0_18px_rgba(6,163,79,0.8)]"
-                          : "border-white/15"
-                        } overflow-hidden bg-[#111] flex items-center justify-center hover:border-[#06a34f] transition`}
+                          : "border-gray-300"
+                        } overflow-hidden bg-gray-100 flex items-center justify-center hover:border-[#06a34f] transition`}
                     >
                       <img
                         src={img}
@@ -406,7 +406,7 @@ const ProductDetails = () => {
                       }}
                       className={`h-2.5 w-2.5 rounded-full ${imageIndex === idx
                           ? "bg-emerald-500 shadow-[0_0_12px_rgba(6,163,79,0.9)]"
-                          : "bg-zinc-600"
+                          : "bg-gray-300"
                         }`}
                     />
                   ))}
@@ -431,7 +431,7 @@ const ProductDetails = () => {
                     maxHeight: isDescriptionExpanded ? "800px" : "70px"
                   }}
                 >
-                  <p className="text-sm md:text-base text-zinc-300 leading-relaxed border-l-2 border-[#06a34f] pl-4">
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed border-l-2 border-[#06a34f] pl-4">
                     {product.description}
                   </p>
                 </div>
@@ -440,7 +440,7 @@ const ProductDetails = () => {
                   <button
                     type="button"
                     onClick={() => setIsDescriptionExpanded((prev) => !prev)}
-                    className="mt-1 ml-4 text-[11px] uppercase tracking-[0.25em] text-emerald-500 hover:text-emerald-400"
+                    className="mt-1 ml-4 text-[11px] uppercase tracking-[0.25em] text-emerald-500 hover:text-emerald-600"
                   >
                     {isDescriptionExpanded ? "Read Less" : "Read More"}
                   </button>
@@ -449,11 +449,11 @@ const ProductDetails = () => {
 
               {variants.length > 0 && (
                 <div className="space-y-2">
-                  <label className="text-[11px] uppercase tracking-[0.3em] text-zinc-400">Variant</label>
+                  <label className="text-[11px] uppercase tracking-[0.3em] text-gray-500">Variant</label>
                   <select
                     value={selectedVariant}
                     onChange={(e) => setSelectedVariant(e.target.value)}
-                    className="bg-[#111111] text-white text-sm rounded-lg px-4 py-2 border border-zinc-700 focus:outline-none focus:border-[#06a34f] max-w-xs"
+                    className="bg-gray-50 text-gray-800 text-sm rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-[#06a34f] max-w-xs"
                   >
                     {variants.map((v, idx) => (
                       <option key={idx} value={v}>
@@ -464,7 +464,7 @@ const ProductDetails = () => {
                 </div>
               )}
 
-              <div className="pt-3 border-t border-white/10">
+              <div className="pt-3 border-t border-gray-200">
                 <div className="flex items-baseline gap-3">
                   <span className="text-3xl md:text-4xl font-extrabold text-[#06a34f]">₹{product.price}</span>
                 </div>
@@ -472,26 +472,26 @@ const ProductDetails = () => {
                 <div className="mt-3 flex items-center gap-3">
                   <span
                     className={`font-bold text-xs px-3 py-1 rounded-full border ${product.countInStock > 0
-                        ? "text-emerald-400 border-emerald-500/60 bg-emerald-900/40"
-                        : "text-red-400 border-red-500/60 bg-red-900/40"
+                        ? "text-emerald-600 border-emerald-500/60 bg-emerald-50"
+                        : "text-red-400 border-red-500/60 bg-red-50"
                       }`}
                   >
                     {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                   </span>
 
-                  <span className="text-[11px] text-zinc-500 uppercase tracking-[0.25em]">#{product._id?.slice(-6)}</span>
+                  <span className="text-[11px] text-gray-500 uppercase tracking-[0.25em]">#{product._id?.slice(-6)}</span>
                 </div>
               </div>
 
               <div className="space-y-4 pt-2">
                 {!isAdmin && product.countInStock > 0 && (
                   <div className="flex flex-wrap items-center gap-3">
-                    <label className="text-[11px] uppercase tracking-[0.3em] text-zinc-400">Quantity</label>
+                    <label className="text-[11px] uppercase tracking-[0.3em] text-gray-500">Quantity</label>
 
                     <select
                       value={qty}
                       onChange={(e) => setQty(Number(e.target.value))}
-                      className="bg-[#111111] text-white text-sm rounded-lg px-4 py-2 border border-zinc-700 focus:outline-none focus:border-[#06a34f]"
+                      className="bg-gray-50 text-gray-800 text-sm rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-[#06a34f]"
                     >
                       {Array.from({ length: maxQty }, (_, i) => i + 1).map((x) => (
                         <option key={x} value={x}>
@@ -501,7 +501,7 @@ const ProductDetails = () => {
                     </select>
 
                     {product.weight && (
-                      <span className="text-[11px] uppercase tracking-[0.3em] text-zinc-400">
+                      <span className="text-[11px] uppercase tracking-[0.3em] text-gray-500">
                         Weight: <span className="text-[11px] tracking-[0.3em] text-emerald-500 uppercase">{product.weight}</span>
                       </span>
                     )}
@@ -514,7 +514,7 @@ const ProductDetails = () => {
                       type="button"
                       onClick={() => handleHeroAddToCart(product, qty)}
                       disabled={product.countInStock === 0}
-                      className="w-full sm:w-auto px-8 sm:px-10 py-3 rounded-2xl border border-emerald-500 bg-black/40 text-emerald-400 text-[11px] sm:text-xs font-bold uppercase tracking-[0.3em] hover:bg-emerald-500/20 shadow-[0_0_20px_rgba(6,163,79,0.3)] disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-full sm:w-auto px-8 sm:px-10 py-3 rounded-2xl border border-emerald-500 bg-gray-100 text-emerald-600 text-[11px] sm:text-xs font-bold uppercase tracking-[0.3em] hover:bg-emerald-500/20 shadow-[0_0_20px_rgba(6,163,79,0.3)] disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Add to Cart
                     </button>
@@ -526,7 +526,7 @@ const ProductDetails = () => {
                       disabled={product.countInStock === 0}
                       className={`w-full sm:w-auto px-8 py-3 font-extrabold uppercase tracking-[0.25em] rounded-full flex items-center justify-center gap-2 text-[11px] transition
                         ${product.countInStock === 0
-                          ? "bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700"
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed border border-gray-300"
                           : "bg-gradient-to-r from-[#06a34f] to-[#058a42] text-black hover:brightness-80 hover:shadow-[0_0_40px_rgba(6,163,79,0.5)] border border-emerald-500"
                         }`}
                     >

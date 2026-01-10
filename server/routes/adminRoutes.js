@@ -6,10 +6,10 @@ const AuthCode = require('../models/AuthCode');
 
 const router = express.Router();
 
-// ---------------------------------------------
+
 // GET /api/admin/auth-code  (ADMIN ONLY)
 // → Fetch current code from User for dashboard display
-// ---------------------------------------------
+
 router.get('/auth-code', protect, admin, async (req, res) => {
   try {
     const adminUser = await User.findById(req.user._id);
@@ -29,20 +29,13 @@ router.get('/auth-code', protect, admin, async (req, res) => {
   }
 });
 
-// ---------------------------------------------
+
 // Helper: "unused" = isUsed: false
-// (kept for clarity if you reuse later)
-// ---------------------------------------------
 const unusedCodeFilter = { isUsed: false };
 
-// ---------------------------------------------
+
 // POST /api/admin/generate-token  (ADMIN ONLY)
-// → Take an UNUSED code from AuthCode DB & store in adminUser
-//    Behaviour:
-//      - Still uses unused codes (isUsed: false)
-//      - Tries to avoid immediately repeating the last code
-//      - Does NOT auto-mark as used (same as before)
-// ---------------------------------------------
+
 router.post('/generate-token', protect, admin, async (req, res) => {
   try {
     const adminUser = await User.findById(req.user._id);
@@ -65,7 +58,6 @@ router.post('/generate-token', protect, admin, async (req, res) => {
     let authCode = null;
     let tries = 0;
 
-    // 2) Try a few times to get a random unused code different from lastCode
     while (tries < 5) {
       const randomIndex = Math.floor(Math.random() * totalUnused);
       const candidate = await AuthCode.findOne(unusedCodeFilter).skip(randomIndex);
@@ -80,7 +72,6 @@ router.post('/generate-token', protect, admin, async (req, res) => {
       tries++;
     }
 
-    // 3) Fallback: if still null, just pick any unused (same as your old logic)
     if (!authCode) {
       authCode = await AuthCode.findOne(unusedCodeFilter);
     }
@@ -93,11 +84,9 @@ router.post('/generate-token', protect, admin, async (req, res) => {
 
     const code = authCode.code;
 
-    // Store the currently generated code on the admin user (for dashboard display)
     adminUser.generatedAdminToken = code;
     await adminUser.save();
 
-    // Code is NOT marked used here; it will be marked used in /auth-code/mark-used
     return res.json({ token: code });
   } catch (err) {
     console.error('Generate token error:', err.message);
@@ -105,11 +94,9 @@ router.post('/generate-token', protect, admin, async (req, res) => {
   }
 });
 
-// ---------------------------------------------
+
 // PUT /api/admin/token-card-visibility  (ADMIN)
-// body: { hideAdminTokenCard: true }
-// → Persist "hide panel" choice on admin user
-// ---------------------------------------------
+
 router.put('/token-card-visibility', protect, admin, async (req, res) => {
   try {
     const { hideAdminTokenCard } = req.body;
@@ -134,12 +121,9 @@ router.put('/token-card-visibility', protect, admin, async (req, res) => {
   }
 });
 
-// ---------------------------------------------
+
 // PUT /api/admin/auth-code/mark-used  (ADMIN ONLY)
-// body: { code: "<currentCode>" }
-// → Mark a specific code as used so it is NEVER
-//   selected again by /generate-token
-// ---------------------------------------------
+
 router.put('/auth-code/mark-used', protect, admin, async (req, res) => {
   try {
     const { code } = req.body;
@@ -161,7 +145,6 @@ router.put('/auth-code/mark-used', protect, admin, async (req, res) => {
       await authCode.save();
     }
 
-    // Clear current token from admin if it matches this code
     const adminUser = await User.findById(req.user._id);
     if (adminUser && adminUser.generatedAdminToken === code) {
       adminUser.generatedAdminToken = '';

@@ -5,7 +5,7 @@ const router = express.Router();
 const { protect, admin } = require('../middleware/authMiddleware');
 const AuthCode = require('../models/AuthCode');
 
-// ------------------ Helper: generate random code ------------------
+
 const randomCode = (length) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let out = '';
@@ -15,24 +15,22 @@ const randomCode = (length) => {
   return out;
 };
 
-// ================================================================
+
 //  GET /api/authcodes/fetch-next-unused
-//  Desc: Fetch next available code (Auto-generates if empty)
 //  Access: Admin only
-// ================================================================
+
 router.get('/fetch-next-unused', protect, admin, async (req, res) => {
   try {
-    // 1. Try to find an existing unused code (Oldest first)
+
     let codeDoc = await AuthCode.findOne({ isUsed: false }).sort({ createdAt: 1 });
 
-    // 2. AUTO-REPLENISHMENT LOGIC
     if (!codeDoc) {
-      console.log('⚠️ Stock empty. Auto-generating 100 new codes...');
+      console.log('Stock empty. Auto-generating 100 new codes...');
 
       const docs = [];
       for (let i = 0; i < 100; i++) {
         docs.push({
-          code: randomCode(12), // Default length 12
+          code: randomCode(12), 
           isUsed: false,
           productId: null,
         });
@@ -55,12 +53,12 @@ router.get('/fetch-next-unused', protect, admin, async (req, res) => {
   }
 });
 
-// ================================================================
+
 //  PUT /api/authcodes/mark-printed
 //  Desc: Mark a specific code as used (Printed on product)
 //  Body: { code: string }
 //  Access: Admin only
-// ================================================================
+
 router.put('/mark-printed', protect, admin, async (req, res) => {
   const { code } = req.body;
 
@@ -93,9 +91,9 @@ router.put('/mark-printed', protect, admin, async (req, res) => {
   }
 });
 
-// ================================================================
+
 //  POST /api/authcodes/generate (Manual Bulk Gen)
-// ================================================================
+
 router.post('/generate', protect, admin, async (req, res) => {
   const { count, length, productId } = req.body;
 
@@ -125,9 +123,9 @@ router.post('/generate', protect, admin, async (req, res) => {
   }
 });
 
-// ================================================================
+
 //  GET /api/authcodes (List All / Filter)
-// ================================================================
+
 router.get('/', protect, admin, async (req, res) => {
   try {
     const { productId, used } = req.query;
@@ -146,9 +144,9 @@ router.get('/', protect, admin, async (req, res) => {
   }
 });
 
-// ================================================================
+
 //  GET /api/authcodes/export (CSV Export)
-// ================================================================
+
 router.get('/export', protect, admin, async (req, res) => {
   try {
     const codes = await AuthCode.find().sort({ createdAt: -1 }).lean();
@@ -177,9 +175,9 @@ router.get('/export', protect, admin, async (req, res) => {
   }
 });
 
-// ================================================================
+
 //  POST /api/authcodes/verify (Customer Check)
-// ================================================================
+
 router.post('/verify', async (req, res) => {
   const { code, markUsed = false, productId } = req.body;
 

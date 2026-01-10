@@ -21,7 +21,7 @@ const CategoryTabs = ({ activeCategory, onCategoryChange, availableCategories = 
               transition-all duration-300 border
               ${isActive
                 ? 'bg-[#06a34f] text-white border-[#06a34f] shadow-[0_0_15px_rgba(6,163,79,0.4)]'
-                : 'bg-transparent text-white/70 border-white/20 hover:border-[#06a34f]/50 hover:text-white'
+                : 'bg-transparent text-gray-600 border-white/20 hover:border-[#06a34f]/50 hover:text-gray-800'
               }
             `}
           >
